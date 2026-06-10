@@ -1,0 +1,293 @@
+@font-face {
+    font-family: 'KGChasingCars';
+    src: url('../fonts/KGChasingCars.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'PatchworkStitchlings';
+    src: url('../fonts/PatchworkStitchlings.ttf') format('truetype');
+}
+
+@font-face{
+font-family:'Alphazet-SemiBold';
+src:url('../fonts/Alphazet-SemiBold.ttf') format('truetype');
+}
+
+@font-face{
+font-family:'Alphazet-Light';
+src:url('../fonts/Alphazet-Light.ttf') format('truetype');
+}
+
+@font-face{
+font-family:'Cinzel-Regular';
+src:url('../fonts/Cinzel-Bold.otf') format('truetype');
+}
+
+@font-face{
+font-family:'ZenithaClassic';
+src:url('../fonts/ZenithaClassic_PERSONAL_USE_ONLY.otf') format('truetype');
+}
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+width:100%;
+
+height:100%;
+
+background:url("Background-grid.jpg");
+
+opacity: 20;
+
+pointer-events:none;
+
+}
+
+
+
+/* glow hero */
+
+
+
+.glow{
+
+position:absolute;
+
+width:700px;
+
+height:700px;
+
+border-radius:50%;
+
+background:radial-gradient(circle,#00e1ff70,#003cff70,transparent 70%);
+
+animation:pulse 5s infinite;
+
+}
+
+
+
+@keyframes pulse{
+
+0%,100%{opacity:.3;transform:scale(1)}
+
+50%{opacity:.9;transform:scale(1.2)}
+
+}
+
+
+/* navbar */
+.start-btn {
+    background-color: #c5b4e3; /* Light purple from the image */
+    border: 5px solid #333;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-family: 'Alphazet-SemiBold';
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s;
+}
+
+.start-btn:hover {
+    transform: scale(1.05);
+    background-color: #b3a2d1;
+}
+
+.media-nav a {
+    border: 5px solid #333;
+    border-radius: 12px;
+    font-weight: bold;
+    /* Use the colors from the image */
+    background: #ecd502; /* Yellow for Memories */
+}
+
+/* Example of color variations for different buttons */
+.media-nav a:nth-child(2) { background: #f5f8f9; } /* Blue for Classmates */
+.media-nav a:nth-child(3) { background: #ebe9ea; } /* Pink for Messages */
+
+
+/* tabs */
+
+.tab{
+display:none;
+padding:120px 60px;
+opacity:0;
+transform:translateY(40px);
+transition:all .6s ease;
+}
+
+.tab.active{
+display:block;
+opacity:1;
+transform:translateY(0);
+}
+
+.journey-separator{
+position:relative;
+width:100%;
+height:80px;
+display:flex;
+align-items:center;
+justify-content:center;
+margin:80px 0;
+}
+
+.journey-separator .circle{
+position:relative;
+background:#000;
+border:4px solid #fac415;
+color:#facc15;
+padding:10px 22px;
+border-radius:50px;
+font-size:14px;
+font-weight:500;
+}
+
+/* media vault */
+.achieve-title{
+font-family:'PatchworkStitchlings' !important;
+}
+
+.masonry{
+column-count:4;
+column-gap:16px;
+}
+
+.media{
+
+position:relative;
+
+}
+
+
+
+.media img{
+
+width:100%;
+
+margin-bottom:16px;
+
+border-radius:10px;
+
+transition:.4s;
+
+}
+
+
+
+.media:hover img{
+
+border:2px solid black;
+
+transform:scale(1.05);
+
+}
+
+
+
+.media span{
+
+position:absolute;
+
+bottom:10px;
+
+left:10px;
+
+background:black;
+
+padding:4px 10px;
+
+font-size:12px;
+
+border-radius:6px;
+
+opacity:0;
+
+transition:.3s;
+
+}
+
+
+
+.media:hover span{
+
+opacity:1;
+
+}
+
+/* notes */
+
+.note{
+font-family:'Caveat', cursive;
+font-size:22px;
+}
+
+.wall-title{
+font-family:'KGChasingCars', cursive;
+}
+
+.author{
+color:red;
+font: weight 6px bold;
+display:block;
+margin-top:6px;
+text-align:right;
+}
+
+.meet-btn{
+font-family:'Cinzel-Regular'!important;
+letter-spacing:1px;
+}
+
+.meet-boo{
+font-family:'ZenithaClassic'!important;
+letter-spacing:1px;
+}
+
+.galleryImg,
+.galleryVideo{
+width:100%;
+border-radius:12px;
+}
+
+.video-thumb{
+position:relative;
+}
+
+.play-icon{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:40px;
+color:white;
+background:rgba(0,0,0,0.6);
+padding:10px 16px;
+border-radius:50%;
+}
+
+.media-nav{
+display:flex;
+gap:20px;
+margin-bottom:30px;
+}
+
+.media-nav a{
+padding:8px 18px;
+border-radius:20px;
+background:#222;
+color:white;
+text-decoration:none;
+transition:0.3s;
+}
+
+.media-nav a:hover{
+background:#ffd500;
+color:black;
+}
