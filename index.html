@@ -17,6 +17,25 @@
 
 <body>
 
+    <!-- BLACKBOARD LOADER -->
+
+<div id="loader">
+
+    <div class="small-board">
+
+        <div class="chalk-writing">
+            Loading...
+        </div>
+
+        <div class="chalk-line"></div>
+
+        <p>
+            Batch 2k25-26
+        </p>
+
+    </div>
+
+</div>
 <!-- HERO -->
 
 <section id="hero" class="min-h-screen relative overflow-hidden p-10">
@@ -118,7 +137,7 @@ The Wall
 <a href="https://instagram.com/memories_westillcarry?igsh=MTMwcThiNTMxM25zcQ=="
 target="_blank"
 rel="noopener"
-class="border border-yellow-300 px-4 py-1 rounded-full">
+class="border border-yellow-400 px-4 py-1 rounded-full">
 Visit Instagram
 </a>
 
@@ -771,6 +790,12 @@ bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
 </div>
 </div>
 
+</div>
+<button onclick="openTab('media')"
+class="meet-btn mt-10 border border-yellow-500 px-6 py-3 rounded-full block mx-auto hover:bg-yellow-500 hover:text-black transition">
+Meet The Members
+</button>
+
 </section>
 
 <!-- MEDIA VAULT -->
@@ -795,6 +820,13 @@ A collection of unforgettable moments.
 <!-- IMAGES -->
 <h3 id="images"  class="text-2xl mb-6">Images</h3>
 <div class="masonry image-grid"></div>
+
+<button onclick="openTab('wall')"
+class="meet-btn mt-10 border border-yellow-500 px-6 py-3 rounded-full block mx-auto hover:bg-yellow-500 hover:text-black transition">
+Note from the one's
+</button>
+
+</div>
 
 </section>
 
@@ -882,6 +914,47 @@ Last Exam of school life.<br>
 
 </div>
 
+<!-- WRITE A NOTE SECTION -->
+
+<div class="write-note-box">
+
+<h2>
+Write a Note For Everyone ❤️
+</h2>
+
+<input 
+id="noteName"
+placeholder="Your Name"
+>
+
+
+<textarea 
+id="noteMessage"
+placeholder="Write your memory..."
+></textarea>
+
+
+<button onclick="addNote()">
+Pin My Memory ✨
+</button>
+
+
+</div>
+
+
+<!-- USER NOTES WILL APPEAR HERE -->
+
+<div id="userNotes" class="grid md:grid-cols-4 gap-6 mt-10">
+
+</div>
+
+<button onclick="openTab('journey')"
+class="meet-btn mt-10 border border-yellow-500 px-6 py-3 rounded-full block mx-auto hover:bg-yellow-500 hover:text-black transition">
+Home
+</button>
+
+</div>
+
 </section>
 
 <script src="js/script.js"></script>
@@ -894,6 +967,54 @@ Last Exam of school life.<br>
   <img id="viewerImg" class="max-h-[90vh] max-w-[90vw] rounded-lg">
 
 </div>
+
+<!-- FOOTER -->
+
+<footer class="memory-footer">
+
+    <div class="footer-content">
+
+        <h2>
+            Batch 2k25-26
+        </h2>
+
+        <p>
+            "Some chapters end, but memories stay forever ❤️"
+        </p>
+
+
+        <div class="footer-line"></div>
+
+
+        <div class="footer-links">
+
+            <a href="#journey">
+                The Journey
+            </a>
+
+            <a href="#yearbook">
+                Yearbook
+            </a>
+
+            <a href="#media">
+                Media Vault
+            </a>
+
+            <a href="#wall">
+                The Wall
+            </a>
+
+        </div>
+
+
+        <p class="copyright">
+            Made with ❤️ by Swapnil Rajas
+        </p>
+
+
+    </div>
+
+</footer>
 
 </body>
 </html>
