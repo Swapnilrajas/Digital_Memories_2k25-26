@@ -3,25 +3,32 @@ document.getElementById("hero").style.display="none"
 document.getElementById("site").classList.remove("hidden")
 }
 
-function openTab(tab,element){
+function openTab(tab, element){
 
-document.querySelectorAll(".tab").forEach(t=>{
-t.classList.remove("active")
-})
+    document.querySelectorAll(".tab").forEach(t=>{
+        t.classList.remove("active");
+    });
 
-setTimeout(()=>{
-document.getElementById(tab).classList.add("active")
-},50)
 
-document.querySelectorAll(".navbtn").forEach(btn=>{
-btn.classList.remove("active")
-})
+    document.getElementById(tab).classList.add("active");
 
-element.classList.add("active")
 
-window.scrollTo({top:0, behavior:"smooth"})
+    document.querySelectorAll(".navbtn").forEach(btn=>{
+        btn.classList.remove("active");
+    });
+
+
+    if(element){
+        element.classList.add("active");
+    }
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
 }
-
 function searchStudent(){
 
 let input = document.getElementById("searchInput").value.toLowerCase()
@@ -119,3 +126,116 @@ function startSite() {
     // Scroll to top
     window.scrollTo(0, 0);
 }
+const reveals = document.querySelectorAll(".reveal");
+
+window.addEventListener("scroll", () => {
+    reveals.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+
+        if(top < window.innerHeight - 100){
+            el.classList.add("active");
+        }
+    });
+});
+
+window.addEventListener("load",()=>{
+
+setTimeout(()=>{
+
+document
+.getElementById("loader")
+.classList.add("loader-hide");
+
+},3000);
+
+
+});
+function addNote(){
+
+let name =
+document.getElementById("noteName").value;
+
+
+let message =
+document.getElementById("noteMessage").value;
+
+
+if(name=="" || message==""){
+alert("Please write your name and message ❤️");
+return;
+}
+
+
+let note = {
+
+name:name,
+message:message
+
+};
+
+
+let notes =
+JSON.parse(localStorage.getItem("memoryNotes")) || [];
+
+
+notes.push(note);
+
+
+localStorage.setItem(
+"memoryNotes",
+JSON.stringify(notes)
+);
+
+
+displayNotes();
+
+
+document.getElementById("noteName").value="";
+document.getElementById("noteMessage").value="";
+
+}
+
+
+
+function displayNotes(){
+
+let box =
+document.getElementById("userNotes");
+
+
+box.innerHTML="";
+
+
+let notes =
+JSON.parse(localStorage.getItem("memoryNotes")) || [];
+
+
+notes.forEach(note=>{
+
+
+box.innerHTML += `
+
+<div class="user-note">
+
+${note.message}
+
+<br><br>
+
+<span>
+~ ${note.name}
+</span>
+
+</div>
+
+`;
+
+});
+
+
+}
+
+
+document.addEventListener(
+"DOMContentLoaded",
+displayNotes
+);
