@@ -93,7 +93,7 @@ closeBtn.onclick = () => {
 
 const imageGrid = document.querySelector(".image-grid");
 
-for (let i = 1; i <= 70; i++) {
+for (let i = 1; i <= 80; i++) {
 
 imageGrid.innerHTML += `
 <div class="media">
