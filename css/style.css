@@ -34,7 +34,6 @@ body{
     -ms-user-select:none;
     user-select:none;
 }
-
 body{
     background:
         radial-gradient(circle at 20% 20%, #e1c56a 0%, transparent 30%),
@@ -42,7 +41,6 @@ body{
         radial-gradient(circle at 60% 80%, #ffa2ca 0%, transparent 30%),
         linear-gradient(135deg,#f8f8f8,#ececec);
 }
-
 body::before{
     content:"";
     position:fixed;
@@ -52,16 +50,13 @@ body::before{
     animation:bgMove 20s ease-in-out infinite alternate;
     z-index:-2;
 }
-
 @keyframes bgMove{
     from{transform:translate(-3%,-3%);}
     to{transform:translate(3%,3%);}
 }
-
 body{
     animation: pageLoad 1.2s ease;
 }
-
 @keyframes pageLoad{
     from{
         opacity:0;
@@ -72,11 +67,9 @@ body{
         transform:translateY(0);
     }
 }
-
 .glow{
     animation: floatGlow 8s ease-in-out infinite;
 }
-
 @keyframes floatGlow{
     0%,100%{
         transform:translateY(0px) scale(1);
@@ -85,26 +78,22 @@ body{
         transform:translateY(-30px) scale(1.1);
     }
 }
-
 .achieve-title{
     animation:titleFloat 4s ease-in-out infinite;
 }
-
 @keyframes titleFloat{
-    0%,100%{
-        transform:translateY(0);
+   0%,100%{
+       transform:translateY(0);
     }
     50%{
         transform:translateY(-8px);
     }
 }
-
 .start-btn{
     transition:.4s;
     position:relative;
     overflow:hidden;
 }
-
 .start-btn::before{
     content:"";
     position:absolute;
@@ -119,258 +108,156 @@ body{
         transparent
     );
 }
-
 .start-btn:hover::before{
     animation:shine .8s;
 }
-
 @keyframes shine{
     to{
         left:130%;
     }
 }
-
 #journey img{
-
 transition:.6s;
-
 }
-
 #journey img:hover{
-
 transform:
 scale(1.05)
 rotate(1deg);
-
 box-shadow:
 0 20px 50px rgba(0,0,0,.35);
-
 }
-
 .student{
-
 transition:.5s;
-
 }
-
 .student:hover{
-
 transform:
 translateY(-12px);
-
 }
-
 .student img{
-
 transition:.7s;
-
 }
-
 .student:hover img{
-
 transform:scale(1.12);
-
 filter:brightness(1.1);
-
 }
-
+.line-divide{
+height:3px;
+width:1200px;
+background:#4e4e4e;
+margin:30px auto;
+opacity:.5;
+}
 .note{
-
 transition:.4s;
-
 transform:rotate(-2deg);
-
 }
-
 .note:nth-child(even){
-
 transform:rotate(2deg);
-
 }
-
 .note:hover{
-
 transform:
 rotate(0deg)
 scale(1.08);
-
 box-shadow:
 0 18px 40px rgba(0,0,0,.35);
-
 }
-
 .play-icon{
-
 animation:pulsePlay 2s infinite;
-
 }
-
 @keyframes pulsePlay{
-
 0%{
 transform:translate(-50%,-50%) scale(1);
 }
-
 50%{
 transform:translate(-50%,-50%) scale(1.2);
 }
-
 100%{
 transform:translate(-50%,-50%) scale(1);
 }
-
 }
-
 .reveal{
-
 opacity:0;
-
 transform:translateY(80px);
-
 transition:1s;
-
 }
-
 .reveal.active{
-
 opacity:1;
-
 transform:translateY(0);
-
 }
-
 body::after{
-
 content:"";
-
 position:fixed;
-
 width:300%;
-
 height:300%;
-
 background:
 radial-gradient(circle,
 rgba(255,255,255,.03) 0%,
 transparent 60%);
-
 animation:bgMove 40s linear infinite;
-
 pointer-events:none;
-
 z-index:-1;
-
 }
-
 @keyframes bgMove{
-
 0%{
 transform:translate(-10%,-10%);
 }
-
 100%{
 transform:translate(10%,10%);
 }
-
 }
-
-
 /* glow hero */
-
-
-
 .glow{
-
 position:absolute;
-
 width:700px;
-
 height:700px;
-
 border-radius:50%;
-
 background:radial-gradient(circle,#00e1ff70,#003cff70,transparent 70%);
-
 animation:pulse 5s infinite;
-
 }
-
-
-
 @keyframes pulse{
-
 0%,100%{opacity:.3;transform:scale(1)}
-
 50%{opacity:.9;transform:scale(1.2)}
-
 }
-
-
 /* navbar */
 .navbar{
     position: sticky;
     top: 15px;
     z-index: 1000;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     width: 92%;
     margin: 20px auto;
     padding: 14px 28px;
-
     background: rgba(255,255,255,0.35);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
-
     border: 1px solid rgba(255,255,255,0.4);
     border-radius: 20px;
-
     box-shadow:
         0 10px 30px rgba(0,0,0,.12),
         inset 0 1px 0 rgba(255,255,255,.5);
-
     transition: .35s;
 }
-
 .navbtn{
-
     background: transparent;
     border: none;
-
     padding: 12px 20px;
-
     border-radius: 12px;
-
     cursor: pointer;
-
     transition: .3s;
-
     font-family: 'Cinzel-Regular';
-
 }
-
 .navbtn:hover{
-
     background: rgba(255,255,255,.35);
-
     backdrop-filter: blur(10px);
-
     transform: translateY(-2px);
-
 }
-
 .navbtn.active{
-
-    background: rgba(255,213,0,.9);
-
+   background: rgba(255,213,0,.9);
     color: black;
-
     box-shadow: 0 5px 20px rgba(255,213,0,.35);
-
 }
-
 .start-btn {
     background-color: #c5b4e3; /* Light purple from the image */
     border: 5px solid #333;
@@ -384,12 +271,10 @@ animation:pulse 5s infinite;
     gap: 10px;
     transition: transform 0.2s;
 }
-
 .start-btn:hover {
     transform: scale(1.05);
     background-color: #b3a2d1;
 }
-
 .media-nav a {
     border: 5px solid #333;
     border-radius: 12px;
@@ -397,14 +282,10 @@ animation:pulse 5s infinite;
     /* Use the colors from the image */
     background: #ecd502; /* Yellow for Memories */
 }
-
 /* Example of color variations for different buttons */
 .media-nav a:nth-child(2) { background: #f5f8f9; } /* Blue for Classmates */
 .media-nav a:nth-child(3) { background: #ebe9ea; } /* Pink for Messages */
-
-
 /* tabs */
-
 .tab{
 display:none;
 padding:120px 60px;
@@ -412,13 +293,11 @@ opacity:0;
 transform:translateY(40px);
 transition:all .6s ease;
 }
-
 .tab.active{
 display:block;
 opacity:1;
 transform:translateY(0);
 }
-
 .journey-separator{
 position:relative;
 width:100%;
@@ -428,7 +307,6 @@ align-items:center;
 justify-content:center;
 margin:80px 0;
 }
-
 .journey-separator .circle{
 position:relative;
 background:#000;
@@ -439,90 +317,49 @@ border-radius:50px;
 font-size:14px;
 font-weight:500;
 }
-
 /* media vault */
 .achieve-title{
 font-family:'PatchworkStitchlings' !important;
 }
-
 .masonry{
 column-count:4;
 column-gap:16px;
 }
-
 .media{
-
 position:relative;
-
 }
-
-
-
 .media img{
-
 width:100%;
-
 margin-bottom:16px;
-
 border-radius:10px;
-
 transition:.4s;
-
 }
-
-
-
 .media:hover img{
-
 border:2px solid black;
-
 transform:scale(1.05);
-
 }
-
-
-
 .media span{
-
 position:absolute;
-
 bottom:10px;
-
 left:10px;
-
 background:black;
-
 padding:4px 10px;
-
 font-size:12px;
-
 border-radius:6px;
-
 opacity:0;
-
 transition:.3s;
-
 }
-
-
-
 .media:hover span{
-
 opacity:1;
-
 }
-
 /* notes */
-
 .note{
 font-family:'Caveat', cursive;
 font-size:22px;
 }
-
 .wall-title{
 font-family:'KGChasingCars', cursive;
 }
-
 .author{
 color:red;
 font: weight 6px bold;
@@ -530,27 +367,22 @@ display:block;
 margin-top:6px;
 text-align:right;
 }
-
 .meet-btn{
 font-family:'Cinzel-Regular'!important;
 letter-spacing:1px;
 }
-
 .meet-boo{
 font-family:'ZenithaClassic'!important;
 letter-spacing:1px;
 }
-
 .galleryImg,
 .galleryVideo{
 width:100%;
 border-radius:12px;
 }
-
 .video-thumb{
 position:relative;
 }
-
 .play-icon{
 position:absolute;
 top:50%;
