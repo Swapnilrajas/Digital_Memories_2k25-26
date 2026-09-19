@@ -1,0 +1,2553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>School Rush | Memory Arcade</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(255,189,50,.12), transparent 35%),
+        linear-gradient(180deg,#080808,#111 55%,#070707);
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:25px;
+    overflow-x:hidden;
+}
+
+.game-wrapper{
+    width:min(1100px,100%);
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.back{
+    color:#aaa;
+    text-decoration:none;
+    font-size:14px;
+    transition:.2s;
+}
+
+.back:hover{
+    color:#ffbd32;
+}
+
+.title{
+    font-size:14px;
+    letter-spacing:3px;
+    color:#ffbd32;
+    text-transform:uppercase;
+}
+
+.game-box{
+    position:relative;
+    background:#0d0d0d;
+    border:1px solid #292929;
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.65),
+        0 0 60px rgba(255,189,50,.05);
+}
+
+.hud{
+    height:75px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    border-bottom:1px solid #242424;
+    background:rgba(18,18,18,.95);
+}
+
+.hud-block{
+    min-width:120px;
+}
+
+.hud-label{
+    color:#777;
+    font-size:10px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:5px;
+}
+
+.hud-value{
+    color:#ffbd32;
+    font-size:22px;
+    font-weight:800;
+}
+
+#gameCanvas{
+    display:block;
+    width:100%;
+    height:auto;
+    background:#151515;
+}
+
+.overlay{
+    position:absolute;
+    inset:75px 0 0 0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:rgba(3,3,3,.72);
+    backdrop-filter:blur(7px);
+    z-index:10;
+}
+
+.panel{
+    width:min(430px,90%);
+    padding:35px;
+    text-align:center;
+    background:
+        linear-gradient(145deg,#191919,#0c0c0c);
+    border:1px solid #343434;
+    border-radius:22px;
+    box-shadow:0 25px 70px rgba(0,0,0,.7);
+}
+
+.panel-icon{
+    width:70px;
+    height:70px;
+    margin:0 auto 18px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:20px;
+    background:linear-gradient(145deg,#ffbd32,#ff8c00);
+    color:#111;
+    font-size:34px;
+    box-shadow:0 10px 35px rgba(255,189,50,.2);
+}
+
+.panel h1{
+    font-size:32px;
+    margin-bottom:8px;
+}
+
+.panel p{
+    color:#999;
+    line-height:1.6;
+    font-size:14px;
+    margin-bottom:22px;
+}
+
+.name-input{
+    width:100%;
+    padding:15px 17px;
+    background:#080808;
+    color:white;
+    border:1px solid #333;
+    border-radius:12px;
+    outline:none;
+    font-size:15px;
+    margin-bottom:12px;
+}
+
+.name-input:focus{
+    border-color:#ffbd32;
+    box-shadow:0 0 0 3px rgba(255,189,50,.08);
+}
+
+.start-btn{
+    width:100%;
+    padding:15px;
+    border:0;
+    border-radius:12px;
+    background:linear-gradient(135deg,#ffbd32,#ff8d00);
+    color:#111;
+    font-size:15px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.start-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(255,189,50,.2);
+}
+
+.instructions{
+    display:flex;
+    justify-content:center;
+    gap:25px;
+    padding:16px;
+    color:#777;
+    font-size:11px;
+    border-top:1px solid #222;
+}
+
+.mobile-controls{
+    display:none;
+    justify-content:center;
+    gap:12px;
+    padding:15px;
+    background:#101010;
+}
+
+.control{
+    width:58px;
+    height:48px;
+    border:1px solid #333;
+    background:#191919;
+    color:#fff;
+    border-radius:12px;
+    font-size:20px;
+}
+
+@media(max-width:700px){
+    body{
+        padding:12px;
+    }
+
+    .hud{
+        height:65px;
+        padding:0 14px;
+    }
+
+    .hud-block{
+        min-width:auto;
+    }
+
+    .hud-value{
+        font-size:18px;
+    }
+
+    .overlay{
+        inset:65px 0 0 0;
+    }
+
+    .panel{
+        padding:25px 20px;
+    }
+
+    .panel h1{
+        font-size:26px;
+    }
+
+    .instructions{
+        display:none;
+    }
+
+    .mobile-controls{
+        display:flex;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="game-wrapper">
+
+    <div class="topbar">
+        <a class="back" href="../arcade.html">← Back to Arcade</a>
+        <div class="title">Memory Arcade</div>
+    </div>
+
+    <div class="game-box">
+
+        <div class="hud">
+
+            <div class="hud-block">
+                <div class="hud-label">Player</div>
+                <div class="hud-value" id="playerDisplay">---</div>
+            </div>
+
+            <div class="hud-block">
+                <div class="hud-label">Score</div>
+                <div class="hud-value" id="score">0</div>
+            </div>
+
+            <div class="hud-block">
+                <div class="hud-label">Speed</div>
+                <div class="hud-value" id="speedDisplay">1x</div>
+            </div>
+
+        </div>
+
+        <canvas id="gameCanvas" width="1000" height="560"></canvas>
+
+        <div class="overlay" id="overlay">
+
+            <div class="panel" id="startPanel">
+
+                <div class="panel-icon">🏃</div>
+
+                <h1>School Rush</h1>
+
+                <p>
+                    Run through school, collect memories and
+                    avoid the obstacles. How long can you survive?
+                </p>
+
+                <input
+                    id="playerName"
+                    class="name-input"
+                    type="text"
+                    maxlength="20"
+                    placeholder="Enter your name"
+                    autocomplete="off"
+                >
+
+                <button id="startBtn" class="start-btn">
+                    START RUN
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="mobile-controls">
+            <button class="control" id="leftBtn">←</button>
+            <button class="control" id="jumpBtn">↑</button>
+            <button class="control" id="rightBtn">→</button>
+        </div>
+
+        <div class="instructions">
+            <span>← → MOVE</span>
+            <span>SPACE / ↑ JUMP</span>
+            <span>COLLECT MEMORIES</span>
+            <span>AVOID OBSTACLES</span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+/* =========================================================
+   FIREBASE
+========================================================= */
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getAuth,
+    signInAnonymously,
+    onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    getDatabase,
+    ref,
+    get,
+    set
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDBcwuTlwLmW388k1cuWVIb-t0PseH78V4",
+        authDomain: "xii-oncamera.firebaseapp.com",
+        projectId: "xii-oncamera",
+        storageBucket: "xii-oncamera.firebasestorage.app",
+        messagingSenderId: "1010193797198",
+        appId: "1:1010193797198:web:75cfacefb390f0a3d9f31f",
+        databaseURL: "https://xii-oncamera-default-rtdb.firebaseio.com/"
+    };
+
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getDatabase(app);
+
+let currentUser = null;
+
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+signInAnonymously(auth)
+.catch(error => {
+    console.error("Firebase Auth Error:", error);
+});
+
+onAuthStateChanged(auth, user => {
+
+    if(user){
+        currentUser = user;
+        console.log("Firebase connected");
+    }
+
+});
+
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const canvas =
+    document.getElementById("gameCanvas");
+
+const ctx =
+    canvas.getContext("2d");
+
+const overlay =
+    document.getElementById("overlay");
+
+const startBtn =
+    document.getElementById("startBtn");
+
+const playerNameInput =
+    document.getElementById("playerName");
+
+const scoreElement =
+    document.getElementById("score");
+
+const speedElement =
+    document.getElementById("speedDisplay");
+
+const playerDisplay =
+    document.getElementById("playerDisplay");
+
+
+/* =========================================================
+   GAME VARIABLES
+========================================================= */
+
+let playerName = "";
+
+let score = 0;
+
+let gameRunning = false;
+
+let gameOver = false;
+
+let animationId;
+
+let lastTime = 0;
+
+let worldSpeed = 300;
+
+let distance = 0;
+
+let spawnTimer = 0;
+
+let itemTimer = 0;
+
+let obstacleTimer = 0;
+
+let shake = 0;
+
+let particles = [];
+
+let obstacles = [];
+
+let collectibles = [];
+
+let clouds = [];
+
+
+/* =========================================================
+   PLAYER
+========================================================= */
+
+const player = {
+
+    x: 130,
+
+    y: 420,
+
+    width: 48,
+
+    height: 72,
+
+    velocityY: 0,
+
+    gravity: 1850,
+
+    jumpPower: -700,
+
+    grounded: true,
+
+    lane: 1,
+
+    targetX: 130
+
+};
+
+
+/* =========================================================
+   LANES
+========================================================= */
+
+const laneY = [
+
+    425,
+
+    365,
+
+    305
+
+];
+
+
+/* =========================================================
+   RESET PLAYER
+========================================================= */
+
+function resetPlayer(){
+
+    player.x = 130;
+
+    player.y = laneY[1];
+
+    player.targetX = 130;
+
+    player.velocityY = 0;
+
+    player.grounded = true;
+
+}
+
+
+/* =========================================================
+   START GAME
+========================================================= */
+
+function startGame(){
+
+    const name =
+        playerNameInput.value.trim();
+
+    if(!name){
+
+        playerNameInput.focus();
+
+        return;
+
+    }
+
+    playerName = name.substring(0,20);
+
+    playerDisplay.textContent =
+        playerName;
+
+    score = 0;
+
+    worldSpeed = 300;
+
+    distance = 0;
+
+    spawnTimer = 0;
+
+    itemTimer = 0;
+
+    obstacleTimer = 0;
+
+    obstacles = [];
+
+    collectibles = [];
+
+    particles = [];
+
+    shake = 0;
+
+    gameOver = false;
+
+    gameRunning = true;
+
+    scoreElement.textContent = "0";
+
+    speedElement.textContent = "1x";
+
+    resetPlayer();
+
+    createClouds();
+
+    overlay.style.display = "none";
+
+    lastTime = performance.now();
+
+    cancelAnimationFrame(animationId);
+
+    animationId =
+        requestAnimationFrame(gameLoop);
+
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+document.addEventListener("keydown", event => {
+
+    if(event.code === "Space" ||
+       event.code === "ArrowUp"){
+
+        event.preventDefault();
+
+        jump();
+
+    }
+
+    if(event.code === "ArrowLeft"){
+
+        moveLeft();
+
+    }
+
+    if(event.code === "ArrowRight"){
+
+        moveRight();
+
+    }
+
+});
+
+
+document.getElementById("jumpBtn")
+.addEventListener("click", jump);
+
+document.getElementById("leftBtn")
+.addEventListener("click", moveLeft);
+
+document.getElementById("rightBtn")
+.addEventListener("click", moveRight);
+
+
+function jump(){
+
+    if(!gameRunning) return;
+
+    if(player.grounded){
+
+        player.velocityY =
+            player.jumpPower;
+
+        player.grounded = false;
+
+        createJumpParticles();
+
+    }
+
+}
+
+
+function moveLeft(){
+
+    if(!gameRunning) return;
+
+    player.lane =
+        Math.max(0, player.lane - 1);
+
+}
+
+
+function moveRight(){
+
+    if(!gameRunning) return;
+
+    player.lane =
+        Math.min(2, player.lane + 1);
+
+}
+
+
+/* =========================================================
+   CLOUDS
+========================================================= */
+
+function createClouds(){
+
+    clouds = [];
+
+    for(let i=0;i<7;i++){
+
+        clouds.push({
+
+            x:Math.random()*canvas.width,
+
+            y:50 + Math.random()*130,
+
+            size:30 + Math.random()*45,
+
+            speed:15 + Math.random()*20
+
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   SPAWN OBSTACLES
+========================================================= */
+
+function spawnObstacle(){
+
+    const types = [
+
+        {
+            type:"desk",
+            width:70,
+            height:50
+        },
+
+        {
+            type:"chair",
+            width:55,
+            height:70
+        },
+
+        {
+            type:"bag",
+            width:50,
+            height:45
+        },
+
+        {
+            type:"cone",
+            width:40,
+            height:55
+        },
+
+        {
+            type:"book",
+            width:65,
+            height:35
+        }
+
+    ];
+
+    const type =
+        types[
+            Math.floor(
+                Math.random()*types.length
+            )
+        ];
+
+    obstacles.push({
+
+        ...type,
+
+        x:canvas.width + 50,
+
+        lane:
+            Math.floor(
+                Math.random()*3
+            ),
+
+        passed:false
+
+    });
+
+}
+
+
+/* =========================================================
+   SPAWN COLLECTIBLES
+========================================================= */
+
+function spawnCollectible(){
+
+    const types = [
+
+        "book",
+        "pencil",
+        "star",
+        "photo",
+        "trophy"
+
+    ];
+
+    collectibles.push({
+
+        type:
+            types[
+                Math.floor(
+                    Math.random()*types.length
+                )
+            ],
+
+        x:canvas.width + 50,
+
+        lane:
+            Math.floor(
+                Math.random()*3
+            ),
+
+        size:28,
+
+        rotation:0
+
+    });
+
+}
+
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+function createParticle(x,y){
+
+    particles.push({
+
+        x:x,
+
+        y:y,
+
+        vx:(Math.random()-.5)*180,
+
+        vy:-Math.random()*180,
+
+        life:1,
+
+        size:3+Math.random()*5
+
+    });
+
+}
+
+
+function createJumpParticles(){
+
+    for(let i=0;i<10;i++){
+
+        createParticle(
+            player.x+20,
+            player.y+player.height
+        );
+
+    }
+
+}
+
+
+function updateParticles(dt){
+
+    particles.forEach(p => {
+
+        p.x += p.vx * dt;
+
+        p.y += p.vy * dt;
+
+        p.vy += 500 * dt;
+
+        p.life -= dt;
+
+    });
+
+    particles =
+        particles.filter(
+            p => p.life > 0
+        );
+
+}
+
+
+/* =========================================================
+   GAME LOOP
+========================================================= */
+
+function gameLoop(time){
+
+    if(!gameRunning) return;
+
+    const dt =
+        Math.min(
+            (time-lastTime)/1000,
+            0.035
+        );
+
+    lastTime = time;
+
+    update(dt);
+
+    draw();
+
+    animationId =
+        requestAnimationFrame(gameLoop);
+
+}
+
+
+/* =========================================================
+   UPDATE
+========================================================= */
+
+function update(dt){
+
+    distance +=
+        worldSpeed * dt;
+
+    /* Increase difficulty */
+
+    worldSpeed =
+        Math.min(
+            650,
+            300 + score * 2
+        );
+
+    const speedMultiplier =
+        (worldSpeed/300).toFixed(1);
+
+    speedElement.textContent =
+        speedMultiplier + "x";
+
+
+    /* Player lane movement */
+
+    const targetLaneX =
+        130 +
+        player.lane * 95;
+
+    player.targetX =
+        targetLaneX;
+
+    player.x +=
+        (player.targetX-player.x)
+        * Math.min(1,dt*10);
+
+
+    /* Gravity */
+
+    player.velocityY +=
+        player.gravity * dt;
+
+    player.y +=
+        player.velocityY * dt;
+
+
+    const groundY =
+        laneY[player.lane];
+
+
+    if(player.y >= groundY){
+
+        player.y = groundY;
+
+        player.velocityY = 0;
+
+        player.grounded = true;
+
+    }
+
+
+    /* Spawn */
+
+    obstacleTimer += dt;
+
+    itemTimer += dt;
+
+
+    const obstacleDelay =
+        Math.max(
+            .65,
+            1.25 - score*.003
+        );
+
+
+    if(obstacleTimer >
+       obstacleDelay){
+
+        obstacleTimer = 0;
+
+        spawnObstacle();
+
+    }
+
+
+    if(itemTimer > .75){
+
+        itemTimer = 0;
+
+        spawnCollectible();
+
+    }
+
+
+    /* Obstacles */
+
+    obstacles.forEach(o => {
+
+        o.x -=
+            worldSpeed * dt;
+
+        if(!o.passed &&
+           o.x < player.x){
+
+            o.passed = true;
+
+        }
+
+    });
+
+
+    /* Collectibles */
+
+    collectibles.forEach(c => {
+
+        c.x -=
+            worldSpeed * dt;
+
+        c.rotation +=
+            dt * 4;
+
+    });
+
+
+    checkCollisions();
+
+
+    obstacles =
+        obstacles.filter(
+            o => o.x > -100
+        );
+
+
+    collectibles =
+        collectibles.filter(
+            c => c.x > -100
+        );
+
+
+    updateParticles(dt);
+
+    updateClouds(dt);
+
+    if(shake > 0){
+
+        shake -= dt*3;
+
+        if(shake < 0)
+            shake = 0;
+
+    }
+
+}
+
+
+/* =========================================================
+   CLOUD UPDATE
+========================================================= */
+
+function updateClouds(dt){
+
+    clouds.forEach(c => {
+
+        c.x -= c.speed * dt;
+
+        if(c.x < -100){
+
+            c.x =
+                canvas.width+100;
+
+        }
+
+    });
+
+}
+
+
+/* =========================================================
+   COLLISION
+========================================================= */
+
+function checkCollisions(){
+
+    for(const o of obstacles){
+
+        if(
+            o.lane === player.lane &&
+            player.x + player.width - 10 > o.x &&
+            player.x + 10 < o.x + o.width &&
+            player.y + player.height - 8 >
+                laneY[o.lane] - o.height &&
+            player.y <
+                laneY[o.lane] + 10
+        ){
+
+            endGame();
+
+            return;
+
+        }
+
+    }
+
+
+    for(let i=collectibles.length-1;i>=0;i--){
+
+        const c =
+            collectibles[i];
+
+        if(
+
+            c.lane === player.lane &&
+
+            Math.abs(
+                (player.x+player.width/2)
+                - c.x
+            ) < 45 &&
+
+            Math.abs(
+                (player.y+player.height/2)
+                -
+                (laneY[c.lane]-20)
+            ) < 55
+
+        ){
+
+            score += 10;
+
+            scoreElement.textContent =
+                score;
+
+            for(let p=0;p<15;p++){
+
+                createParticle(
+                    c.x,
+                    laneY[c.lane]-25
+                );
+
+            }
+
+            collectibles.splice(i,1);
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   DRAW WORLD
+========================================================= */
+
+function draw(){
+
+    ctx.save();
+
+    if(shake > 0){
+
+        ctx.translate(
+            (Math.random()-.5)*8,
+            (Math.random()-.5)*8
+        );
+
+    }
+
+    drawBackground();
+
+    drawClouds();
+
+    drawSchool();
+
+    drawRoad();
+
+    drawCollectibles();
+
+    drawObstacles();
+
+    drawPlayer();
+
+    drawParticles();
+
+    ctx.restore();
+
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+function drawBackground(){
+
+    const gradient =
+        ctx.createLinearGradient(
+            0,0,
+            0,canvas.height
+        );
+
+    gradient.addColorStop(0,"#18233b");
+
+    gradient.addColorStop(.45,"#273650");
+
+    gradient.addColorStop(1,"#111");
+
+    ctx.fillStyle =
+        gradient;
+
+    ctx.fillRect(
+        0,0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    /* Sun */
+
+    const sun =
+        ctx.createRadialGradient(
+            780,90,10,
+            780,90,100
+        );
+
+    sun.addColorStop(
+        0,
+        "rgba(255,210,90,.55)"
+    );
+
+    sun.addColorStop(
+        1,
+        "rgba(255,210,90,0)"
+    );
+
+    ctx.fillStyle = sun;
+
+    ctx.fillRect(
+        650,0,
+        300,220
+    );
+
+}
+
+
+/* =========================================================
+   CLOUDS
+========================================================= */
+
+function drawClouds(){
+
+    ctx.fillStyle =
+        "rgba(255,255,255,.12)";
+
+    clouds.forEach(c => {
+
+        ctx.beginPath();
+
+        ctx.arc(
+            c.x,
+            c.y,
+            c.size*.55,
+            0,
+            Math.PI*2
+        );
+
+        ctx.arc(
+            c.x+c.size*.5,
+            c.y+5,
+            c.size*.4,
+            0,
+            Math.PI*2
+        );
+
+        ctx.arc(
+            c.x-c.size*.45,
+            c.y+8,
+            c.size*.35,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+    });
+
+}
+
+
+/* =========================================================
+   SCHOOL BUILDING
+========================================================= */
+
+function drawSchool(){
+
+    /* Main building */
+
+    ctx.fillStyle="#242424";
+
+    ctx.fillRect(
+        0,
+        175,
+        canvas.width,
+        145
+    );
+
+
+    /* Roof */
+
+    ctx.fillStyle="#121212";
+
+    ctx.beginPath();
+
+    ctx.moveTo(0,175);
+
+    ctx.lineTo(
+        canvas.width/2,
+        120
+    );
+
+    ctx.lineTo(
+        canvas.width,
+        175
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /* Windows */
+
+    for(let x=40;x<canvas.width;x+=115){
+
+        ctx.fillStyle="#111";
+
+        ctx.fillRect(
+            x,
+            205,
+            65,
+            55
+        );
+
+        ctx.fillStyle="#d4a94d";
+
+        ctx.fillRect(
+            x+7,
+            212,
+            22,
+            17
+        );
+
+        ctx.fillRect(
+            x+36,
+            212,
+            22,
+            17
+        );
+
+        ctx.fillStyle="#456";
+
+        ctx.fillRect(
+            x+7,
+            235,
+            22,
+            17
+        );
+
+        ctx.fillRect(
+            x+36,
+            235,
+            22,
+            17
+        );
+
+    }
+
+
+    /* School sign */
+
+    ctx.fillStyle="#111";
+
+    ctx.fillRect(
+        385,
+        145,
+        230,
+        45
+    );
+
+    ctx.strokeStyle="#ffbd32";
+
+    ctx.lineWidth=2;
+
+    ctx.strokeRect(
+        385,
+        145,
+        230,
+        45
+    );
+
+    ctx.fillStyle="#ffbd32";
+
+    ctx.font="bold 19px Arial";
+
+    ctx.textAlign="center";
+
+    ctx.fillText(
+        "MEMORY HIGH SCHOOL",
+        500,
+        174
+    );
+
+}
+
+
+/* =========================================================
+   ROAD
+========================================================= */
+
+function drawRoad(){
+
+    /* Ground */
+
+    ctx.fillStyle="#30352f";
+
+    ctx.fillRect(
+        0,
+        320,
+        canvas.width,
+        240
+    );
+
+
+    /* Road */
+
+    ctx.fillStyle="#202020";
+
+    ctx.fillRect(
+        0,
+        350,
+        canvas.width,
+        210
+    );
+
+
+    /* Lane lines */
+
+    ctx.strokeStyle="#444";
+
+    ctx.lineWidth=3;
+
+    ctx.setLineDash([30,25]);
+
+    for(let y of [335,395]){
+
+        ctx.beginPath();
+
+        ctx.moveTo(0,y);
+
+        ctx.lineTo(
+            canvas.width,
+            y
+        );
+
+        ctx.stroke();
+
+    }
+
+    ctx.setLineDash([]);
+
+
+    /* Road lights */
+
+    for(let x=0;x<canvas.width;x+=100){
+
+        const offset =
+            (distance*.7)%100;
+
+        const px =
+            x-offset;
+
+        ctx.fillStyle="#ffbd32";
+
+        ctx.fillRect(
+            px,
+            535,
+            45,
+            4
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   PLAYER
+========================================================= */
+
+function drawPlayer(){
+
+    const x =
+        player.x;
+
+    const y =
+        player.y;
+
+    /* Shadow */
+
+    ctx.fillStyle=
+        "rgba(0,0,0,.35)";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        x+24,
+        y+70,
+        30,
+        7,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.save();
+
+    /* Running bob */
+
+    const bob =
+        player.grounded
+        ? Math.sin(
+            performance.now()/100
+        )*3
+        : 0;
+
+    ctx.translate(
+        x,
+        y+bob
+    );
+
+
+    /* Head */
+
+    ctx.fillStyle="#d99b72";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        24,
+        12,
+        13,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* Hair */
+
+    ctx.fillStyle="#17120f";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        24,
+        8,
+        14,
+        Math.PI,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* Shirt */
+
+    ctx.fillStyle="#ffbd32";
+
+    roundRect(
+        ctx,
+        9,
+        25,
+        30,
+        30,
+        7
+    );
+
+    ctx.fill();
+
+
+    /* School logo */
+
+    ctx.fillStyle="#111";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        24,
+        38,
+        5,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* Legs */
+
+    ctx.strokeStyle="#172033";
+
+    ctx.lineWidth=8;
+
+    ctx.lineCap="round";
+
+    ctx.beginPath();
+
+    ctx.moveTo(18,55);
+
+    ctx.lineTo(13,69);
+
+    ctx.moveTo(31,55);
+
+    ctx.lineTo(37,68);
+
+    ctx.stroke();
+
+
+    /* Shoes */
+
+    ctx.strokeStyle="#eee";
+
+    ctx.lineWidth=5;
+
+    ctx.beginPath();
+
+    ctx.moveTo(9,70);
+
+    ctx.lineTo(18,70);
+
+    ctx.moveTo(33,69);
+
+    ctx.lineTo(43,69);
+
+    ctx.stroke();
+
+
+    /* Arms */
+
+    ctx.strokeStyle="#d99b72";
+
+    ctx.lineWidth=7;
+
+    ctx.beginPath();
+
+    ctx.moveTo(12,30);
+
+    ctx.lineTo(2,44);
+
+    ctx.moveTo(37,30);
+
+    ctx.lineTo(47,42);
+
+    ctx.stroke();
+
+    ctx.restore();
+
+}
+
+
+/* =========================================================
+   OBSTACLES
+========================================================= */
+
+function drawObstacles(){
+
+    obstacles.forEach(o => {
+
+        const x=o.x;
+
+        const y=
+            laneY[o.lane]
+            - o.height;
+
+
+        if(o.type==="desk")
+            drawDesk(x,y);
+
+        if(o.type==="chair")
+            drawChair(x,y);
+
+        if(o.type==="bag")
+            drawBag(x,y);
+
+        if(o.type==="cone")
+            drawCone(x,y);
+
+        if(o.type==="book")
+            drawBookObstacle(x,y);
+
+    });
+
+}
+
+
+function drawDesk(x,y){
+
+    ctx.fillStyle="#68452d";
+
+    ctx.fillRect(
+        x,
+        y+12,
+        70,
+        12
+    );
+
+    ctx.fillStyle="#402719";
+
+    ctx.fillRect(
+        x+8,
+        y+24,
+        7,
+        30
+    );
+
+    ctx.fillRect(
+        x+55,
+        y+24,
+        7,
+        30
+    );
+
+}
+
+
+function drawChair(x,y){
+
+    ctx.strokeStyle="#8d5a34";
+
+    ctx.lineWidth=9;
+
+    ctx.lineCap="round";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x+12,
+        y+8
+    );
+
+    ctx.lineTo(
+        x+12,
+        y+40
+    );
+
+    ctx.lineTo(
+        x+45,
+        y+40
+    );
+
+    ctx.moveTo(
+        x+12,
+        y+10
+    );
+
+    ctx.lineTo(
+        x+45,
+        y+10
+    );
+
+    ctx.lineTo(
+        x+45,
+        y+60
+    );
+
+    ctx.stroke();
+
+}
+
+
+function drawBag(x,y){
+
+    ctx.fillStyle="#253d68";
+
+    roundRect(
+        ctx,
+        x,
+        y+10,
+        50,
+        38,
+        10
+    );
+
+    ctx.fill();
+
+    ctx.strokeStyle="#6e89ba";
+
+    ctx.lineWidth=3;
+
+    ctx.stroke();
+
+    ctx.fillStyle="#ffbd32";
+
+    ctx.fillRect(
+        x+8,
+        y+25,
+        34,
+        5
+    );
+
+}
+
+
+function drawCone(x,y){
+
+    ctx.fillStyle="#ff7b22";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x+20,
+        y
+    );
+
+    ctx.lineTo(
+        x+40,
+        y+55
+    );
+
+    ctx.lineTo(
+        x,
+        y+55
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.fillStyle="#fff";
+
+    ctx.fillRect(
+        x+8,
+        y+30,
+        25,
+        7
+    );
+
+}
+
+
+function drawBookObstacle(x,y){
+
+    ctx.fillStyle="#6c4ab5";
+
+    ctx.fillRect(
+        x,
+        y+10,
+        65,
+        25
+    );
+
+    ctx.fillStyle="#ffbd32";
+
+    ctx.fillRect(
+        x+8,
+        y+16,
+        49,
+        3
+    );
+
+}
+
+
+/* =========================================================
+   COLLECTIBLES
+========================================================= */
+
+function drawCollectibles(){
+
+    collectibles.forEach(c => {
+
+        const x=c.x;
+
+        const y=
+            laneY[c.lane]-30;
+
+
+        ctx.save();
+
+        ctx.translate(x,y);
+
+        ctx.rotate(c.rotation);
+
+
+        /* Glow */
+
+        ctx.shadowBlur=20;
+
+        ctx.shadowColor="#ffbd32";
+
+
+        if(c.type==="star"){
+
+            drawStar(
+                0,
+                0,
+                14,
+                6
+            );
+
+        }
+
+        else if(c.type==="trophy"){
+
+            drawTrophy();
+
+        }
+
+        else if(c.type==="photo"){
+
+            drawPhoto();
+
+        }
+
+        else if(c.type==="pencil"){
+
+            drawPencil();
+
+        }
+
+        else{
+
+            drawBookCollectible();
+
+        }
+
+        ctx.restore();
+
+    });
+
+}
+
+
+function drawStar(cx,cy,r,points){
+
+    ctx.fillStyle="#ffbd32";
+
+    ctx.beginPath();
+
+    for(let i=0;i<points*2;i++){
+
+        const angle =
+            -Math.PI/2 +
+            i*Math.PI/points;
+
+        const radius =
+            i%2===0
+            ? r
+            : r*.45;
+
+        ctx.lineTo(
+            cx+
+            Math.cos(angle)*radius,
+            cy+
+            Math.sin(angle)*radius
+        );
+
+    }
+
+    ctx.closePath();
+
+    ctx.fill();
+
+}
+
+
+function drawTrophy(){
+
+    ctx.fillStyle="#ffbd32";
+
+    ctx.fillRect(
+        -9,
+        -12,
+        18,
+        18
+    );
+
+    ctx.fillRect(
+        -3,
+        6,
+        6,
+        8
+    );
+
+    ctx.fillRect(
+        -12,
+        14,
+        24,
+        5
+    );
+
+    ctx.strokeStyle="#ffbd32";
+
+    ctx.lineWidth=4;
+
+    ctx.beginPath();
+
+    ctx.arc(
+        -10,
+        -4,
+        8,
+        Math.PI/2,
+        Math.PI*1.5
+    );
+
+    ctx.arc(
+        10,
+        -4,
+        8,
+        -Math.PI/2,
+        Math.PI/2
+    );
+
+    ctx.stroke();
+
+}
+
+
+function drawPhoto(){
+
+    ctx.fillStyle="#f1f1f1";
+
+    ctx.fillRect(
+        -18,
+        -15,
+        36,
+        30
+    );
+
+    ctx.fillStyle="#6e9c62";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        -6,
+        -5,
+        5,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.fillStyle="#79a9d1";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -15,10
+    );
+
+    ctx.lineTo(
+        -2,-2
+    );
+
+    ctx.lineTo(
+        5,6
+    );
+
+    ctx.lineTo(
+        12,-3
+    );
+
+    ctx.lineTo(
+        17,10
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+}
+
+
+function drawPencil(){
+
+    ctx.fillStyle="#ffbd32";
+
+    ctx.rotate(-.5);
+
+    ctx.fillRect(
+        -20,
+        -4,
+        35,
+        8
+    );
+
+    ctx.fillStyle="#f2c29b";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        15,-4
+    );
+
+    ctx.lineTo(
+        24,0
+    );
+
+    ctx.lineTo(
+        15,4
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+}
+
+
+function drawBookCollectible(){
+
+    ctx.fillStyle="#ef5350";
+
+    ctx.fillRect(
+        -18,
+        -14,
+        36,
+        28
+    );
+
+    ctx.fillStyle="#fff";
+
+    ctx.fillRect(
+        -12,
+        -8,
+        24,
+        3
+    );
+
+    ctx.fillRect(
+        -12,
+        0,
+        18,
+        3
+    );
+
+}
+
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+function drawParticles(){
+
+    particles.forEach(p => {
+
+        ctx.globalAlpha =
+            Math.max(0,p.life);
+
+        ctx.fillStyle="#ffbd32";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p.x,
+            p.y,
+            p.size,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+    });
+
+    ctx.globalAlpha=1;
+
+}
+
+
+/* =========================================================
+   GAME OVER
+========================================================= */
+
+async function endGame(){
+
+    if(!gameRunning) return;
+
+    gameRunning=false;
+
+    gameOver=true;
+
+    shake=.4;
+
+    await saveScore();
+
+    showGameOver();
+
+}
+
+
+/* =========================================================
+   SAVE SCORE
+========================================================= */
+
+async function saveScore(){
+
+    if(!currentUser){
+
+        console.warn(
+            "Firebase user not ready"
+        );
+
+        return;
+
+    }
+
+    try{
+
+        const scoreRef =
+            ref(
+                db,
+                "leaderboard/school-rush/"
+                + currentUser.uid
+            );
+
+        const snapshot =
+            await get(scoreRef);
+
+        const oldData =
+            snapshot.exists()
+            ? snapshot.val()
+            : null;
+
+        const oldScore =
+            oldData &&
+            typeof oldData.score==="number"
+            ? oldData.score
+            : 0;
+
+
+        if(score > oldScore){
+
+            await set(
+                scoreRef,
+                {
+
+                    nickname:
+                        playerName,
+
+                    score:
+                        score,
+
+                    updatedAt:
+                        Date.now()
+
+                }
+            );
+
+            console.log(
+                "New best score saved:",
+                score
+            );
+
+        }
+
+        else{
+
+            console.log(
+                "Best score remains:",
+                oldScore
+            );
+
+        }
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Score save error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   GAME OVER SCREEN
+========================================================= */
+
+function showGameOver(){
+
+    overlay.style.display =
+        "flex";
+
+
+    overlay.innerHTML = `
+
+        <div class="panel">
+
+            <div class="panel-icon">
+                🏆
+            </div>
+
+            <h1>Run Over</h1>
+
+            <p>
+                Great run, ${escapeHtml(playerName)}!
+                <br>
+                Your score was
+                <strong style="color:#ffbd32">
+                    ${score}
+                </strong>
+            </p>
+
+            <button
+                class="start-btn"
+                id="restartBtn"
+            >
+                RUN AGAIN
+            </button>
+
+        </div>
+
+    `;
+
+
+    document
+        .getElementById("restartBtn")
+        .addEventListener(
+            "click",
+            showStartScreen
+        );
+
+}
+
+
+/* =========================================================
+   START SCREEN AGAIN
+========================================================= */
+
+function showStartScreen(){
+
+    overlay.innerHTML = `
+
+        <div class="panel">
+
+            <div class="panel-icon">
+                🏃
+            </div>
+
+            <h1>School Rush</h1>
+
+            <p>
+                Run through school,
+                collect memories and
+                beat your previous score.
+            </p>
+
+            <input
+                id="playerName"
+                class="name-input"
+                type="text"
+                maxlength="20"
+                placeholder="Enter your name"
+                value="${escapeAttribute(playerName)}"
+                autocomplete="off"
+            >
+
+            <button
+                id="startBtn"
+                class="start-btn"
+            >
+                START RUN
+            </button>
+
+        </div>
+
+    `;
+
+
+    overlay.style.display="flex";
+
+
+    const newInput =
+        document.getElementById(
+            "playerName"
+        );
+
+    const newButton =
+        document.getElementById(
+            "startBtn"
+        );
+
+
+    newButton.addEventListener(
+        "click",
+        () => {
+
+            const name =
+                newInput.value.trim();
+
+            if(!name){
+
+                newInput.focus();
+
+                return;
+
+            }
+
+            playerName=name.substring(
+                0,20
+            );
+
+            playerDisplay.textContent =
+                playerName;
+
+            score=0;
+
+            scoreElement.textContent="0";
+
+            speedElement.textContent="1x";
+
+            worldSpeed=300;
+
+            obstacles=[];
+
+            collectibles=[];
+
+            particles=[];
+
+            resetPlayer();
+
+            gameRunning=true;
+
+            gameOver=false;
+
+            overlay.style.display="none";
+
+            lastTime =
+                performance.now();
+
+            cancelAnimationFrame(
+                animationId
+            );
+
+            animationId =
+                requestAnimationFrame(
+                    gameLoop
+                );
+
+        }
+    );
+
+
+    newInput.addEventListener(
+        "keydown",
+        event => {
+
+            if(event.key==="Enter"){
+
+                newButton.click();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function roundRect(
+    ctx,
+    x,
+    y,
+    width,
+    height,
+    radius
+){
+
+    ctx.beginPath();
+
+    ctx.roundRect(
+        x,
+        y,
+        width,
+        height,
+        radius
+    );
+
+}
+
+
+function escapeHtml(text){
+
+    return text
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function escapeAttribute(text){
+
+    return text
+        .replace(/&/g,"&amp;")
+        .replace(/"/g,"&quot;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;");
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+startBtn.addEventListener(
+    "click",
+    startGame
+);
+
+playerNameInput.addEventListener(
+    "keydown",
+    event => {
+
+        if(event.key==="Enter"){
+
+            startGame();
+
+        }
+
+    }
+);
+
+
+resetPlayer();
+
+createClouds();
+
+draw();
+
+</script>
+
+</body>
+</html>
