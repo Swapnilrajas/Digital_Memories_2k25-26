@@ -625,12 +625,9 @@ footer{
                     our school year.
                 </p>
 
-                <span
-                    class="play-btn"
-                    style="opacity:.45"
-                >
-                    COMING SOON
-                </span>
+              <a href="games/photo-puzzle.html" class="play-btn">
+    PLAY GAME →
+</a>
 
             </div>
 
@@ -713,6 +710,13 @@ footer{
             >
                 🏃 School Rush
             </button>
+
+            <button 
+                  class="game-tab" 
+                  data-game="photo-puzzle">
+            🧩 Photo Puzzle
+            </button>
+
 
         </div>
 
@@ -936,7 +940,14 @@ gameTabs.forEach(tab => {
                 "🏃 School Rush";
 
         }
+        else if (
+            currentGame === 
+            "photo-puzzle"
+        ) {
 
+        currentGameTitle.textContent =
+        "🧩 Photo Puzzle";
+        }
 
         loadLeaderboard(
             currentGame
@@ -992,21 +1003,31 @@ async function loadLeaderboard(game){
             snapshot.val();
 
 
-        const players =
-            Object.values(data);
+const playerMap = {};
 
+Object.values(data).forEach(player => {
 
-        /*
-            Sort highest score first
-        */
+    const name = (player.nickname || "Anonymous")
+        .trim()
+        .toLowerCase();
 
-        players.sort(
-            (a,b) =>
-                Number(b.score || 0)
-                -
-                Number(a.score || 0)
-        );
+    const score = Number(player.score || 0);
 
+    // Keep only the highest score for each name
+    if (
+        !playerMap[name] ||
+        score > Number(playerMap[name].score || 0)
+    ) {
+        playerMap[name] = player;
+    }
+
+});
+
+const players = Object.values(playerMap);
+
+players.sort((a, b) =>
+    Number(b.score || 0) - Number(a.score || 0)
+);
 
         /*
             Keep top 100
