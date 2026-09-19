@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo Puzzle | XII.oncamera</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background:
+        radial-gradient(circle at top, #252000 0%, #090909 45%, #000 100%);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 95%;
+    max-width: 850px;
+    text-align: center;
+    padding: 25px 15px;
+}
+
+.back {
+    display: inline-block;
+    color: #ffd84d;
+    text-decoration: none;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+h1 {
+    font-size: clamp(30px, 6vw, 55px);
+    color: #ffd84d;
+    text-shadow: 0 0 20px rgba(255,216,77,.35);
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+.game-info {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.info-box {
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,216,77,.25);
+    padding: 10px 20px;
+    border-radius: 12px;
+    min-width: 110px;
+}
+
+.info-box span {
+    display: block;
+    color: #ffd84d;
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 3px;
+}
+
+#puzzleGrid {
+    width: min(90vw, 570px);
+    aspect-ratio: 1;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    padding: 4px;
+    background: #ffd84d;
+    border-radius: 15px;
+    box-shadow: 0 0 35px rgba(255,216,77,.18);
+}
+
+.tile {
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 7px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-size: 300% 300%;
+    transition: .18s;
+}
+
+.tile:hover {
+    filter: brightness(1.25);
+    transform: scale(.98);
+}
+
+.tile.selected {
+    outline: 4px solid #fff;
+    filter: brightness(1.3);
+    transform: scale(.96);
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+button.control {
+    border: none;
+    background: #ffd84d;
+    color: #111;
+    font-weight: bold;
+    padding: 12px 22px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+button.control:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255,216,77,.25);
+}
+
+button.secondary {
+    background: #222;
+    color: white;
+    border: 1px solid #555;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.88);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    padding: 20px;
+}
+
+.modal {
+    width: min(92vw, 450px);
+    background: #111;
+    border: 1px solid #ffd84d;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(255,216,77,.2);
+}
+
+.modal h2 {
+    color: #ffd84d;
+    margin-bottom: 12px;
+}
+
+.modal p {
+    color: #aaa;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    background: #1d1d1d;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 10px;
+    outline: none;
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+input:focus {
+    border-color: #ffd84d;
+}
+
+#previewImage {
+    display: none;
+    width: min(90vw, 570px);
+    aspect-ratio: 1;
+    object-fit: cover;
+    margin: auto;
+    border-radius: 15px;
+    box-shadow: 0 0 35px rgba(255,216,77,.2);
+}
+
+.message {
+    min-height: 24px;
+    color: #aaa;
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+.score-big {
+    font-size: 55px;
+    color: #ffd84d;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.hidden {
+    display: none !important;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a class="back" href="../arcade.html">← Back to Memory Arcade</a>
+
+    <h1>🧩 Photo Puzzle</h1>
+    <p class="subtitle">Rebuild the school memory!</p>
+
+    <div class="game-info">
+        <div class="info-box">
+            TIME
+            <span id="timer">0</span>
+        </div>
+
+        <div class="info-box">
+            MOVES
+            <span id="moves">0</span>
+        </div>
+
+        <div class="info-box">
+            PHOTO
+            <span id="photoNumber">1</span>
+        </div>
+    </div>
+
+    <div id="puzzleGrid"></div>
+
+    <img id="previewImage">
+
+    <div class="buttons">
+        <button class="control secondary" id="previewBtn">
+            👁 Preview
+        </button>
+
+        <button class="control secondary" id="newGameBtn">
+            🔄 New Puzzle
+        </button>
+    </div>
+
+    <div class="message" id="message"></div>
+
+</div>
+
+
+<!-- START GAME -->
+
+<div class="overlay" id="startOverlay">
+    <div class="modal">
+
+        <h2>🧩 Photo Puzzle</h2>
+
+        <p>
+            Enter your name to start.<br>
+            A random school memory will be selected.
+        </p>
+
+        <input
+            type="text"
+            id="playerName"
+            placeholder="Enter your name"
+            maxlength="25"
+        >
+
+        <button class="control" id="startBtn">
+            START GAME
+        </button>
+
+    </div>
+</div>
+
+
+<!-- FINISH -->
+
+<div class="overlay hidden" id="finishOverlay">
+
+    <div class="modal">
+
+        <h2>🎉 Puzzle Complete!</h2>
+
+        <p>Your score</p>
+
+        <div class="score-big" id="finalScore">0</div>
+
+        <p id="finishDetails"></p>
+
+        <button class="control" id="playAgainBtn">
+            🧩 Next Photo
+        </button>
+
+        <br><br>
+
+        <a
+            href="../arcade.html"
+            style="color:#ffd84d;text-decoration:none;"
+        >
+            🏆 View Leaderboard
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- FIREBASE -->
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getAuth,
+    signInAnonymously,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    getDatabase,
+    ref,
+    get,
+    set
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+/* ================================
+   FIREBASE CONFIG
+================================ */
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyDBcwuTlwLmW388k1cuWVIb-t0PseH78V4",
+
+    authDomain: "xii-oncamera.firebaseapp.com",
+
+    databaseURL:
+        "https://xii-oncamera-default-rtdb.firebaseio.com/",
+
+    projectId: "xii-oncamera",
+
+    storageBucket:
+        "xii-oncamera.firebasestorage.app",
+
+    messagingSenderId:
+        "1010193797198",
+
+    appId:
+        "1:1010193797198:web:75cfacefb390f0a3d9f31f"
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getDatabase(app);
+
+
+/* ================================
+   20 PUZZLE PHOTOS
+================================ */
+
+const puzzleImages = [
+
+    "../assets/games/puzzles/photo%20(1).jpg",
+    "../assets/games/puzzles/photo%20(2).jpg",
+    "../assets/games/puzzles/photo%20(3).jpg",
+    "../assets/games/puzzles/photo%20(4).jpg",
+    "../assets/games/puzzles/photo%20(5).jpg",
+    "../assets/games/puzzles/photo%20(6).jpg",
+    "../assets/games/puzzles/photo%20(7).jpg",
+    "../assets/games/puzzles/photo%20(8).jpg",
+    "../assets/games/puzzles/photo%20(9).jpg",
+    "../assets/games/puzzles/photo%20(10).jpg",
+    "../assets/games/puzzles/photo%20(11).jpg",
+    "../assets/games/puzzles/photo%20(12).jpg",
+    "../assets/games/puzzles/photo%20(13).jpg",
+    "../assets/games/puzzles/photo%20(14).jpg",
+    "../assets/games/puzzles/photo%20(15).jpg",
+    "../assets/games/puzzles/photo%20(16).jpg",
+    "../assets/games/puzzles/photo%20(17).jpg",
+    "../assets/games/puzzles/photo%20(18).jpg",
+    "../assets/games/puzzles/photo%20(19).jpg",
+    "../assets/games/puzzles/photo%20(20).jpg",
+    "../assets/games/puzzles/photo%20(21).jpg",
+    "../assets/games/puzzles/photo%20(22).jpg",
+    "../assets/games/puzzles/photo%20(23).jpg",
+    "../assets/games/puzzles/photo%20(24).jpg",
+    "../assets/games/puzzles/photo%20(25).jpg",
+    "../assets/games/puzzles/photo%20(26).jpg",
+    "../assets/games/puzzles/photo%20(27).jpg",
+    "../assets/games/puzzles/photo%20(28).jpg",
+    "../assets/games/puzzles/photo%20(29).jpg",
+    "../assets/games/puzzles/photo%20(30).jpg",
+];
+
+
+/* ================================
+   VARIABLES
+================================ */
+
+const SIZE = 3;
+
+let currentImage = "";
+
+let currentPhotoNumber = 0;
+
+let positions = [];
+
+let selectedTile = null;
+
+let moves = 0;
+
+let seconds = 0;
+
+let timerInterval = null;
+
+let gameStarted = false;
+
+let playerName = "";
+
+let currentUser = null;
+
+
+/* ================================
+   ELEMENTS
+================================ */
+
+const grid =
+    document.getElementById("puzzleGrid");
+
+const timer =
+    document.getElementById("timer");
+
+const movesDisplay =
+    document.getElementById("moves");
+
+const photoNumber =
+    document.getElementById("photoNumber");
+
+const message =
+    document.getElementById("message");
+
+const startOverlay =
+    document.getElementById("startOverlay");
+
+const finishOverlay =
+    document.getElementById("finishOverlay");
+
+const playerNameInput =
+    document.getElementById("playerName");
+
+const finalScore =
+    document.getElementById("finalScore");
+
+const finishDetails =
+    document.getElementById("finishDetails");
+
+const previewImage =
+    document.getElementById("previewImage");
+
+
+/* ================================
+   FIREBASE LOGIN
+================================ */
+
+signInAnonymously(auth)
+    .catch(error => {
+
+        console.error(
+            "Firebase authentication error:",
+            error
+        );
+
+        message.textContent =
+            "Firebase login failed.";
+
+    });
+
+
+onAuthStateChanged(auth, user => {
+
+    if (user) {
+
+        currentUser = user;
+
+        console.log(
+            "Firebase user:",
+            user.uid
+        );
+
+    }
+
+});
+
+
+/* ================================
+   RANDOM PHOTO
+================================ */
+
+function chooseRandomPhoto() {
+
+    currentPhotoNumber =
+        Math.floor(
+            Math.random() *
+            puzzleImages.length
+        );
+
+    currentImage =
+        puzzleImages[currentPhotoNumber];
+
+    photoNumber.textContent =
+        currentPhotoNumber + 1;
+
+}
+
+
+/* ================================
+   START GAME
+================================ */
+
+document
+    .getElementById("startBtn")
+    .addEventListener("click", startGame);
+
+
+playerNameInput
+    .addEventListener("keydown", event => {
+
+        if (event.key === "Enter") {
+
+            startGame();
+
+        }
+
+    });
+
+
+function startGame() {
+
+    const name =
+        playerNameInput.value.trim();
+
+    if (!name) {
+
+        playerNameInput.focus();
+
+        return;
+
+    }
+
+    playerName = name;
+
+    startOverlay.classList.add("hidden");
+
+    gameStarted = true;
+
+    startNewPuzzle();
+
+}
+
+
+/* ================================
+   NEW PUZZLE
+================================ */
+
+function startNewPuzzle() {
+
+    clearInterval(timerInterval);
+
+    chooseRandomPhoto();
+
+    seconds = 0;
+
+    moves = 0;
+
+    selectedTile = null;
+
+    timer.textContent = "0";
+
+    movesDisplay.textContent = "0";
+
+    message.textContent = "";
+
+    previewImage.style.display = "none";
+
+    grid.style.display = "grid";
+
+    createPuzzle();
+
+    timerInterval =
+        setInterval(() => {
+
+            seconds++;
+
+            timer.textContent =
+                seconds;
+
+        }, 1000);
+
+}
+
+
+/* ================================
+   CREATE PUZZLE
+================================ */
+
+function createPuzzle() {
+
+    positions =
+        Array.from(
+            { length: SIZE * SIZE },
+            (_, i) => i
+        );
+
+
+    // Shuffle
+
+    do {
+
+        positions.sort(
+            () => Math.random() - 0.5
+        );
+
+    } while (isSolved());
+
+
+    renderPuzzle();
+
+}
+
+
+/* ================================
+   RENDER PUZZLE
+================================ */
+
+function renderPuzzle() {
+
+    grid.innerHTML = "";
+
+    positions.forEach(
+        (imagePosition, index) => {
+
+            const tile =
+                document.createElement("button");
+
+            tile.className = "tile";
+
+            const row =
+                Math.floor(
+                    imagePosition / SIZE
+                );
+
+            const col =
+                imagePosition % SIZE;
+
+
+            const bgX =
+                (col / (SIZE - 1)) * 100;
+
+            const bgY =
+                (row / (SIZE - 1)) * 100;
+
+
+            tile.style.backgroundImage =
+                `url("${currentImage}")`;
+
+            tile.style.backgroundPosition =
+                `${bgX}% ${bgY}%`;
+
+
+            tile.addEventListener(
+                "click",
+                () => handleTileClick(index)
+            );
+
+
+            grid.appendChild(tile);
+
+        }
+    );
+
+}
+
+
+/* ================================
+   TILE CLICK
+================================ */
+
+function handleTileClick(index) {
+
+    if (!gameStarted) return;
+
+
+    const tiles =
+        document.querySelectorAll(".tile");
+
+
+    if (selectedTile === null) {
+
+        selectedTile = index;
+
+        tiles[index]
+            .classList.add("selected");
+
+        return;
+
+    }
+
+
+    if (selectedTile === index) {
+
+        tiles[index]
+            .classList.remove("selected");
+
+        selectedTile = null;
+
+        return;
+
+    }
+
+
+    // Swap
+
+    [
+        positions[selectedTile],
+        positions[index]
+
+    ] = [
+
+        positions[index],
+        positions[selectedTile]
+
+    ];
+
+
+    moves++;
+
+    movesDisplay.textContent =
+        moves;
+
+
+    selectedTile = null;
+
+
+    renderPuzzle();
+
+
+    if (isSolved()) {
+
+        finishGame();
+
+    }
+
+}
+
+
+/* ================================
+   CHECK SOLVED
+================================ */
+
+function isSolved() {
+
+    return positions.every(
+        (value, index) =>
+            value === index
+    );
+
+}
+
+
+/* ================================
+   CALCULATE SCORE
+================================ */
+
+function calculateScore() {
+
+    /*
+       Faster time = more score
+       Fewer moves = more score
+    */
+
+    return Math.max(
+        100,
+        1000 -
+        (seconds * 5) -
+        (moves * 10)
+    );
+
+}
+
+
+/* ================================
+   FINISH GAME
+================================ */
+
+async function finishGame() {
+
+    gameStarted = false;
+
+    clearInterval(timerInterval);
+
+    const score =
+        calculateScore();
+
+
+    finalScore.textContent =
+        score;
+
+
+    finishDetails.innerHTML =
+        `⏱ Time: <b>${seconds}s</b><br>
+         🔄 Moves: <b>${moves}</b>`;
+
+
+    finishOverlay.classList.remove("hidden");
+
+
+    await saveScore(score);
+
+}
+
+
+/* ================================
+   SAVE BEST SCORE
+================================ */
+
+async function saveScore(score) {
+
+    if (!currentUser) {
+
+        console.log(
+            "Firebase user not ready."
+        );
+
+        return;
+
+    }
+
+
+    const playerRef =
+        ref(
+            db,
+            `leaderboard/photo-puzzle/${currentUser.uid}`
+        );
+
+
+    try {
+
+        const snapshot =
+            await get(playerRef);
+
+
+        const oldData =
+            snapshot.val();
+
+
+        const oldScore =
+            oldData
+                ? Number(oldData.score || 0)
+                : 0;
+
+
+        // Only save if this is a new best score
+
+        if (score > oldScore) {
+
+            await set(
+                playerRef,
+                {
+
+                    nickname: playerName,
+
+                    score: score,
+
+                    updatedAt:
+                        Date.now(),
+
+                    moves: moves,
+
+                    time: seconds
+
+                }
+            );
+
+
+            console.log(
+                "New best score saved:",
+                score
+            );
+
+        } else {
+
+            console.log(
+                "Old best score kept:",
+                oldScore
+            );
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Score save error:",
+            error
+        );
+
+        message.textContent =
+            "Score could not be saved.";
+
+    }
+
+}
+
+
+/* ================================
+   PLAY AGAIN
+================================ */
+
+document
+    .getElementById("playAgainBtn")
+    .addEventListener(
+        "click",
+        () => {
+
+            finishOverlay
+                .classList
+                .add("hidden");
+
+            gameStarted = true;
+
+            startNewPuzzle();
+
+        }
+    );
+
+
+/* ================================
+   NEW PUZZLE BUTTON
+================================ */
+
+document
+    .getElementById("newGameBtn")
+    .addEventListener(
+        "click",
+        () => {
+
+            if (!gameStarted) return;
+
+            startNewPuzzle();
+
+        }
+    );
+
+
+/* ================================
+   PREVIEW
+================================ */
+
+document
+    .getElementById("previewBtn")
+    .addEventListener(
+        "click",
+        showPreview
+    );
+
+
+function showPreview() {
+
+    if (!gameStarted) return;
+
+
+    clearInterval(timerInterval);
+
+    grid.style.display = "none";
+
+    previewImage.src =
+        currentImage;
+
+    previewImage.style.display =
+        "block";
+
+
+    setTimeout(() => {
+
+        previewImage.style.display =
+            "none";
+
+        grid.style.display =
+            "grid";
+
+        timerInterval =
+            setInterval(() => {
+
+                seconds++;
+
+                timer.textContent =
+                    seconds;
+
+            }, 1000);
+
+    }, 1800);
+
+}
+
+</script>
+
+</body>
+</html>
