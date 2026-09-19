@@ -1,396 +1,487 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Memory Arcade | XII.oncamera</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background:
-                radial-gradient(circle at 50% 0%, rgba(255, 174, 0, 0.12), transparent 35%),
-                #080808;
-            color: white;
-            font-family: Arial, sans-serif;
-            min-height: 100vh;
-        }
-
-        /* ================= NAVBAR ================= */
-
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            height: 75px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 0 6%;
-            background: rgba(10, 10, 10, 0.75);
-            backdrop-filter: blur(18px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .logo {
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: 2px;
-        }
-
-        .logo span {
-            color: #ffbd32;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 28px;
-        }
-
-        .nav-links a {
-            color: #aaa;
-            text-decoration: none;
-            font-size: 13px;
-            letter-spacing: 1px;
-            transition: 0.3s;
-        }
-
-        .nav-links a:hover,
-        .nav-links .active {
-            color: #ffbd32;
-        }
-
-        /* ================= HERO ================= */
-
-        .hero {
-            text-align: center;
-            padding: 80px 20px 45px;
-        }
-
-        .hero small {
-            color: #ffbd32;
-            letter-spacing: 4px;
-            font-size: 11px;
-        }
-
-        .hero h1 {
-            font-size: clamp(45px, 8vw, 90px);
-            margin-top: 12px;
-            letter-spacing: -3px;
-        }
-
-        .hero p {
-            color: #999;
-            margin-top: 15px;
-            font-size: 15px;
-        }
-
-        /* ================= TABS ================= */
-
-        .tabs {
-            width: fit-content;
-            margin: 10px auto 45px;
-
-            display: flex;
-            padding: 5px;
-
-            background: #151515;
-            border: 1px solid #292929;
-            border-radius: 50px;
-        }
-
-        .tab {
-            border: none;
-            background: transparent;
-            color: #888;
-
-            padding: 13px 28px;
-            border-radius: 40px;
-
-            cursor: pointer;
-            font-size: 14px;
-            transition: 0.3s;
-        }
-
-        .tab.active {
-            background: #ffbd32;
-            color: #111;
-            font-weight: bold;
-        }
-
-        /* ================= CONTENT ================= */
-
-        .container {
-            width: min(1200px, 90%);
-            margin: auto;
-            padding-bottom: 80px;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* ================= GAME GRID ================= */
-
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-        }
-
-        .game-card {
-            background: #111;
-            border: 1px solid #292929;
-            border-radius: 20px;
-            overflow: hidden;
-
-            transition: 0.35s;
-        }
-
-        .game-card:hover {
-            transform: translateY(-8px);
-            border-color: #ffbd32;
-            box-shadow: 0 15px 50px rgba(255, 189, 50, 0.1);
-        }
-
-        .game-image {
-            height: 210px;
-            position: relative;
-            overflow: hidden;
-            background: #191919;
-        }
-
-        .game-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: 0.5s;
-        }
-
-        .game-card:hover .game-image img {
-            transform: scale(1.08);
-        }
-
-        .game-info {
-            padding: 22px;
-        }
-
-        .game-info h2 {
-            font-size: 22px;
-            margin-bottom: 8px;
-        }
-
-        .game-info p {
-            color: #888;
-            font-size: 13px;
-            line-height: 1.6;
-            min-height: 42px;
-        }
-
-        .play-btn {
-            display: inline-block;
-            margin-top: 18px;
-
-            padding: 11px 22px;
-
-            background: #ffbd32;
-            color: #111;
-
-            text-decoration: none;
-            border-radius: 30px;
-
-            font-size: 13px;
-            font-weight: bold;
-
-            transition: 0.3s;
-        }
-
-        .play-btn:hover {
-            background: white;
-            transform: scale(1.04);
-        }
-
-        /* ================= LEADERBOARD ================= */
-
-        .leaderboard {
-            max-width: 850px;
-            margin: auto;
-
-            background: #111;
-            border: 1px solid #292929;
-            border-radius: 22px;
-            overflow: hidden;
-        }
-
-        .leaderboard-header {
-            padding: 25px;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            border-bottom: 1px solid #292929;
-        }
-
-        .leaderboard-header h2 {
-            font-size: 22px;
-        }
-
-        .leaderboard-header span {
-            color: #ff4d4d;
-            font-size: 12px;
-        }
-
-        .player {
-            display: grid;
-            grid-template-columns: 70px 1fr 150px 100px;
-
-            align-items: center;
-
-            padding: 20px 25px;
-
-            border-bottom: 1px solid #222;
-        }
-
-        .player:last-child {
-            border-bottom: none;
-        }
-
-        .rank {
-            font-size: 20px;
-            font-weight: bold;
-            color: #ffd900;
-        }
-
-        .rank.gold {
-            color: #ffbd32;
-        }
-
-        .name {
-            font-weight: bold;
-        }
-
-        .game-name {
-            color: #777;
-            font-size: 12px;
-        }
-
-        .score {
-            text-align: center;
-            font-weight: bold;
-            color: #ffbd32;
-        }
-
-        /* ================= EMPTY MESSAGE ================= */
-
-        .coming-soon {
-            margin-top: 25px;
-            text-align: center;
-            padding: 25px;
-
-            color: #777;
-            border: 1px dashed #333;
-            border-radius: 15px;
-        }
-
-        /* ================= MOBILE ================= */
-
-        @media (max-width: 850px) {
-
-            .game-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .nav-links {
-                gap: 12px;
-            }
-
-            .nav-links a {
-                font-size: 10px;
-            }
-
-            .player {
-                grid-template-columns: 45px 1fr 80px;
-            }
-
-            .player .game-name {
-                display: none;
-            }
-        }
-
-        @media (max-width: 600px) {
-
-            nav {
-                height: auto;
-                padding: 18px 5%;
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .nav-links {
-                overflow-x: auto;
-                width: 100%;
-                justify-content: center;
-            }
-
-            .game-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero {
-                padding-top: 55px;
-            }
-
-            .hero h1 {
-                letter-spacing: -1px;
-            }
-
-            .tabs {
-                width: 90%;
-                justify-content: center;
-            }
-
-            .tab {
-                flex: 1;
-                padding: 12px 15px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Memory Arcade | XII.oncamera</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 50% -10%,rgba(255,189,50,.14),transparent 35%),
+        linear-gradient(180deg,#080808,#101010 55%,#070707);
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+    position:sticky;
+    top:0;
+    z-index:100;
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 6%;
+    background:rgba(8,8,8,.82);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid #242424;
+}
+
+.logo{
+    color:#ffbd32;
+    font-weight:900;
+    letter-spacing:2px;
+    text-decoration:none;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+}
+
+.nav-links a{
+    color:#aaa;
+    text-decoration:none;
+    font-size:12px;
+    letter-spacing:1px;
+    transition:.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:#ffbd32;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    text-align:center;
+    padding:80px 20px 50px;
+}
+
+.hero-tag{
+    color:#ffbd32;
+    font-size:11px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    margin-bottom:15px;
+}
+
+.hero h1{
+    font-size:clamp(42px,7vw,78px);
+    line-height:1;
+    margin-bottom:18px;
+}
+
+.hero h1 span{
+    color:#ffbd32;
+}
+
+.hero p{
+    max-width:650px;
+    margin:auto;
+    color:#888;
+    line-height:1.7;
+}
+
+/* ================= TABS ================= */
+
+.main-tabs{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:45px;
+}
+
+.main-tab{
+    padding:13px 30px;
+    border:1px solid #303030;
+    background:#111;
+    color:#888;
+    border-radius:30px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.2s;
+}
+
+.main-tab:hover{
+    color:#fff;
+    border-color:#555;
+}
+
+.main-tab.active{
+    background:#ffbd32;
+    border-color:#ffbd32;
+    color:#111;
+}
+
+/* ================= CONTENT ================= */
+
+.container{
+    width:min(1050px,92%);
+    margin:auto;
+}
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+/* ================= GAME CARDS ================= */
+
+.games-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:25px;
+}
+
+.game-card{
+    position:relative;
+    min-height:280px;
+    overflow:hidden;
+    border:1px solid #292929;
+    border-radius:22px;
+    background:#111;
+    transition:.3s;
+}
+
+.game-card:hover{
+    transform:translateY(-6px);
+    border-color:#555;
+    box-shadow:0 20px 50px rgba(0,0,0,.45);
+}
+
+.game-image{
+    height:190px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:70px;
+    background:
+        radial-gradient(circle at center,rgba(255,189,50,.16),transparent 60%),
+        linear-gradient(135deg,#191919,#0a0a0a);
+}
+
+.game-info{
+    padding:20px;
+}
+
+.game-info h3{
+    margin-bottom:7px;
+}
+
+.game-info p{
+    color:#777;
+    font-size:13px;
+    margin-bottom:15px;
+}
+
+.play-btn{
+    display:inline-block;
+    padding:9px 18px;
+    border-radius:20px;
+    background:#ffbd32;
+    color:#111;
+    text-decoration:none;
+    font-size:12px;
+    font-weight:bold;
+}
+
+/* ================= LEADERBOARD ================= */
+
+.leaderboard-box{
+    background:#0d0d0d;
+    border:1px solid #292929;
+    border-radius:24px;
+    overflow:hidden;
+    box-shadow:0 25px 70px rgba(0,0,0,.35);
+}
+
+.leaderboard-title{
+    padding:28px;
+    border-bottom:1px solid #252525;
+}
+
+.leaderboard-title h2{
+    font-size:25px;
+    margin-bottom:7px;
+}
+
+.leaderboard-title p{
+    color:#777;
+    font-size:12px;
+}
+
+/* GAME LEADERBOARD TABS */
+
+.game-tabs{
+    display:flex;
+    gap:10px;
+    padding:18px 25px;
+    background:#111;
+    border-bottom:1px solid #252525;
+}
+
+.game-tab{
+    flex:1;
+    padding:15px 20px;
+    border:1px solid #303030;
+    border-radius:12px;
+    background:#151515;
+    color:#888;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.2s;
+}
+
+.game-tab:hover{
+    color:#fff;
+    border-color:#555;
+}
+
+.game-tab.active{
+    background:#ffbd32;
+    border-color:#ffbd32;
+    color:#111;
+}
+
+/* CURRENT GAME */
+
+.current-game{
+    padding:20px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #252525;
+}
+
+.current-game h3{
+    font-size:18px;
+}
+
+.current-game span{
+    color:#ffbd32;
+    font-size:11px;
+    letter-spacing:2px;
+}
+
+/* TABLE HEADER */
+
+.leaderboard-header{
+    display:grid;
+    grid-template-columns:70px 1fr 150px;
+    padding:16px 25px;
+    color:#666;
+    font-size:10px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    border-bottom:1px solid #222;
+}
+
+/* PLAYER ROW */
+
+.player-row{
+    display:grid;
+    grid-template-columns:70px 1fr 150px;
+    align-items:center;
+    padding:20px 25px;
+    border-bottom:1px solid #202020;
+    transition:.2s;
+}
+
+.player-row:hover{
+    background:#151515;
+}
+
+.player-row:last-child{
+    border-bottom:none;
+}
+
+.rank{
+    font-size:18px;
+    font-weight:900;
+    color:#666;
+}
+
+.rank.gold{
+    color:#ffbd32;
+}
+
+.rank.silver{
+    color:#c9c9c9;
+}
+
+.rank.bronze{
+    color:#c27b45;
+}
+
+.player-name{
+    font-weight:bold;
+}
+
+.player-score{
+    text-align:right;
+    color:#ffbd32;
+    font-size:18px;
+    font-weight:900;
+}
+
+/* TOP 3 */
+
+.player-row.top-one{
+    background:linear-gradient(
+        90deg,
+        rgba(255,189,50,.08),
+        transparent
+    );
+}
+
+/* LOADING */
+
+.loading{
+    padding:55px;
+    text-align:center;
+    color:#777;
+}
+
+.loading-spinner{
+    width:25px;
+    height:25px;
+    margin:0 auto 15px;
+    border:3px solid #333;
+    border-top-color:#ffbd32;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* EMPTY */
+
+.empty{
+    padding:55px;
+    text-align:center;
+    color:#777;
+}
+
+.empty-icon{
+    font-size:35px;
+    margin-bottom:10px;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    text-align:center;
+    padding:70px 20px 40px;
+    color:#555;
+    font-size:11px;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:700px){
+
+    .navbar{
+        padding:0 20px;
+    }
+
+    .nav-links{
+        gap:12px;
+    }
+
+    .nav-links a{
+        font-size:9px;
+    }
+
+    .hero{
+        padding:55px 20px 35px;
+    }
+
+    .games-grid{
+        grid-template-columns:1fr;
+    }
+
+    .main-tabs{
+        margin-bottom:30px;
+    }
+
+    .main-tab{
+        padding:11px 22px;
+    }
+
+    .game-tabs{
+        flex-direction:column;
+    }
+
+    .leaderboard-header,
+    .player-row{
+        grid-template-columns:45px 1fr 80px;
+        padding-left:15px;
+        padding-right:15px;
+    }
+
+    .player-score{
+        font-size:15px;
+    }
+
+    .current-game{
+        padding:18px 15px;
+    }
+
+}
+
+</style>
 </head>
+
 
 <body>
 
+
 <!-- ================= NAVBAR ================= -->
 
-<nav>
+<nav class="navbar">
 
-    <div class="logo">
-        XII<span>.oncamera</span>
-    </div>
+    <a href="index.html" class="logo">
+        XII.ONCAMERA
+    </a>
 
     <div class="nav-links">
 
-        <a href="index.html#journey">THE JOURNEY</a>
+        <a href="index.html">
+            HOME
+        </a>
 
-        <a href="index.html#yearbook">YEARBOOK</a>
+        <a href="index.html#yearbook">
+            YEARBOOK
+        </a>
 
-        <a href="index.html#media">MEDIA VAULT</a>
+        <a href="index.html#media">
+            MEDIA
+        </a>
 
-        <a href="arcade.html" class="active">🎮 GAMES</a>
-
-        <a href="index.html#wall">THE WALL</a>
+        <a href="arcade.html" class="active">
+            🎮 GAMES
+        </a>
 
     </div>
 
@@ -399,29 +490,40 @@
 
 <!-- ================= HERO ================= -->
 
-<section class="hero">
+<header class="hero">
 
-    <small>CLASS OF 2025–26</small>
+    <div class="hero-tag">
+        XII.ONCAMERA • DIGITAL MEMORIES
+    </div>
 
-    <h1>Memory Arcade</h1>
+    <h1>
+        Memory <span>Arcade</span>
+    </h1>
 
     <p>
-        Play. Compete. Make memories.
+        Play the games. Chase the high score.
+        Leave your name in the history of our batch.
     </p>
 
-</section>
+</header>
 
 
-<!-- ================= TABS ================= -->
+<!-- ================= MAIN TABS ================= -->
 
-<div class="tabs">
+<div class="main-tabs">
 
-    <button class="tab active" onclick="openTab('games', this)">
-        🎮 Games
+    <button
+        class="main-tab active"
+        data-section="gamesSection"
+    >
+        🎮 GAMES
     </button>
 
-    <button class="tab" onclick="openTab('leaderboard', this)">
-        🏆 Leaderboard
+    <button
+        class="main-tab"
+        data-section="leaderboardSection"
+    >
+        🏆 LEADERBOARD
     </button>
 
 </div>
@@ -430,352 +532,683 @@
 <div class="container">
 
 
-    <!-- ================= GAMES ================= -->
+<!-- ================= GAMES ================= -->
 
-    <section id="games" class="tab-content active">
+<section
+    id="gamesSection"
+    class="section active"
+>
 
-        <div class="game-grid">
+    <div class="games-grid">
 
 
-            <!-- MEMORY SNAKE -->
+        <!-- MEMORY SNAKE -->
 
-            <div class="game-card">
+        <div class="game-card">
 
-                <div class="game-image">
-
-                    <img
-                        src="assets/games/memory-snake.png"
-                        alt="Memory Snake"
-                    >
-
-                </div>
-
-                <div class="game-info">
-
-                    <h2>Memory Snake</h2>
-
-                    <p>
-                        Collect memories, grow your snake and beat the highest score.
-                    </p>
-
-                    <a
-                        href="games/memory-snake.html"
-                        class="play-btn"
-                    >
-                        PLAY GAME →
-                    </a>
-
-                </div>
-
+            <div class="game-image">
+                🐍
             </div>
 
+            <div class="game-info">
 
-            <!-- SCHOOL RUSH -->
+                <h3>
+                    Memory Snake
+                </h3>
 
-            <div class="game-card">
+                <p>
+                    Collect memories,
+                    grow your snake and
+                    chase the highest score.
+                </p>
 
-                <div class="game-image">
-
-                    <img
-                        src="assets/games/school-rush.jpg"
-                        alt="School Rush"
-                    >
-
-                </div>
-
-                <div class="game-info">
-
-                    <h2>School Rush</h2>
-
-                    <p>
-                        Run through school, dodge obstacles and collect memories.
-                    </p>
-
-                    <a
-                        href="games/school-rush.html"
-                        class="play-btn"
-                    >
-                        PLAY GAME →
-                    </a>
-
-                </div>
+                <a
+                    href="games/memory-snake.html"
+                    class="play-btn"
+                >
+                    PLAY GAME →
+                </a>
 
             </div>
-
-
-            <!-- PHOTO PUZZLE -->
-
-            <div class="game-card">
-
-                <div class="game-image">
-
-                    <img
-                        src="assets/games/photo-puzzle.jpg"
-                        alt="Photo Puzzle"
-                    >
-
-                </div>
-
-                <div class="game-info">
-
-                    <h2>Photo Puzzle</h2>
-
-                    <p>
-                        Rebuild your favourite school memories piece by piece.
-                    </p>
-
-                    <a
-                        href="#"
-                        class="play-btn"
-                        onclick="comingSoon(event)"
-                    >
-                        COMING SOON
-                    </a>
-
-                </div>
-
-            </div>
-
-
-            <!-- SPOT DIFFERENCE -->
-
-            <div class="game-card">
-
-                <div class="game-image">
-
-                    <img
-                        src="assets/games/spot-difference.jpg"
-                        alt="Spot the Difference"
-                    >
-
-                </div>
-
-                <div class="game-info">
-
-                    <h2>Spot The Difference</h2>
-
-                    <p>
-                        Find the hidden differences between two school memories.
-                    </p>
-
-                    <a
-                        href="#"
-                        class="play-btn"
-                        onclick="comingSoon(event)"
-                    >
-                        COMING SOON
-                    </a>
-
-                </div>
-
-            </div>
-
 
         </div>
 
-    </section>
 
+        <!-- SCHOOL RUSH -->
 
+        <div class="game-card">
 
-    <!-- ================= LEADERBOARD ================= -->
+            <div class="game-image">
+                🏃
+            </div>
 
-    <section id="leaderboard" class="tab-content">
+            <div class="game-info">
 
-        <div class="leaderboard">
+                <h3>
+                    School Rush
+                </h3>
 
-            <div class="leaderboard-header">
+                <p>
+                    Run through school,
+                    collect memories and
+                    avoid the obstacles.
+                </p>
 
-                <h2>🏆 Hall of Fame</h2>
-
-                <span>TOP SCORES</span>
+                <a
+                    href="games/school-rush.html"
+                    class="play-btn"
+                >
+                    PLAY GAME →
+                </a>
 
             </div>
 
+        </div>
 
-           <div id="leaderboardList">
-    <div class="coming-soon">
-        Loading leaderboard...
+
+        <!-- PHOTO PUZZLE -->
+
+        <div class="game-card">
+
+            <div class="game-image">
+                🧩
+            </div>
+
+            <div class="game-info">
+
+                <h3>
+                    Photo Puzzle
+                </h3>
+
+                <p>
+                    Rebuild memories from
+                    our school year.
+                </p>
+
+                <span
+                    class="play-btn"
+                    style="opacity:.45"
+                >
+                    COMING SOON
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- DIFFERENCE -->
+
+        <div class="game-card">
+
+            <div class="game-image">
+                🔎
+            </div>
+
+            <div class="game-info">
+
+                <h3>
+                    Spot The Difference
+                </h3>
+
+                <p>
+                    Can you find everything
+                    that changed?
+                </p>
+
+                <span
+                    class="play-btn"
+                    style="opacity:.45"
+                >
+                    COMING SOON
+                </span>
+
+            </div>
+
+        </div>
+
     </div>
+
+</section>
+
+
+<!-- ================= LEADERBOARD ================= -->
+
+<section
+    id="leaderboardSection"
+    class="section"
+>
+
+    <div class="leaderboard-box">
+
+
+        <div class="leaderboard-title">
+
+            <h2>
+                🏆 Hall of Fame
+            </h2>
+
+            <p>
+                The highest scores across
+                our Memory Arcade.
+            </p>
+
+        </div>
+
+
+        <!-- GAME TABS -->
+
+        <div class="game-tabs">
+
+            <button
+                class="game-tab active"
+                data-game="memory-snake"
+            >
+                🐍 Memory Snake
+            </button>
+
+            <button
+                class="game-tab"
+                data-game="school-rush"
+            >
+                🏃 School Rush
+            </button>
+
+        </div>
+
+
+        <!-- CURRENT GAME -->
+
+        <div class="current-game">
+
+            <h3 id="currentGameTitle">
+                🐍 Memory Snake
+            </h3>
+
+            <span>
+                TOP SCORES
+            </span>
+
+        </div>
+
+
+        <!-- HEADER -->
+
+        <div class="leaderboard-header">
+
+            <div>
+                RANK
+            </div>
+
+            <div>
+                PLAYER
+            </div>
+
+            <div style="text-align:right">
+                SCORE
+            </div>
+
+        </div>
+
+
+        <!-- SCORES -->
+
+        <div id="leaderboardList">
+
+            <div class="loading">
+
+                <div class="loading-spinner"></div>
+
+                Loading leaderboard...
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
 </div>
 
-    </section>
 
-</div>
-
-
-<!-- ================= JAVASCRIPT ================= -->
-
-<script>
-
-function openTab(tabName, button) {
-
-    // Hide all content
-    const contents = document.querySelectorAll(".tab-content");
-
-    contents.forEach(content => {
-        content.classList.remove("active");
-    });
+<footer>
+    XII.ONCAMERA • BATCH MEMORIES
+</footer>
 
 
-    // Remove active from buttons
-    const buttons = document.querySelectorAll(".tab");
 
-    buttons.forEach(btn => {
-        btn.classList.remove("active");
-    });
-
-
-    // Show selected content
-    document.getElementById(tabName).classList.add("active");
-
-    button.classList.add("active");
-
-}
-
-
-function comingSoon(event) {
-
-    event.preventDefault();
-
-    alert("🚧 This game is coming soon!");
-
-}
-
-</script>
+<!-- ================= FIREBASE ================= -->
 
 <script type="module">
-    console.log("🔥 LEADERBOARD SCRIPT STARTED");
 
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import {
+    initializeApp
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-    import {
-        getDatabase,
-        ref,
-        onValue
-    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
-    console.log("🔥 FIREBASE MODULES LOADED");
+import {
+    getDatabase,
+    ref,
+    get
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyDBcwuTlwLmW388k1cuWVIb-t0PseH78V4",
-        authDomain: "xii-oncamera.firebaseapp.com",
-        projectId: "xii-oncamera",
-        storageBucket: "xii-oncamera.firebasestorage.app",
-        messagingSenderId: "1010193797198",
-        appId: "1:1010193797198:web:75cfacefb390f0a3d9f31f",
-        databaseURL: "https://xii-oncamera-default-rtdb.firebaseio.com/"
-    };
 
-    const app = initializeApp(firebaseConfig);
+const firebaseConfig = {
 
-    console.log("🔥 FIREBASE APP INITIALIZED");
+    apiKey:
+        "AIzaSyDBcwuTlwLmW388k1cuWVIb-t0PseH78V4",
 
-    const db = getDatabase(app);
+    authDomain:
+        "xii-oncamera.firebaseapp.com",
 
-    console.log("🔥 DATABASE CONNECTED");
+    databaseURL:
+        "https://xii-oncamera-default-rtdb.firebaseio.com/",
 
-    const leaderboardRef = ref(db, "leaderboard");
+    projectId:
+        "xii-oncamera",
 
-    onValue(
-        leaderboardRef,
+    storageBucket:
+        "xii-oncamera.firebasestorage.app",
 
-        (snapshot) => {
+    messagingSenderId:
+        "1010193797198",
 
-            console.log("🔥 LEADERBOARD DATA:", snapshot.val());
+    appId:
+        "1:1010193797198:web:75cfacefb390f0a3d9f31f"
 
-            const data = snapshot.val() || {};
-            const scores = [];
+};
 
-            Object.entries(data).forEach(([game, players]) => {
 
-                if (!players) return;
+const app =
+    initializeApp(firebaseConfig);
 
-                Object.entries(players).forEach(([uid, player]) => {
 
-                    if (!player) return;
+const db =
+    getDatabase(app);
 
-                    scores.push({
-                        nickname: player.nickname || "Anonymous",
-                        score: Number(player.score) || 0,
-                        game: game
-                    });
 
-                });
+/* ================= ELEMENTS ================= */
 
-            });
+const mainTabs =
+    document.querySelectorAll(".main-tab");
 
-            scores.sort((a, b) => b.score - a.score);
+const sections =
+    document.querySelectorAll(".section");
 
-            const leaderboardList =
-                document.getElementById("leaderboardList");
+const gameTabs =
+    document.querySelectorAll(".game-tab");
 
-            if (!leaderboardList) {
+const leaderboardList =
+    document.getElementById(
+        "leaderboardList"
+    );
 
-                console.error(
-                    "❌ leaderboardList element not found!"
-                );
+const currentGameTitle =
+    document.getElementById(
+        "currentGameTitle"
+    );
 
-                return;
-            }
 
-            if (scores.length === 0) {
+/* ================= MAIN TAB SWITCH ================= */
 
-                leaderboardList.innerHTML = `
-                    <div class="coming-soon">
-                        No scores yet. Be the first to play!
-                    </div>
-                `;
+mainTabs.forEach(tab => {
 
-                return;
-            }
+    tab.addEventListener("click", () => {
 
-            leaderboardList.innerHTML = scores
-                .slice(0, 20)
-                .map((player, index) => {
+        mainTabs.forEach(t =>
+            t.classList.remove("active")
+        );
 
-                    const gameName =
-                        player.game === "memory-snake"
-                            ? "Memory Snake"
-                            : player.game === "school-rush"
-                                ? "School Rush"
-                                : player.game;
+        sections.forEach(section =>
+            section.classList.remove("active")
+        );
 
-                    return `
-                        <div class="leaderboard-row">
 
-                            <div class="rank">
-                                #${index + 1}
-                            </div>
+        tab.classList.add("active");
 
-                            <div class="player-name">
-                                ${player.nickname}
-                            </div>
 
-                            <div class="game-name">
-                                ${gameName}
-                            </div>
+        const target =
+            document.getElementById(
+                tab.dataset.section
+            );
 
-                            <div class="player-score">
-                                ${player.score}
-                            </div>
+        target.classList.add("active");
 
-                        </div>
-                    `;
 
-                })
-                .join("");
+        /* Load leaderboard when opened */
 
-        },
+        if(
+            tab.dataset.section ===
+            "leaderboardSection"
+        ){
 
-        (error) => {
-
-            console.error(
-                "❌ FIREBASE LEADERBOARD ERROR:",
-                error
+            loadLeaderboard(
+                currentGame
             );
 
         }
-    );
+
+    });
+
+});
+
+
+/* ================= GAME TABS ================= */
+
+let currentGame =
+    "memory-snake";
+
+
+gameTabs.forEach(tab => {
+
+    tab.addEventListener("click", () => {
+
+        gameTabs.forEach(t =>
+            t.classList.remove("active")
+        );
+
+        tab.classList.add("active");
+
+        currentGame =
+            tab.dataset.game;
+
+
+        if(
+            currentGame ===
+            "memory-snake"
+        ){
+
+            currentGameTitle.textContent =
+                "🐍 Memory Snake";
+
+        }
+
+        else if(
+            currentGame ===
+            "school-rush"
+        ){
+
+            currentGameTitle.textContent =
+                "🏃 School Rush";
+
+        }
+
+
+        loadLeaderboard(
+            currentGame
+        );
+
+    });
+
+});
+
+
+/* ================= LOAD LEADERBOARD ================= */
+
+async function loadLeaderboard(game){
+
+    leaderboardList.innerHTML = `
+
+        <div class="loading">
+
+            <div class="loading-spinner"></div>
+
+            Loading leaderboard...
+
+        </div>
+
+    `;
+
+
+    try{
+
+        const leaderboardRef =
+            ref(
+                db,
+                "leaderboard/" + game
+            );
+
+
+        const snapshot =
+            await get(
+                leaderboardRef
+            );
+
+
+        if(!snapshot.exists()){
+
+            showEmpty();
+
+            return;
+
+        }
+
+
+        const data =
+            snapshot.val();
+
+
+        const players =
+            Object.values(data);
+
+
+        /*
+            Sort highest score first
+        */
+
+        players.sort(
+            (a,b) =>
+                Number(b.score || 0)
+                -
+                Number(a.score || 0)
+        );
+
+
+        /*
+            Keep top 100
+        */
+
+        const topPlayers =
+            players.slice(0,100);
+
+
+        if(topPlayers.length === 0){
+
+            showEmpty();
+
+            return;
+
+        }
+
+
+        leaderboardList.innerHTML = "";
+
+
+        topPlayers.forEach(
+            (player,index) => {
+
+                const row =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                row.className =
+                    "player-row";
+
+
+                if(index === 0){
+
+                    row.classList.add(
+                        "top-one"
+                    );
+
+                }
+
+
+                let rankClass = "";
+
+
+                if(index === 0){
+
+                    rankClass = "gold";
+
+                }
+
+                else if(index === 1){
+
+                    rankClass = "silver";
+
+                }
+
+                else if(index === 2){
+
+                    rankClass = "bronze";
+
+                }
+
+
+                const rank =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                rank.className =
+                    "rank " +
+                    rankClass;
+
+
+                rank.textContent =
+                    "#" + (index + 1);
+
+
+                const name =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                name.className =
+                    "player-name";
+
+
+                name.textContent =
+                    player.nickname ||
+                    "Anonymous";
+
+
+                const score =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                score.className =
+                    "player-score";
+
+
+                score.textContent =
+                    Number(
+                        player.score || 0
+                    );
+
+
+                row.appendChild(rank);
+
+                row.appendChild(name);
+
+                row.appendChild(score);
+
+
+                leaderboardList.appendChild(
+                    row
+                );
+
+            }
+        );
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Leaderboard error:",
+            error
+        );
+
+
+        leaderboardList.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    ⚠️
+                </div>
+
+                <div>
+                    Unable to load leaderboard.
+                </div>
+
+                <small style="
+                    display:block;
+                    margin-top:8px;
+                    color:#555;
+                ">
+                    Check your Firebase
+                    connection and database rules.
+                </small>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* ================= EMPTY ================= */
+
+function showEmpty(){
+
+    leaderboardList.innerHTML = `
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                🏆
+            </div>
+
+            <div>
+                No scores yet.
+            </div>
+
+            <small style="
+                display:block;
+                margin-top:8px;
+                color:#555;
+            ">
+                Be the first player!
+            </small>
+
+        </div>
+
+    `;
+
+}
+
+
+/* ================= INITIAL LOAD ================= */
+
+loadLeaderboard(
+    "memory-snake"
+);
+
 </script>
 
 </body>
