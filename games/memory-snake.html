@@ -282,24 +282,12 @@
 <!-- FIREBASE -->
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 import {
   getAuth,
   signInAnonymously
-}
-from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-
-import {
-  getDatabase,
-  ref,
-  get,
-  set,
-  serverTimestamp
-}
-from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
-
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 const firebaseConfig = {
 
@@ -323,10 +311,20 @@ databaseURL: "https://xii-oncamera-default-rtdb.firebaseio.com/",
 const app = initializeApp(firebaseConfig);
 console.log("🔥 FIREBASE APP INITIALIZED");
 
-const auth = getAuth(app);
-
 const db = getDatabase(app);
 console.log("🔥 DATABASE CONNECTED", db);
+
+const auth = getAuth(app);
+
+let currentUser = null;
+
+try {
+  const result = await signInAnonymously(auth);
+  currentUser = result.user;
+  console.log("Anonymous Firebase user:", currentUser.uid);
+} catch (error) {
+  console.error("Anonymous login failed:", error);
+}
 
 signInAnonymously(auth)
   .then(() => {
@@ -335,24 +333,6 @@ signInAnonymously(auth)
   .catch((error) => {
     console.error("Firebase error:", error);
   });
-
-
-  let currentUser = null;
-
-
-  // Anonymous login
-  try {
-
-    const result = await signInAnonymously(auth);
-
-    currentUser = result.user;
-
-  } catch (error) {
-
-    console.error("Firebase login error:", error);
-
-  }
-
 
   // ==========================================================
   // GAME VARIABLES
@@ -662,11 +642,7 @@ signInAnonymously(auth)
     submitStatus.className =
       "status";
     try {
-      const result =
-        await submitBestScore(
-          playerName,
-          score
-        );
+      const result = await saveScore(score);
       if (result.updated) {
         bestMessage.textContent =
           `🎉 New personal best: ${result.score}`;
@@ -693,68 +669,45 @@ signInAnonymously(auth)
   // ==========================================================
   // ⭐ BEST SCORE SYSTEM
   // ==========================================================
-  async function submitBestScore(
-    nickname,
-    newScore
-  ) {
-    if (!currentUser) {
-      throw new Error(
-        "Not authenticated"
-      );
-    }
-    /*
-      DATA STRUCTURE:
-      leaderboard
-        memory-snake
-          PLAYER_UID
-            nickname
-            score
-            updatedAt
+async function saveScore(score) {
 
-      Each player has ONE record.
-
-      Higher score replaces old score.
-      Lower score is ignored.
-    */
-    const playerRef = ref(
-      db,
-      `leaderboard/memory-snake/${currentUser.uid}`
-    );
-    const snapshot =
-      await get(playerRef);
-    const oldData =
-      snapshot.exists()
-        ? snapshot.val()
-        : null;
-    const oldScore =
-      oldData &&
-      typeof oldData.score === "number"
-        ? oldData.score
-        : 0;
-    // New personal best
-    if (newScore > oldScore) {
-      await set(
-        playerRef,
-        {
-          nickname:
-            nickname.substring(0, 20),
-          score:
-            newScore,
-          updatedAt:
-            serverTimestamp()
-        }
-      );
-      return {
-        updated: true,
-        score: newScore
-      };
-    }
-    // Existing score is already higher
-    return {
-      updated: false,
-      bestScore: oldScore
-    };
+  if (!currentUser) {
+    throw new Error("Firebase user is not logged in.");
   }
+
+  const playerRef = ref(
+    db,
+    `leaderboard/memory-snake/${currentUser.uid}`
+  );
+
+  const snapshot = await get(playerRef);
+
+  const oldData = snapshot.exists()
+    ? snapshot.val()
+    : null;
+
+  const oldTotal = oldData
+    ? Number(oldData.score || 0)
+    : 0;
+
+  const newTotal = oldTotal + Number(score);
+
+  await set(playerRef, {
+    nickname: playerName,
+    score: newTotal,
+    updatedAt: Date.now()
+  });
+
+  console.log(
+    `Memory Snake: ${oldTotal} + ${score} = ${newTotal}`
+  );
+
+  return {
+    updated: true,
+    score: newTotal
+  };
+}
+
   // ==========================================================
   // PLAY AGAIN
   // ==========================================================
