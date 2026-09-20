@@ -1,1236 +1,2407 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Memory Arcade | XII.oncamera</title>
-
-<style>
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-body{
-    min-height:100vh;
-    background:
-        radial-gradient(circle at 50% -10%,rgba(255,189,50,.14),transparent 35%),
-        linear-gradient(180deg,#080808,#101010 55%,#070707);
-    color:#fff;
-    font-family:Arial,Helvetica,sans-serif;
-}
-
-/* ================= NAVBAR ================= */
-
-.navbar{
-    position:sticky;
-    top:0;
-    z-index:100;
-    height:70px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 6%;
-    background:rgba(8,8,8,.82);
-    backdrop-filter:blur(16px);
-    border-bottom:1px solid #242424;
-}
-
-.logo{
-    color:#ffbd32;
-    font-weight:900;
-    letter-spacing:2px;
-    text-decoration:none;
-}
-
-.nav-links{
-    display:flex;
-    gap:25px;
-}
-
-.nav-links a{
-    color:#aaa;
-    text-decoration:none;
-    font-size:12px;
-    letter-spacing:1px;
-    transition:.2s;
-}
-
-.nav-links a:hover,
-.nav-links a.active{
-    color:#ffbd32;
-}
-
-/* ================= HERO ================= */
-
-.hero{
-    text-align:center;
-    padding:80px 20px 50px;
-}
-
-.hero-tag{
-    color:#ffbd32;
-    font-size:11px;
-    letter-spacing:4px;
-    text-transform:uppercase;
-    margin-bottom:15px;
-}
-
-.hero h1{
-    font-size:clamp(42px,7vw,78px);
-    line-height:1;
-    margin-bottom:18px;
-}
-
-.hero h1 span{
-    color:#ffbd32;
-}
-
-.hero p{
-    max-width:650px;
-    margin:auto;
-    color:#888;
-    line-height:1.7;
-}
-
-/* ================= TABS ================= */
-
-.main-tabs{
-    display:flex;
-    justify-content:center;
-    gap:10px;
-    margin-bottom:45px;
-}
-
-.main-tab{
-    padding:13px 30px;
-    border:1px solid #303030;
-    background:#111;
-    color:#888;
-    border-radius:30px;
-    cursor:pointer;
-    font-weight:bold;
-    transition:.2s;
-}
-
-.main-tab:hover{
-    color:#fff;
-    border-color:#555;
-}
-
-.main-tab.active{
-    background:#ffbd32;
-    border-color:#ffbd32;
-    color:#111;
-}
-
-/* ================= CONTENT ================= */
-
-.container{
-    width:min(1050px,92%);
-    margin:auto;
-}
-
-.section{
-    display:none;
-}
-
-.section.active{
-    display:block;
-}
-
-/* ================= GAME CARDS ================= */
-
-.games-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:25px;
-}
-
-.game-card{
-    position:relative;
-    min-height:280px;
-    overflow:hidden;
-    border:1px solid #292929;
-    border-radius:22px;
-    background:#111;
-    transition:.3s;
-}
-
-.game-card:hover{
-    transform:translateY(-6px);
-    border-color:#555;
-    box-shadow:0 20px 50px rgba(0,0,0,.45);
-}
-
-.game-image{
-    height:190px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:70px;
-    background:
-        radial-gradient(circle at center,rgba(255,189,50,.16),transparent 60%),
-        linear-gradient(135deg,#191919,#0a0a0a);
-}
-
-.game-info{
-    padding:20px;
-}
-
-.game-info h3{
-    margin-bottom:7px;
-}
-
-.game-info p{
-    color:#777;
-    font-size:13px;
-    margin-bottom:15px;
-}
-
-.play-btn{
-    display:inline-block;
-    padding:9px 18px;
-    border-radius:20px;
-    background:#ffbd32;
-    color:#111;
-    text-decoration:none;
-    font-size:12px;
-    font-weight:bold;
-}
-
-/* ================= LEADERBOARD ================= */
-
-.leaderboard-box{
-    background:#0d0d0d;
-    border:1px solid #292929;
-    border-radius:24px;
-    overflow:hidden;
-    box-shadow:0 25px 70px rgba(0,0,0,.35);
-}
-
-.leaderboard-title{
-    padding:28px;
-    border-bottom:1px solid #252525;
-}
-
-.leaderboard-title h2{
-    font-size:25px;
-    margin-bottom:7px;
-}
-
-.leaderboard-title p{
-    color:#777;
-    font-size:12px;
-}
-
-/* GAME LEADERBOARD TABS */
-
-.game-tabs{
-    display:flex;
-    gap:10px;
-    padding:18px 25px;
-    background:#111;
-    border-bottom:1px solid #252525;
-}
-
-.game-tab{
-    flex:1;
-    padding:15px 20px;
-    border:1px solid #303030;
-    border-radius:12px;
-    background:#151515;
-    color:#888;
-    cursor:pointer;
-    font-weight:bold;
-    transition:.2s;
-}
-
-.game-tab:hover{
-    color:#fff;
-    border-color:#555;
-}
-
-.game-tab.active{
-    background:#ffbd32;
-    border-color:#ffbd32;
-    color:#111;
-}
-
-/* CURRENT GAME */
-
-.current-game{
-    padding:20px 25px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border-bottom:1px solid #252525;
-}
-
-.current-game h3{
-    font-size:18px;
-}
-
-.current-game span{
-    color:#ffbd32;
-    font-size:11px;
-    letter-spacing:2px;
-}
-
-/* TABLE HEADER */
-
-.leaderboard-header{
-    display:grid;
-    grid-template-columns:70px 1fr 150px;
-    padding:16px 25px;
-    color:#666;
-    font-size:10px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    border-bottom:1px solid #222;
-}
-
-/* PLAYER ROW */
-
-.player-row{
-    display:grid;
-    grid-template-columns:70px 1fr 150px;
-    align-items:center;
-    padding:20px 25px;
-    border-bottom:1px solid #202020;
-    transition:.2s;
-}
-
-.player-row:hover{
-    background:#151515;
-}
-
-.player-row:last-child{
-    border-bottom:none;
-}
-
-.rank{
-    font-size:18px;
-    font-weight:900;
-    color:#666;
-}
-
-.rank.gold{
-    color:#ffbd32;
-}
-
-.rank.silver{
-    color:#c9c9c9;
-}
-
-.rank.bronze{
-    color:#c27b45;
-}
-
-.player-name{
-    font-weight:bold;
-}
-
-.player-score{
-    text-align:right;
-    color:#ffbd32;
-    font-size:18px;
-    font-weight:900;
-}
-
-/* TOP 3 */
-
-.player-row.top-one{
-    background:linear-gradient(
-        90deg,
-        rgba(255,189,50,.08),
-        transparent
-    );
-}
-
-/* LOADING */
-
-.loading{
-    padding:55px;
-    text-align:center;
-    color:#777;
-}
-
-.loading-spinner{
-    width:25px;
-    height:25px;
-    margin:0 auto 15px;
-    border:3px solid #333;
-    border-top-color:#ffbd32;
-    border-radius:50%;
-    animation:spin .8s linear infinite;
-}
-
-@keyframes spin{
-    to{
-        transform:rotate(360deg);
-    }
-}
-
-/* EMPTY */
-
-.empty{
-    padding:55px;
-    text-align:center;
-    color:#777;
-}
-
-.empty-icon{
-    font-size:35px;
-    margin-bottom:10px;
-}
-
-/* ================= FOOTER ================= */
-
-footer{
-    text-align:center;
-    padding:70px 20px 40px;
-    color:#555;
-    font-size:11px;
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:700px){
-
-    .navbar{
-        padding:0 20px;
-    }
-
-    .nav-links{
-        gap:12px;
-    }
-
-    .nav-links a{
-        font-size:9px;
-    }
-
-    .hero{
-        padding:55px 20px 35px;
-    }
-
-    .games-grid{
-        grid-template-columns:1fr;
-    }
-
-    .main-tabs{
-        margin-bottom:30px;
-    }
-
-    .main-tab{
-        padding:11px 22px;
-    }
-
-    .game-tabs{
-        flex-direction:column;
-    }
-
-    .leaderboard-header,
-    .player-row{
-        grid-template-columns:45px 1fr 80px;
-        padding-left:15px;
-        padding-right:15px;
-    }
-
-    .player-score{
-        font-size:15px;
-    }
-
-    .current-game{
-        padding:18px 15px;
-    }
-
-}
-
-</style>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Memory Arcade | XII.oncamera</title>
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(255, 190, 40, 0.10),
+                    transparent 35%
+                ),
+                #080808;
+
+            color: #ffffff;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           GRAIN
+        ===================================================== */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            opacity: 0.06;
+
+            background-image:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
+
+            z-index: 9999;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        nav {
+
+            height: 76px;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 55px;
+
+            background:
+                rgba(8, 8, 8, 0.90);
+
+            backdrop-filter: blur(18px);
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo {
+
+            color: #ffbd24;
+
+            text-decoration: none;
+
+            font-size: 22px;
+
+            font-weight: 900;
+
+            letter-spacing: 3px;
+        }
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 32px;
+        }
+
+        .nav-links a {
+
+            color: #777;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            letter-spacing: 1px;
+
+            transition: 0.25s;
+        }
+
+        .nav-links a:hover {
+
+            color: white;
+        }
+
+        .nav-links a.active {
+
+            color: #ffbd24;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+
+            min-height: 390px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 70px 20px;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .hero::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 700px;
+
+            height: 700px;
+
+            left: 50%;
+
+            top: -430px;
+
+            transform: translateX(-50%);
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255,189,36,0.18),
+                    transparent 65%
+                );
+        }
+
+        .hero-content {
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+        .hero-icon {
+
+            font-size: 60px;
+
+            margin-bottom: 15px;
+
+            filter:
+                drop-shadow(
+                    0 0 20px
+                    rgba(255,189,36,0.35)
+                );
+        }
+
+        .hero h1 {
+
+            font-size:
+                clamp(44px, 7vw, 80px);
+
+            font-weight: 900;
+
+            letter-spacing: -2px;
+
+            margin-bottom: 15px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #ffffff,
+                    #fff3c7,
+                    #ffbd24
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+
+            color: #888;
+
+            font-size: 16px;
+
+            line-height: 1.7;
+        }
+
+        .hero-badge {
+
+            display: inline-block;
+
+            margin-top: 22px;
+
+            padding: 9px 18px;
+
+            border:
+                1px solid
+                rgba(255,189,36,0.3);
+
+            border-radius: 30px;
+
+            color: #ffbd24;
+
+            font-size: 11px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =====================================================
+           MAIN TABS
+        ===================================================== */
+
+        .main-tabs {
+
+            width:
+                min(
+                    1200px,
+                    calc(100% - 40px)
+                );
+
+            margin:
+                0 auto 40px;
+
+            padding: 6px;
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 8px;
+
+            background: #111;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.10);
+
+            border-radius: 14px;
+        }
+
+        .main-tab {
+
+            height: 58px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: transparent;
+
+            color: #777;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+        }
+
+        .main-tab:hover {
+
+            color: white;
+        }
+
+        .main-tab.active {
+
+            background: #ffbd24;
+
+            color: #080808;
+
+            box-shadow:
+                0 8px 25px
+                rgba(255,189,36,0.15);
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        main {
+
+            width:
+                min(
+                    1200px,
+                    calc(100% - 40px)
+                );
+
+            margin: 0 auto;
+
+            padding-bottom: 100px;
+        }
+
+
+        /* =====================================================
+           SECTION TITLE
+        ===================================================== */
+
+        .section-title {
+
+            margin-bottom: 28px;
+        }
+
+        .section-title h2 {
+
+            font-size: 28px;
+
+            margin-bottom: 7px;
+        }
+
+        .section-title p {
+
+            color: #707070;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           GAMES
+        ===================================================== */
+
+        #gamesSection {
+
+            display: block;
+        }
+
+        .games-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .game-card {
+
+            min-height: 310px;
+
+            position: relative;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: flex-end;
+
+            padding: 25px;
+
+            overflow: hidden;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.10);
+
+            border-radius: 20px;
+
+            background: #111;
+
+            color: white;
+
+            text-decoration: none;
+
+            transition:
+                transform 0.3s,
+                border-color 0.3s,
+                box-shadow 0.3s;
+        }
+
+        .game-card:hover {
+
+            transform:
+                translateY(-7px);
+
+            border-color:
+                rgba(255,189,36,0.55);
+
+            box-shadow:
+                0 20px 50px
+                rgba(0,0,0,0.5);
+        }
+
+        .game-card-image {
+
+            position: absolute;
+
+            inset: 0;
+
+            background-size: cover;
+
+            background-position: center;
+
+            opacity: 0.60;
+
+            transition: 0.5s;
+        }
+
+        .game-card:hover
+        .game-card-image {
+
+            transform: scale(1.06);
+
+            opacity: 0.75;
+        }
+
+        .game-card::after {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    to top,
+                    rgba(0,0,0,0.98),
+                    rgba(0,0,0,0.65),
+                    rgba(0,0,0,0.10)
+                );
+        }
+
+        .game-card-content {
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+        .game-icon {
+
+            font-size: 38px;
+
+            margin-bottom: 10px;
+        }
+
+        .game-card h3 {
+
+            font-size: 23px;
+
+            margin-bottom: 7px;
+        }
+
+        .game-card p {
+
+            color: #aaa;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            margin-bottom: 17px;
+        }
+
+        .play-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 10px 17px;
+
+            border-radius: 8px;
+
+            background: #ffbd24;
+
+            color: #080808;
+
+            font-size: 11px;
+
+            font-weight: 900;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =====================================================
+           LEADERBOARD SECTION
+        ===================================================== */
+
+        #leaderboardSection {
+
+            display: none;
+        }
+
+        .leaderboard-section {
+
+            border:
+                1px solid
+                rgba(255,255,255,0.10);
+
+            border-radius: 22px;
+
+            background:
+                rgba(14,14,14,0.90);
+
+            overflow: hidden;
+        }
+
+        .leaderboard-heading {
+
+            padding: 32px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.08);
+        }
+
+        .leaderboard-heading-top {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .leaderboard-heading h2 {
+
+            font-size: 29px;
+
+            margin-bottom: 7px;
+        }
+
+        .leaderboard-heading p {
+
+            color: #707070;
+
+            font-size: 14px;
+        }
+
+        .top-label {
+
+            color: #ffbd24;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 2px;
+        }
+
+
+        /* =====================================================
+           LEADERBOARD GAME TABS
+        ===================================================== */
+
+        .game-tabs {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 12px;
+
+            padding: 22px 30px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.08);
+        }
+
+        .game-tab {
+
+            min-height: 56px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+
+            border-radius: 12px;
+
+            background: #141414;
+
+            color: #777;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+        }
+
+        .game-tab:hover {
+
+            color: white;
+
+            border-color:
+                rgba(255,189,36,0.4);
+        }
+
+        .game-tab.active {
+
+            background: #ffbd24;
+
+            color: #080808;
+
+            border-color: #ffbd24;
+        }
+
+
+        /* =====================================================
+           CURRENT LEADERBOARD TITLE
+        ===================================================== */
+
+        .current-board-title {
+
+            padding:
+                25px 30px 20px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.06);
+        }
+
+        .current-board-title h3 {
+
+            font-size: 22px;
+        }
+
+
+        /* =====================================================
+           TABLE
+        ===================================================== */
+
+        .leaderboard-table-wrap {
+
+            width: 100%;
+
+            overflow-x: auto;
+        }
+
+        .leaderboard-table {
+
+            width: 100%;
+
+            min-width: 500px;
+
+            border-collapse: collapse;
+        }
+
+        .leaderboard-table th {
+
+            padding: 19px 28px;
+
+            color: #666;
+
+            font-size: 10px;
+
+            font-weight: 600;
+
+            letter-spacing: 2px;
+
+            text-align: left;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.08);
+        }
+
+        .leaderboard-table td {
+
+            padding: 19px 28px;
+
+            color: #ddd;
+
+            font-size: 15px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.05);
+        }
+
+        .leaderboard-table
+        th:last-child,
+
+        .leaderboard-table
+        td:last-child {
+
+            text-align: right;
+        }
+
+        .leaderboard-table
+        td:first-child {
+
+            width: 90px;
+
+            color: #777;
+        }
+
+        .leaderboard-table
+        td:nth-child(2) {
+
+            font-weight: 700;
+        }
+
+        .leaderboard-table
+        td:last-child {
+
+            color: #ffbd24;
+
+            font-size: 17px;
+
+            font-weight: 900;
+        }
+
+        .leaderboard-table tbody tr:hover {
+
+            background:
+                rgba(255,255,255,0.025);
+        }
+
+
+        /* =====================================================
+           LOADING
+        ===================================================== */
+
+        .loading-cell {
+
+            padding: 60px 20px !important;
+
+            text-align: center !important;
+
+            color: #777 !important;
+        }
+
+        .loader {
+
+            width: 28px;
+
+            height: 28px;
+
+            margin:
+                0 auto 15px;
+
+            border-radius: 50%;
+
+            border:
+                3px solid
+                rgba(255,255,255,0.12);
+
+            border-top-color:
+                #ffbd24;
+
+            animation:
+                spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error-message {
+
+            color: #ff7777 !important;
+        }
+
+
+        /* =====================================================
+           SCORE NOTE
+        ===================================================== */
+
+        .score-note {
+
+            padding: 20px 30px;
+
+            color: #666;
+
+            font-size: 12px;
+
+            line-height: 1.7;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.05);
+        }
+
+        .score-note strong {
+
+            color: #aaa;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+
+            padding: 50px 20px;
+
+            text-align: center;
+
+            color: #4d4d4d;
+
+            font-size: 12px;
+
+            letter-spacing: 1px;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            nav {
+
+                padding: 0 25px;
+            }
+
+            .nav-links {
+
+                gap: 17px;
+            }
+
+            .nav-links a {
+
+                font-size: 10px;
+            }
+
+            .games-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .game-tabs {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            nav {
+
+                height: 68px;
+
+                padding: 0 18px;
+            }
+
+            .logo {
+
+                font-size: 16px;
+
+                letter-spacing: 2px;
+            }
+
+            .nav-links {
+
+                gap: 9px;
+            }
+
+            .nav-links a {
+
+                font-size: 8px;
+            }
+
+            .hero {
+
+                min-height: 340px;
+            }
+
+            .hero-icon {
+
+                font-size: 45px;
+            }
+
+            .hero h1 {
+
+                font-size: 45px;
+            }
+
+            .hero p {
+
+                font-size: 14px;
+            }
+
+            .main-tabs {
+
+                width:
+                    calc(100% - 25px);
+            }
+
+            .main-tab {
+
+                height: 50px;
+
+                font-size: 11px;
+            }
+
+            main {
+
+                width:
+                    calc(100% - 25px);
+            }
+
+            .games-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+            .game-tabs {
+
+                grid-template-columns: 1fr;
+
+                padding: 15px;
+            }
+
+            .leaderboard-heading {
+
+                padding: 25px 20px;
+            }
+
+            .leaderboard-heading h2 {
+
+                font-size: 24px;
+            }
+
+            .top-label {
+
+                display: none;
+            }
+
+            .current-board-title {
+
+                padding:
+                    20px;
+            }
+
+            .leaderboard-table th,
+            .leaderboard-table td {
+
+                padding:
+                    16px;
+            }
+
+            .score-note {
+
+                padding:
+                    18px 20px;
+            }
+        }
+
+    </style>
+
 </head>
 
 
 <body>
 
 
-<!-- ================= NAVBAR ================= -->
+    <!-- =====================================================
+         NAVBAR
+    ===================================================== -->
 
-<nav class="navbar">
+    <nav>
 
-    <a href="index.html" class="logo">
-        XII.ONCAMERA
-    </a>
-
-    <div class="nav-links">
-
-        <a href="index.html">
-            HOME
+        <a href="index.html" class="logo">
+            XII.ONCAMERA
         </a>
 
-        <a href="index.html#yearbook">
-            YEARBOOK
-        </a>
+        <div class="nav-links">
 
-        <a href="index.html#media">
-            MEDIA
-        </a>
+            <a href="index.html">
+                HOME
+            </a>
 
-        <a href="arcade.html" class="active">
-            🎮 GAMES
-        </a>
+            <a href="index.html#yearbook">
+                YEARBOOK
+            </a>
 
-    </div>
+            <a href="index.html#media">
+                MEDIA
+            </a>
 
-</nav>
-
-
-<!-- ================= HERO ================= -->
-
-<header class="hero">
-
-    <div class="hero-tag">
-        XII.ONCAMERA • DIGITAL MEMORIES
-    </div>
-
-    <h1>
-        Memory <span>Arcade</span>
-    </h1>
-
-    <p>
-        Play the games. Chase the high score.
-        Leave your name in the history of our batch.
-    </p>
-
-</header>
-
-
-<!-- ================= MAIN TABS ================= -->
-
-<div class="main-tabs">
-
-    <button
-        class="main-tab active"
-        data-section="gamesSection"
-    >
-        🎮 GAMES
-    </button>
-
-    <button
-        class="main-tab"
-        data-section="leaderboardSection"
-    >
-        🏆 LEADERBOARD
-    </button>
-
-</div>
-
-
-<div class="container">
-
-
-<!-- ================= GAMES ================= -->
-
-<section
-    id="gamesSection"
-    class="section active"
->
-
-    <div class="games-grid">
-
-
-        <!-- MEMORY SNAKE -->
-
-        <div class="game-card">
-
-            <div class="game-image">
-                🐍
-            </div>
-
-            <div class="game-info">
-
-                <h3>
-                    Memory Snake
-                </h3>
-
-                <p>
-                    Collect memories,
-                    grow your snake and
-                    chase the highest score.
-                </p>
-
-                <a
-                    href="games/memory-snake.html"
-                    class="play-btn"
-                >
-                    PLAY GAME →
-                </a>
-
-            </div>
+            <a href="arcade.html" class="active">
+                🎮 GAMES
+            </a>
 
         </div>
 
+    </nav>
 
-        <!-- SCHOOL RUSH -->
 
-        <div class="game-card">
 
-            <div class="game-image">
-                🏃
+    <!-- =====================================================
+         HERO
+    ===================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="hero-icon">
+                🎮
             </div>
 
-            <div class="game-info">
-
-                <h3>
-                    School Rush
-                </h3>
-
-                <p>
-                    Run through school,
-                    collect memories and
-                    avoid the obstacles.
-                </p>
-
-                <a
-                    href="games/school-rush.html"
-                    class="play-btn"
-                >
-                    PLAY GAME →
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <!-- PHOTO PUZZLE -->
-
-        <div class="game-card">
-
-            <div class="game-image">
-                🧩
-            </div>
-
-            <div class="game-info">
-
-                <h3>
-                    Photo Puzzle
-                </h3>
-
-                <p>
-                    Rebuild memories from
-                    our school year.
-                </p>
-
-              <a href="games/photo-puzzle.html" class="play-btn">
-    PLAY GAME →
-</a>
-
-            </div>
-
-        </div>
-
-
-        <!-- DIFFERENCE -->
-
-        <div class="game-card">
-
-            <div class="game-image">
-                🔎
-            </div>
-
-            <div class="game-info">
-
-                <h3>
-                    Spot The Difference
-                </h3>
-
-                <p>
-                    Can you find everything
-                    that changed?
-                </p>
-
-                <span
-                    class="play-btn"
-                    style="opacity:.45"
-                >
-                    COMING SOON
-                </span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ================= LEADERBOARD ================= -->
-
-<section
-    id="leaderboardSection"
-    class="section"
->
-
-    <div class="leaderboard-box">
-
-
-        <div class="leaderboard-title">
-
-            <h2>
-                🏆 Hall of Fame
-            </h2>
+            <h1>
+                Memory Arcade
+            </h1>
 
             <p>
-                The highest scores across
-                our Memory Arcade.
+                Play. Remember. Compete.
+                <br>
+                Turn your school memories into unforgettable games.
             </p>
 
-        </div>
-
-
-        <!-- GAME TABS -->
-
-        <div class="game-tabs">
-
-            <button
-                class="game-tab active"
-                data-game="memory-snake"
-            >
-                🐍 Memory Snake
-            </button>
-
-            <button
-                class="game-tab"
-                data-game="school-rush"
-            >
-                🏃 School Rush
-            </button>
-
-            <button 
-                  class="game-tab" 
-                  data-game="photo-puzzle">
-            🧩 Photo Puzzle
-            </button>
-
-
-        </div>
-
-
-        <!-- CURRENT GAME -->
-
-        <div class="current-game">
-
-            <h3 id="currentGameTitle">
-                🐍 Memory Snake
-            </h3>
-
-            <span>
-                TOP SCORES
+            <span class="hero-badge">
+                XII.oncamera • Batch Memories
             </span>
 
         </div>
 
-
-        <!-- HEADER -->
-
-        <div class="leaderboard-header">
-
-            <div>
-                RANK
-            </div>
-
-            <div>
-                PLAYER
-            </div>
-
-            <div style="text-align:right">
-                SCORE
-            </div>
-
-        </div>
+    </section>
 
 
-        <!-- SCORES -->
 
-        <div id="leaderboardList">
+    <!-- =====================================================
+         MAIN TABS
+    ===================================================== -->
 
-            <div class="loading">
+    <div class="main-tabs">
 
-                <div class="loading-spinner"></div>
+        <button
+            type="button"
+            class="main-tab active"
+            id="gamesTab">
 
-                Loading leaderboard...
+            🎮 GAMES
 
-            </div>
+        </button>
 
-        </div>
 
+        <button
+            type="button"
+            class="main-tab"
+            id="leaderboardTab">
+
+            🏆 LEADERBOARD
+
+        </button>
 
     </div>
 
-</section>
-
-</div>
 
 
-<footer>
-    XII.ONCAMERA • BATCH MEMORIES
-</footer>
+    <!-- =====================================================
+         MAIN
+    ===================================================== -->
+
+    <main>
+
+
+        <!-- =================================================
+             GAMES SECTION
+        ================================================= -->
+
+        <section id="gamesSection">
+
+            <div class="section-title">
+
+                <h2>
+                    🎮 Games
+                </h2>
+
+                <p>
+                    Choose a game and challenge yourself.
+                </p>
+
+            </div>
+
+
+            <div class="games-grid">
+
+
+                <!-- MEMORY SNAKE -->
+
+                <a
+                    href="games/memory-snake.html"
+                    class="game-card">
+
+                    <div
+                        class="game-card-image"
+                        style="
+                            background-image:
+                            url('assets/games/memory-snake.jpg');
+                        ">
+                    </div>
+
+                    <div class="game-card-content">
+
+                        <div class="game-icon">
+                            🐍
+                        </div>
+
+                        <h3>
+                            Memory Snake
+                        </h3>
+
+                        <p>
+                            Collect school memories
+                            and grow your snake.
+                        </p>
+
+                        <span class="play-btn">
+                            PLAY NOW →
+                        </span>
+
+                    </div>
+
+                </a>
 
 
 
-<!-- ================= FIREBASE ================= -->
+                <!-- SCHOOL RUSH -->
 
-<script type="module">
+                <a
+                    href="games/school-rush.html"
+                    class="game-card">
 
-import {
-    initializeApp
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+                    <div
+                        class="game-card-image"
+                        style="
+                            background-image:
+                            url('assets/games/school-rush.jpg');
+                        ">
+                    </div>
 
+                    <div class="game-card-content">
 
-import {
-    getDatabase,
-    ref,
-    get
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+                        <div class="game-icon">
+                            🏃
+                        </div>
 
+                        <h3>
+                            School Rush
+                        </h3>
 
-const firebaseConfig = {
+                        <p>
+                            Run through school,
+                            collect memories and
+                            avoid obstacles.
+                        </p>
 
-    apiKey:
-        "AIzaSyDBcwuTlwLmW388k1cuWVIb-t0PseH78V4",
+                        <span class="play-btn">
+                            PLAY NOW →
+                        </span>
 
-    authDomain:
-        "xii-oncamera.firebaseapp.com",
+                    </div>
 
-    databaseURL:
-        "https://xii-oncamera-default-rtdb.firebaseio.com/",
-
-    projectId:
-        "xii-oncamera",
-
-    storageBucket:
-        "xii-oncamera.firebasestorage.app",
-
-    messagingSenderId:
-        "1010193797198",
-
-    appId:
-        "1:1010193797198:web:75cfacefb390f0a3d9f31f"
-
-};
+                </a>
 
 
-const app =
-    initializeApp(firebaseConfig);
+
+                <!-- PHOTO PUZZLE -->
+
+                <a
+                    href="games/photo-puzzle.html"
+                    class="game-card">
+
+                    <div
+                        class="game-card-image"
+                        style="
+                            background-image:
+                            url('assets/games/photo-puzzle.jpg');
+                        ">
+                    </div>
+
+                    <div class="game-card-content">
+
+                        <div class="game-icon">
+                            🧩
+                        </div>
+
+                        <h3>
+                            Photo Puzzle
+                        </h3>
+
+                        <p>
+                            Rebuild memories from
+                            your school photo collection.
+                        </p>
+
+                        <span class="play-btn">
+                            PLAY NOW →
+                        </span>
+
+                    </div>
+
+                </a>
 
 
-const db =
-    getDatabase(app);
+
+                <!-- SPOT DIFFERENCE -->
+
+                <div class="game-card">
+
+                    <div
+                        class="game-card-image"
+                        style="
+                            background-image:
+                            url('assets/games/spot-difference.jpg');
+                        ">
+                    </div>
+
+                    <div class="game-card-content">
+
+                        <div class="game-icon">
+                            🔍
+                        </div>
+
+                        <h3>
+                            Spot The Difference
+                        </h3>
+
+                        <p>
+                            Find what's changed between
+                            two school memories.
+                        </p>
+
+                        <span
+                            class="play-btn"
+                            style="
+                                background:#292929;
+                                color:#888;
+                            ">
+
+                            COMING SOON
+
+                        </span>
+
+                    </div>
+
+                </div>
 
 
-/* ================= ELEMENTS ================= */
+            </div>
 
-const mainTabs =
-    document.querySelectorAll(".main-tab");
-
-const sections =
-    document.querySelectorAll(".section");
-
-const gameTabs =
-    document.querySelectorAll(".game-tab");
-
-const leaderboardList =
-    document.getElementById(
-        "leaderboardList"
-    );
-
-const currentGameTitle =
-    document.getElementById(
-        "currentGameTitle"
-    );
+        </section>
 
 
-/* ================= MAIN TAB SWITCH ================= */
 
-mainTabs.forEach(tab => {
+        <!-- =================================================
+             LEADERBOARD SECTION
+        ================================================= -->
 
-    tab.addEventListener("click", () => {
-
-        mainTabs.forEach(t =>
-            t.classList.remove("active")
-        );
-
-        sections.forEach(section =>
-            section.classList.remove("active")
-        );
+        <section
+            id="leaderboardSection"
+            class="leaderboard-section">
 
 
-        tab.classList.add("active");
+            <!-- HEADER -->
+
+            <div class="leaderboard-heading">
+
+                <div class="leaderboard-heading-top">
+
+                    <div>
+
+                        <h2>
+                            🏆 Hall of Fame
+                        </h2>
+
+                        <p>
+                            The highest cumulative scores
+                            across our Memory Arcade.
+                        </p>
+
+                    </div>
+
+                    <span class="top-label">
+                        TOP SCORES
+                    </span>
+
+                </div>
+
+            </div>
 
 
-        const target =
+
+            <!-- =================================================
+                 LEADERBOARD GAME TABS
+            ================================================= -->
+
+            <div class="game-tabs">
+
+
+                <button
+                    type="button"
+                    class="game-tab active"
+                    data-game="memory-snake">
+
+                    🐍 Memory Snake
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="game-tab"
+                    data-game="school-rush">
+
+                    🏃 School Rush
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="game-tab"
+                    data-game="photo-puzzle">
+
+                    🧩 Photo Puzzle
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="game-tab"
+                    data-game="total">
+
+                    👑 Total
+
+                </button>
+
+
+            </div>
+
+
+
+            <!-- CURRENT GAME TITLE -->
+
+            <div class="current-board-title">
+
+                <h3 id="leaderboardTitle">
+                    🐍 Memory Snake
+                </h3>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 LEADERBOARD TABLE
+            ================================================= -->
+
+            <div class="leaderboard-table-wrap">
+
+                <table class="leaderboard-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                RANK
+                            </th>
+
+                            <th>
+                                PLAYER
+                            </th>
+
+                            <th>
+                                SCORE
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <!-- IMPORTANT ID -->
+
+                    <tbody id="leaderboardBody">
+
+                        <tr>
+
+                            <td
+                                colspan="3"
+                                class="loading-cell">
+
+                                <div class="loader"></div>
+
+                                Loading leaderboard...
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+
+            <!-- SCORE INFORMATION -->
+
+            <div class="score-note">
+
+                <strong>
+                    How scoring works:
+                </strong>
+
+                Every completed game adds its score
+                to your existing cumulative score.
+
+                Scores are not replaced by a new high score.
+
+                <br><br>
+
+                Example:
+
+                Memory Snake 20 +
+
+                School Rush 50 +
+
+                Photo Puzzle 30
+
+                =
+
+                <strong>
+                    100 Total Points
+                </strong>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ===================================================== -->
+
+    <footer>
+
+        XII.ONCAMERA • BATCH MEMORIES
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         FIREBASE
+    ===================================================== -->
+
+    <script type="module">
+
+        import {
+            initializeApp
+        }
+        from
+        "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+
+        import {
+            getDatabase,
+            ref,
+            get
+        }
+        from
+        "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+
+
+        /* =================================================
+           FIREBASE CONFIG
+        ================================================= */
+
+        const firebaseConfig = {
+
+            apiKey:
+                "AIzaSyDBcwuTlwLmW388k1cuWVIb-t0PseH78V4",
+
+            authDomain:
+                "xii-oncamera.firebaseapp.com",
+
+            databaseURL:
+                "https://xii-oncamera-default-rtdb.firebaseio.com",
+
+            projectId:
+                "xii-oncamera",
+
+            storageBucket:
+                "xii-oncamera.firebasestorage.app",
+
+            messagingSenderId:
+                "1010193797198",
+
+            appId:
+                "1:1010193797198:web:75cfacefb390f0a3d9f31f"
+
+        };
+
+
+        /* =================================================
+           INITIALIZE FIREBASE
+        ================================================= */
+
+        const app =
+            initializeApp(firebaseConfig);
+
+        const db =
+            getDatabase(app);
+
+
+
+        /* =================================================
+           ELEMENTS
+        ================================================= */
+
+        const leaderboardBody =
             document.getElementById(
-                tab.dataset.section
+                "leaderboardBody"
             );
 
-        target.classList.add("active");
-
-
-        /* Load leaderboard when opened */
-
-        if(
-            tab.dataset.section ===
-            "leaderboardSection"
-        ){
-
-            loadLeaderboard(
-                currentGame
+        const leaderboardTitle =
+            document.getElementById(
+                "leaderboardTitle"
             );
 
+        const gameTabs =
+            document.querySelectorAll(
+                ".game-tab"
+            );
+
+
+
+        /* =================================================
+           CURRENT GAME
+        ================================================= */
+
+        let currentGame =
+            "memory-snake";
+
+
+
+        /* =================================================
+           GAME TITLES
+        ================================================= */
+
+        const gameNames = {
+
+            "memory-snake":
+                "🐍 Memory Snake",
+
+            "school-rush":
+                "🏃 School Rush",
+
+            "photo-puzzle":
+                "🧩 Photo Puzzle",
+
+            "total":
+                "👑 Total Scores"
+
+        };
+
+
+
+        /* =================================================
+           NORMALIZE PLAYER NAME
+           
+           This means:
+           
+           Swapnil Rajas
+           SwapnilRajas
+           SWAPNIL RAJAS
+           
+           are treated as the same player.
+        ================================================= */
+
+        function normalizePlayerName(name) {
+
+            return String(
+                name || "Anonymous"
+            )
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, "");
+
         }
 
-    });
-
-});
 
 
-/* ================= GAME TABS ================= */
+        /* =================================================
+           ESCAPE HTML
+        ================================================= */
 
-let currentGame =
-    "memory-snake";
+        function escapeHtml(text) {
 
+            const div =
+                document.createElement("div");
 
-gameTabs.forEach(tab => {
+            div.textContent =
+                String(text);
 
-    tab.addEventListener("click", () => {
-
-        gameTabs.forEach(t =>
-            t.classList.remove("active")
-        );
-
-        tab.classList.add("active");
-
-        currentGame =
-            tab.dataset.game;
-
-
-        if(
-            currentGame ===
-            "memory-snake"
-        ){
-
-            currentGameTitle.textContent =
-                "🐍 Memory Snake";
+            return div.innerHTML;
 
         }
 
-        else if(
-            currentGame ===
-            "school-rush"
-        ){
 
-            currentGameTitle.textContent =
-                "🏃 School Rush";
+
+        /* =================================================
+           RENDER LEADERBOARD
+        ================================================= */
+
+        function renderLeaderboard(players) {
+
+
+            if (!leaderboardBody) {
+
+                console.error(
+                    "leaderboardBody not found."
+                );
+
+                return;
+
+            }
+
+
+            /* NO SCORES */
+
+            if (
+                !players ||
+                players.length === 0
+            ) {
+
+                leaderboardBody.innerHTML = `
+
+                    <tr>
+
+                        <td
+                            colspan="3"
+                            class="loading-cell">
+
+                            No scores yet.
+                            Be the first!
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+                return;
+
+            }
+
+
+            /* DISPLAY PLAYERS */
+
+            leaderboardBody.innerHTML =
+
+                players
+                .map(
+                    (player, index) => `
+
+                    <tr>
+
+                        <td>
+                            ${index + 1}
+                        </td>
+
+                        <td>
+                            ${escapeHtml(
+                                player.nickname
+                            )}
+                        </td>
+
+                        <td>
+                            ${Number(
+                                player.score || 0
+                            )}
+                        </td>
+
+                    </tr>
+
+                `
+                )
+                .join("");
 
         }
-        else if (
-            currentGame === 
-            "photo-puzzle"
-        ) {
 
-        currentGameTitle.textContent =
-        "🧩 Photo Puzzle";
+
+
+        /* =================================================
+           LOAD LEADERBOARD
+        ================================================= */
+
+        async function loadLeaderboard(game) {
+
+
+            currentGame =
+                game;
+
+
+            /* SHOW LOADING */
+
+            leaderboardBody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="3"
+                        class="loading-cell">
+
+                        <div class="loader"></div>
+
+                        Loading leaderboard...
+
+                    </td>
+
+                </tr>
+
+            `;
+
+
+            /* UPDATE TITLE */
+
+            leaderboardTitle.textContent =
+                gameNames[game] ||
+                "Leaderboard";
+
+
+
+            try {
+
+
+                /* =========================================
+                   TOTAL LEADERBOARD
+                ========================================= */
+
+                if (game === "total") {
+
+
+                    const games = [
+
+                        "memory-snake",
+
+                        "school-rush",
+
+                        "photo-puzzle"
+
+                    ];
+
+
+                    const playerMap =
+                        new Map();
+
+
+                    /* GET ALL THREE GAMES */
+
+                    const snapshots =
+                        await Promise.all(
+
+                            games.map(
+                                gameName =>
+
+                                    get(
+                                        ref(
+                                            db,
+                                            "leaderboard/" +
+                                            gameName
+                                        )
+                                    )
+                            )
+
+                        );
+
+
+                    /* PROCESS EACH GAME */
+
+                    snapshots.forEach(
+                        snapshot => {
+
+                            const data =
+                                snapshot.val();
+
+
+                            if (!data) {
+                                return;
+                            }
+
+
+                            Object.values(data)
+                            .forEach(player => {
+
+
+                                if (!player) {
+                                    return;
+                                }
+
+
+                                const nickname =
+                                    String(
+                                        player.nickname ||
+                                        "Anonymous"
+                                    ).trim();
+
+
+                                const key =
+                                    normalizePlayerName(
+                                        nickname
+                                    );
+
+
+                                const score =
+                                    Number(
+                                        player.score ||
+                                        0
+                                    );
+
+
+                                if (
+                                    playerMap.has(key)
+                                ) {
+
+
+                                    const existing =
+                                        playerMap.get(key);
+
+
+                                    existing.score +=
+                                        score;
+
+
+                                } else {
+
+
+                                    playerMap.set(
+                                        key,
+                                        {
+
+                                            nickname:
+                                                nickname,
+
+                                            score:
+                                                score
+
+                                        }
+                                    );
+
+                                }
+
+                            });
+
+                        }
+                    );
+
+
+                    /* CONVERT TO ARRAY */
+
+                    const players =
+                        Array.from(
+                            playerMap.values()
+                        );
+
+
+                    /* SORT */
+
+                    players.sort(
+                        (a, b) =>
+
+                            Number(
+                                b.score || 0
+                            )
+
+                            -
+
+                            Number(
+                                a.score || 0
+                            )
+                    );
+
+
+                    /* DISPLAY */
+
+                    renderLeaderboard(
+                        players
+                    );
+
+
+                    return;
+
+                }
+
+
+
+                /* =========================================
+                   INDIVIDUAL GAME LEADERBOARD
+                ========================================= */
+
+                const snapshot =
+                    await get(
+                        ref(
+                            db,
+                            "leaderboard/" +
+                            game
+                        )
+                    );
+
+
+                const data =
+                    snapshot.val();
+
+
+                /* NO DATA */
+
+                if (!data) {
+
+                    renderLeaderboard([]);
+
+                    return;
+
+                }
+
+
+                /* PLAYER MAP */
+
+                const playerMap =
+                    new Map();
+
+
+                /* PROCESS PLAYERS */
+
+                Object.values(data)
+                .forEach(player => {
+
+
+                    if (!player) {
+                        return;
+                    }
+
+
+                    const nickname =
+                        String(
+                            player.nickname ||
+                            "Anonymous"
+                        ).trim();
+
+
+                    const key =
+                        normalizePlayerName(
+                            nickname
+                        );
+
+
+                    const score =
+                        Number(
+                            player.score ||
+                            0
+                        );
+
+
+                    if (
+                        playerMap.has(key)
+                    ) {
+
+
+                        const existing =
+                            playerMap.get(key);
+
+
+                        existing.score +=
+                            score;
+
+
+                    } else {
+
+
+                        playerMap.set(
+                            key,
+                            {
+
+                                nickname:
+                                    nickname,
+
+                                score:
+                                    score
+
+                            }
+                        );
+
+                    }
+
+                });
+
+
+                /* ARRAY */
+
+                const players =
+                    Array.from(
+                        playerMap.values()
+                    );
+
+
+                /* SORT */
+
+                players.sort(
+                    (a, b) =>
+
+                        Number(
+                            b.score || 0
+                        )
+
+                        -
+
+                        Number(
+                            a.score || 0
+                        )
+                );
+
+
+                /* DISPLAY */
+
+                renderLeaderboard(
+                    players
+                );
+
+
+            }
+
+            catch (error) {
+
+
+                console.error(
+                    "Firebase leaderboard error:",
+                    error
+                );
+
+
+                leaderboardBody.innerHTML = `
+
+                    <tr>
+
+                        <td
+                            colspan="3"
+                            class="loading-cell error-message">
+
+                            ⚠️ Unable to load leaderboard.
+
+                            <br><br>
+
+                            Check your Firebase
+                            Realtime Database rules
+                            and internet connection.
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+
         }
+
+
+
+        /* =================================================
+           LEADERBOARD GAME TABS
+        ================================================= */
+
+        gameTabs.forEach(tab => {
+
+
+            tab.addEventListener(
+                "click",
+                function () {
+
+
+                    /* REMOVE ACTIVE */
+
+                    gameTabs.forEach(
+                        button => {
+
+                            button.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    /* ACTIVATE CLICKED TAB */
+
+                    this.classList.add(
+                        "active"
+                    );
+
+
+                    /* GET GAME */
+
+                    const game =
+                        this.dataset.game;
+
+
+                    /* LOAD */
+
+                    loadLeaderboard(
+                        game
+                    );
+
+                }
+            );
+
+        });
+
+
+
+        /* =================================================
+           INITIAL LEADERBOARD LOAD
+        ================================================= */
 
         loadLeaderboard(
-            currentGame
+            "memory-snake"
         );
 
-    });
-
-});
 
 
-/* ================= LOAD LEADERBOARD ================= */
+        /* =================================================
+           AUTO REFRESH
+        ================================================= */
 
-async function loadLeaderboard(game){
+        setInterval(
+            function () {
 
-    leaderboardList.innerHTML = `
+                /*
+                 * Only refresh while
+                 * leaderboard is visible.
+                 */
 
-        <div class="loading">
-
-            <div class="loading-spinner"></div>
-
-            Loading leaderboard...
-
-        </div>
-
-    `;
-
-
-    try{
-
-        const leaderboardRef =
-            ref(
-                db,
-                "leaderboard/" + game
-            );
-
-
-        const snapshot =
-            await get(
-                leaderboardRef
-            );
-
-
-        if(!snapshot.exists()){
-
-            showEmpty();
-
-            return;
-
-        }
-
-
-        const data =
-            snapshot.val();
-
-
-const playerMap = {};
-
-Object.values(data).forEach(player => {
-
-    const name = (player.nickname || "Anonymous")
-        .trim()
-        .toLowerCase();
-
-    const score = Number(player.score || 0);
-
-    // Keep only the highest score for each name
-    if (
-        !playerMap[name] ||
-        score > Number(playerMap[name].score || 0)
-    ) {
-        playerMap[name] = player;
-    }
-
-});
-
-const players = Object.values(playerMap);
-
-players.sort((a, b) =>
-    Number(b.score || 0) - Number(a.score || 0)
-);
-
-        /*
-            Keep top 100
-        */
-
-        const topPlayers =
-            players.slice(0,100);
-
-
-        if(topPlayers.length === 0){
-
-            showEmpty();
-
-            return;
-
-        }
-
-
-        leaderboardList.innerHTML = "";
-
-
-        topPlayers.forEach(
-            (player,index) => {
-
-                const row =
-                    document.createElement(
-                        "div"
+                const section =
+                    document.getElementById(
+                        "leaderboardSection"
                     );
 
 
-                row.className =
-                    "player-row";
+                if (
+                    section &&
+                    section.style.display !== "none"
+                ) {
 
-
-                if(index === 0){
-
-                    row.classList.add(
-                        "top-one"
+                    loadLeaderboard(
+                        currentGame
                     );
 
                 }
 
+            },
+            30000
+        );
 
-                let rankClass = "";
+    </script>
 
 
-                if(index === 0){
 
-                    rankClass = "gold";
+    <!-- =====================================================
+         MAIN GAMES / LEADERBOARD TAB SCRIPT
+
+         IMPORTANT:
+         This is a NORMAL script and is separate
+         from Firebase.
+    ===================================================== -->
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+
+                /* GET ELEMENTS */
+
+                const gamesTab =
+                    document.getElementById(
+                        "gamesTab"
+                    );
+
+                const leaderboardTab =
+                    document.getElementById(
+                        "leaderboardTab"
+                    );
+
+                const gamesSection =
+                    document.getElementById(
+                        "gamesSection"
+                    );
+
+                const leaderboardSection =
+                    document.getElementById(
+                        "leaderboardSection"
+                    );
+
+
+                /* SAFETY CHECK */
+
+                if (
+                    !gamesTab ||
+                    !leaderboardTab ||
+                    !gamesSection ||
+                    !leaderboardSection
+                ) {
+
+                    console.error(
+                        "Main arcade tabs could not be found."
+                    );
+
+                    return;
 
                 }
 
-                else if(index === 1){
-
-                    rankClass = "silver";
-
-                }
-
-                else if(index === 2){
-
-                    rankClass = "bronze";
-
-                }
 
 
-                const rank =
-                    document.createElement(
-                        "div"
-                    );
+                /* =================================================
+                   GAMES TAB
+                ================================================= */
+
+                gamesTab.addEventListener(
+                    "click",
+                    function () {
 
 
-                rank.className =
-                    "rank " +
-                    rankClass;
+                        gamesTab.classList.add(
+                            "active"
+                        );
 
 
-                rank.textContent =
-                    "#" + (index + 1);
+                        leaderboardTab.classList.remove(
+                            "active"
+                        );
 
 
-                const name =
-                    document.createElement(
-                        "div"
-                    );
+                        gamesSection.style.display =
+                            "block";
 
 
-                name.className =
-                    "player-name";
+                        leaderboardSection.style.display =
+                            "none";
 
 
-                name.textContent =
-                    player.nickname ||
-                    "Anonymous";
+                        window.scrollTo({
+
+                            top: 0,
+
+                            behavior: "smooth"
+
+                        });
+
+                    }
+                );
 
 
-                const score =
-                    document.createElement(
-                        "div"
-                    );
+
+                /* =================================================
+                   LEADERBOARD TAB
+                ================================================= */
+
+                leaderboardTab.addEventListener(
+                    "click",
+                    function () {
 
 
-                score.className =
-                    "player-score";
+                        leaderboardTab.classList.add(
+                            "active"
+                        );
 
 
-                score.textContent =
-                    Number(
-                        player.score || 0
-                    );
+                        gamesTab.classList.remove(
+                            "active"
+                        );
 
 
-                row.appendChild(rank);
-
-                row.appendChild(name);
-
-                row.appendChild(score);
+                        gamesSection.style.display =
+                            "none";
 
 
-                leaderboardList.appendChild(
-                    row
+                        leaderboardSection.style.display =
+                            "block";
+
+
+                        /*
+                         * Firebase leaderboard function
+                         * is available globally inside the
+                         * module only when called there,
+                         * so we DON'T depend on it here.
+                         *
+                         * The leaderboard has already been
+                         * loaded when the page opened.
+                         */
+
+
+                        window.scrollTo({
+
+                            top: 0,
+
+                            behavior: "smooth"
+
+                        });
+
+                    }
                 );
 
             }
         );
 
-    }
+    </script>
 
-    catch(error){
-
-        console.error(
-            "Leaderboard error:",
-            error
-        );
-
-
-        leaderboardList.innerHTML = `
-
-            <div class="empty">
-
-                <div class="empty-icon">
-                    ⚠️
-                </div>
-
-                <div>
-                    Unable to load leaderboard.
-                </div>
-
-                <small style="
-                    display:block;
-                    margin-top:8px;
-                    color:#555;
-                ">
-                    Check your Firebase
-                    connection and database rules.
-                </small>
-
-            </div>
-
-        `;
-
-    }
-
-}
-
-
-/* ================= EMPTY ================= */
-
-function showEmpty(){
-
-    leaderboardList.innerHTML = `
-
-        <div class="empty">
-
-            <div class="empty-icon">
-                🏆
-            </div>
-
-            <div>
-                No scores yet.
-            </div>
-
-            <small style="
-                display:block;
-                margin-top:8px;
-                color:#555;
-            ">
-                Be the first player!
-            </small>
-
-        </div>
-
-    `;
-
-}
-
-
-/* ================= INITIAL LOAD ================= */
-
-loadLeaderboard(
-    "memory-snake"
-);
-
-</script>
 
 </body>
+
 </html>
