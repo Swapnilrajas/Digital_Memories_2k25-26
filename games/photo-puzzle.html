@@ -329,20 +329,20 @@ input:focus {
 
 import {
     initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 import {
     getAuth,
     signInAnonymously,
     onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 import {
     getDatabase,
     ref,
     get,
     set
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
 
 
 /* ================================
@@ -374,10 +374,19 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
-
 const db = getDatabase(app);
 
+const auth = getAuth(app);
+
+let currentUser = null;
+
+try {
+  const result = await signInAnonymously(auth);
+  currentUser = result.user;
+  console.log("Anonymous Firebase user:", currentUser.uid);
+} catch (error) {
+  console.error("Anonymous login failed:", error);
+}
 
 /* ================================
    20 PUZZLE PHOTOS
@@ -442,8 +451,6 @@ let gameStarted = false;
 
 let playerName = "";
 
-let currentUser = null;
-
 
 /* ================================
    ELEMENTS
@@ -481,40 +488,6 @@ const finishDetails =
 
 const previewImage =
     document.getElementById("previewImage");
-
-
-/* ================================
-   FIREBASE LOGIN
-================================ */
-
-signInAnonymously(auth)
-    .catch(error => {
-
-        console.error(
-            "Firebase authentication error:",
-            error
-        );
-
-        message.textContent =
-            "Firebase login failed.";
-
-    });
-
-
-onAuthStateChanged(auth, user => {
-
-    if (user) {
-
-        currentUser = user;
-
-        console.log(
-            "Firebase user:",
-            user.uid
-        );
-
-    }
-
-});
 
 
 /* ================================
@@ -878,60 +851,42 @@ async function saveScore(score) {
             snapshot.val();
 
 
-        const oldScore =
+        const oldTotal =
             oldData
                 ? Number(oldData.score || 0)
                 : 0;
 
 
-        // Only save if this is a new best score
-
-        if (score > oldScore) {
-
-            await set(
-                playerRef,
-                {
-
-                    nickname: playerName,
-
-                    score: score,
-
-                    updatedAt:
-                        Date.now(),
-
-                    moves: moves,
-
-                    time: seconds
-
-                }
-            );
+        const newTotal =
+            oldTotal + Number(score);
 
 
-            console.log(
-                "New best score saved:",
-                score
-            );
+        await set(
+            playerRef,
+            {
 
-        } else {
+                nickname: playerName,
 
-            console.log(
-                "Old best score kept:",
-                oldScore
-            );
+                score: newTotal,
 
-        }
+                updatedAt:
+                    Date.now()
 
-    }
-
-    catch (error) {
-
-        console.error(
-            "Score save error:",
-            error
+            }
         );
 
-        message.textContent =
-            "Score could not be saved.";
+
+        console.log(
+            `Photo Puzzle: ${oldTotal} + ${score} = ${newTotal}`
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Photo Puzzle score error:",
+            error
+        );
 
     }
 
@@ -1027,6 +982,77 @@ function showPreview() {
     }, 1800);
 
 }
+
+/* =========================
+   MAIN GAMES / LEADERBOARD TABS
+========================= */
+
+const mainTabs =
+    document.querySelectorAll(".main-tab");
+
+const gamesSection =
+    document.getElementById("gamesSection");
+
+const leaderboardSection =
+    document.getElementById("leaderboardSection");
+
+
+mainTabs.forEach(tab => {
+
+    tab.addEventListener("click", () => {
+
+        const section =
+            tab.dataset.section;
+
+
+        /* Remove active from all */
+
+        mainTabs.forEach(item => {
+            item.classList.remove("active");
+        });
+
+
+        /* Activate clicked tab */
+
+        tab.classList.add("active");
+
+
+        /* Show Games */
+
+        if (section === "games") {
+
+            gamesSection.style.display = "block";
+
+            leaderboardSection.style.display = "none";
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+
+        /* Show Leaderboard */
+
+        if (section === "leaderboard") {
+
+            gamesSection.style.display = "none";
+
+            leaderboardSection.style.display = "block";
+
+            loadLeaderboard(currentGame);
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+    });
+
+});
 
 </script>
 
