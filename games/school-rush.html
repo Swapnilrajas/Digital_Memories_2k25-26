@@ -2200,90 +2200,71 @@ async function endGame(){
    SAVE SCORE
 ========================================================= */
 
-async function saveScore(){
+/* =========================================================
+   SAVE SCORE
+========================================================= */
 
-    if(!currentUser){
+async function saveScore() {
 
-        console.warn(
-            "Firebase user not ready"
+    if (!currentUser) {
+
+        console.log(
+            "Firebase user not ready."
         );
 
         return;
-
     }
 
-    try{
+    const playerRef =
+        ref(
+            db,
+            `leaderboard/school-rush/${currentUser.uid}`
+        );
 
-        const scoreRef =
-            ref(
-                db,
-                "leaderboard/school-rush/"
-                + currentUser.uid
-            );
+    try {
 
         const snapshot =
-            await get(scoreRef);
+            await get(playerRef);
 
         const oldData =
             snapshot.exists()
-            ? snapshot.val()
-            : null;
+                ? snapshot.val()
+                : null;
 
-        const oldScore =
-            oldData &&
-            typeof oldData.score==="number"
-            ? oldData.score
-            : 0;
+        const oldTotal =
+            oldData
+                ? Number(oldData.score || 0)
+                : 0;
 
+        const newTotal =
+            oldTotal + Number(score);
 
-        if(score > oldScore){
+        await set(
+            playerRef,
+            {
+                nickname: playerName,
 
-            await set(
-                scoreRef,
-                {
+                score: newTotal,
 
-                    nickname:
-                        playerName,
+                updatedAt:
+                    Date.now()
+            }
+        );
 
-                    score:
-                        score,
+        console.log(
+            `School Rush: ${oldTotal} + ${score} = ${newTotal}`
+        );
 
-                    updatedAt:
-                        Date.now()
-
-                }
-            );
-
-            console.log(
-                "New best score saved:",
-                score
-            );
-
-        }
-
-        else{
-
-            console.log(
-                "Best score remains:",
-                oldScore
-            );
-
-        }
-
-    }
-
-    catch(error){
+    } catch (error) {
 
         console.error(
-            "Score save error:",
+            "School Rush score error:",
             error
         );
 
     }
 
 }
-
-
 /* =========================================================
    GAME OVER SCREEN
 ========================================================= */
