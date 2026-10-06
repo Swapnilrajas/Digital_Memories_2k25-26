@@ -86,53 +86,51 @@
     <!-- Add more cards for Messages, Videos, and Specials -->
 </div>
 
-<div class="navbar flex justify-between items-center px-10 py-4">
+```html
+<div class="navbar flex justify-between items-center px-5 md:px-10 py-4">
 
-<!-- LEFT SIDE -->
-<div class="flex items-center gap-2 font-semibold text-lg">
-<img src="icon.png" class="w-10 h-10">
-<span>Batch 2k25-26</span>
+    <!-- LEFT SIDE -->
+    <div class="flex items-center gap-2 font-semibold text-lg">
+        <img src="icon.png" class="w-10 h-10">
+        <span>Batch 2k25-26</span>
+    </div>
+
+    <!-- MOBILE MENU BUTTON -->
+    <button id="menuBtn" class="mobile-menu-btn">
+        ☰
+    </button>
+
+    <!-- RIGHT SIDE -->
+    <div id="navLinks" class="nav-links flex items-center gap-8 text-slate-700 font-[Cinzel-Regular]">
+
+        <button class="navbtn active" onclick="openTab('journey',this)">
+            The Journey
+        </button>
+
+        <button class="navbtn" onclick="openTab('yearbook',this)">
+            Yearbook
+        </button>
+
+        <button class="navbtn" onclick="openTab('media',this)">
+            Media Vault
+        </button>
+
+        <a href="arcade.html">🎮 GAMES</a>
+
+        <button class="navbtn" onclick="openTab('wall',this)">
+            The Wall
+        </button>
+
+        <a href="https://instagram.com/memories_westillcarry?igsh=MTMwcThiNTMxM25zcQ=="
+           target="_blank"
+           rel="noopener"
+           class="border border-yellow-400 px-4 py-1 rounded-full">
+            Visit Instagram
+        </a>
+
+    </div>
 </div>
-
-
-<!-- RIGHT SIDE -->
-<div class="flex items-center gap-8 text-slate-700 font-[Cinzel-Regular]">
-
-<button class="navbtn active" onclick="openTab('journey',this)">
-The Journey
-</button>
-
-<button class="navbtn" onclick="openTab('yearbook',this)">
-Yearbook
-</button>
-
-<button class="navbtn" onclick="openTab('media',this)">
-Media Vault
-</button>
-
-<a href="arcade.html">🎮 GAMES</a>
-
-<button class="navbtn" onclick="openTab('wall',this)">
-The Wall
-</button>
-
-<a href="https://instagram.com/memories_westillcarry?igsh=MTMwcThiNTMxM25zcQ=="
-target="_blank"
-rel="noopener"
-class="border border-yellow-400 px-4 py-1 rounded-full">
-Visit Instagram
-</a>
-</div>   
-</div>
-
-   <script>
-const menuBtn = document.getElementById("menuBtn");
-const navLinks = document.getElementById("navLinks");
-
-menuBtn.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-});
-</script>
+```
 
 <!-- JOURNEY TAB -->
 
