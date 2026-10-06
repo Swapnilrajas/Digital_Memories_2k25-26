@@ -616,155 +616,375 @@ font-size:22px;
 
 }
 
-```css
-/* ================================
-   MOBILE RESPONSIVE NAVBAR
-   ================================ */
+/* =========================================================
+   MOBILE RESPONSIVE DESIGN
+   ========================================================= */
 
 @media (max-width: 768px) {
 
-    /* Main navbar */
-    .navbar {
-        width: 94%;
-        margin: 10px auto;
-        padding: 10px 14px;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-        border-radius: 16px;
-    }
+    /* ---------- GENERAL ---------- */
 
-    /* Logo + Batch name */
-    .navbar > div:first-child {
-        justify-content: center;
+    html,
+    body {
         width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
     }
 
-    .navbar > div:first-child img {
-        width: 32px;
-        height: 32px;
+    * {
+        box-sizing: border-box;
     }
 
-    .navbar > div:first-child span {
-        font-size: 15px;
-    }
+    /* ---------- HERO ---------- */
 
-    /* Right-side navigation */
-    .navbar > div:last-child {
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        gap: 6px;
-    }
-
-    /* Navigation buttons */
-    .navbar .navbtn,
-    .navbar > div:last-child > a {
-        font-size: 11px;
-        padding: 8px 9px;
-        white-space: nowrap;
-    }
-
-    /* Instagram button */
-    .navbar > div:last-child > a:last-child {
-        padding: 7px 10px;
-    }
-
-    /* Hero */
     #hero {
-        padding: 20px 12px;
+        min-height: 100vh !important;
+        padding: 20px !important;
+        overflow: hidden;
+    }
+
+    #hero > div {
+        margin-top: 80px !important;
     }
 
     #hero h1 {
         font-size: 3rem !important;
-        line-height: 1.1;
+        line-height: 1.1 !important;
+        margin-top: 15px !important;
     }
 
     #hero h2 {
-        font-size: 1.8rem !important;
+        font-size: 2rem !important;
+        margin-top: 25px !important;
     }
 
     #hero p {
-        font-size: 15px;
-        padding-left: 15px;
-        padding-right: 15px;
+        font-size: 16px !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
     }
 
-    /* Tabs */
+    .start-btn {
+        font-size: 15px !important;
+        padding: 13px 22px !important;
+        border-width: 3px !important;
+    }
+
+
+    /* =====================================================
+       TOP MEMORY / CLASSMATES CARDS
+       ===================================================== */
+
+    .media-nav {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+        padding: 10px !important;
+        margin-bottom: 15px !important;
+    }
+
+    .media-nav button {
+        min-width: 0 !important;
+        padding: 10px 5px !important;
+    }
+
+    .media-nav button span {
+        font-size: 25px !important;
+    }
+
+    .media-nav button p {
+        font-size: 10px !important;
+    }
+
+
+    /* =====================================================
+       NAVBAR
+       ===================================================== */
+
+    .navbar {
+        width: calc(100% - 20px) !important;
+        margin: 10px auto !important;
+        padding: 10px 14px !important;
+        border-radius: 16px !important;
+        position: sticky !important;
+        top: 8px !important;
+    }
+
+    .navbar > div:first-child span {
+        font-size: 14px !important;
+    }
+
+    .navbar > div:first-child img {
+        width: 34px !important;
+        height: 34px !important;
+    }
+
+    .mobile-menu-btn {
+        display: block !important;
+        font-size: 27px !important;
+        padding: 0 !important;
+    }
+
+    .nav-links {
+        display: none !important;
+
+        position: absolute !important;
+        top: calc(100% + 8px) !important;
+        left: 0 !important;
+        right: 0 !important;
+
+        flex-direction: column !important;
+        align-items: stretch !important;
+
+        gap: 4px !important;
+        padding: 10px !important;
+
+        border-radius: 16px !important;
+
+        background: rgba(255,255,255,.97) !important;
+        backdrop-filter: blur(15px);
+
+        box-shadow: 0 15px 35px rgba(0,0,0,.18);
+
+        z-index: 9999 !important;
+    }
+
+    .nav-links.active {
+        display: flex !important;
+    }
+
+    .nav-links button,
+    .nav-links a {
+        width: 100% !important;
+        padding: 12px 8px !important;
+        text-align: center !important;
+        font-size: 14px !important;
+    }
+
+    .nav-links .navbtn.active {
+        background: rgba(255,213,0,.9) !important;
+    }
+
+
+    /* =====================================================
+       ALL TABS
+       ===================================================== */
+
     .tab {
-        padding: 70px 15px;
+        padding: 50px 18px !important;
     }
 
-    /* Journey images */
+
+    /* =====================================================
+       JOURNEY
+       ===================================================== */
+
+    #journey {
+        padding: 45px 18px !important;
+    }
+
+    .meet-boo {
+        font-size: 3rem !important;
+        text-align: center !important;
+        margin-bottom: 35px !important;
+    }
+
+    #journey > div {
+        max-width: 100% !important;
+    }
+
     #journey img {
         width: 100% !important;
-        max-width: 100%;
+        max-width: 100% !important;
+        height: auto !important;
+        object-fit: cover !important;
     }
 
-    /* Yearbook title */
-    #yearbook h1 {
-        font-size: 2.5rem !important;
-    }
-
-    /* Student cards */
-    #yearbook .student {
+    #journey .max-w-md {
         width: 100% !important;
-        max-width: 300px;
-        margin-left: auto;
-        margin-right: auto;
+        max-width: 100% !important;
     }
 
-    /* Student grid */
-    #yearbook .grid {
-        gap: 20px;
+    .journey-separator {
+        height: 45px !important;
+        margin: 35px 0 !important;
+    }
+
+    .journey-separator .line {
+        max-width: 80% !important;
+    }
+
+    #journey .meet-btn {
+        margin-top: 30px !important;
+    }
+
+
+    /* =====================================================
+       YEARBOOK
+       ===================================================== */
+
+    #yearbook {
+        padding: 45px 12px !important;
+    }
+
+    #yearbook h1 {
+        font-size: 2.7rem !important;
+        line-height: 1.15 !important;
+    }
+
+    #yearbook > div {
+        max-width: 100% !important;
     }
 
     /* Search */
-    #searchInput {
-        width: 100%;
+
+    #yearbook input {
+        width: 100% !important;
+        margin: 0 !important;
     }
 
-    /* Alphabet buttons */
+    #yearbook .w-full.px-14 {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+
+    /* Alphabet */
+
     #yearbook .flex.flex-wrap {
-        gap: 5px;
+        gap: 5px !important;
     }
 
     #yearbook .flex.flex-wrap button {
-        padding: 6px 9px;
-        font-size: 12px;
+        padding: 6px 9px !important;
+        font-size: 12px !important;
     }
 
-    /* Media navigation */
-    .media-nav {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
+    /* Student grid */
+
+    #yearbook .grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 12px !important;
     }
 
-    /* Masonry */
+    .student {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .student img {
+        width: 100% !important;
+        height: 220px !important;
+        object-fit: cover !important;
+    }
+
+    .student h3 {
+        font-size: 12px !important;
+    }
+
+    /* Disable huge hover movement on mobile */
+
+    .student:hover {
+        transform: none !important;
+    }
+
+    .student:hover img {
+        transform: none !important;
+    }
+
+    .line-divide {
+        width: 90% !important;
+    }
+
+
+    /* =====================================================
+       MEDIA VAULT
+       ===================================================== */
+
+    #media {
+        padding: 45px 15px !important;
+    }
+
+    #media .achieve-title {
+        font-size: 2.8rem !important;
+        text-align: center !important;
+    }
+
+    #media p {
+        text-align: center !important;
+    }
+
     .masonry {
-        column-count: 1;
+        column-count: 2 !important;
+        column-gap: 8px !important;
     }
 
-    /* Wall title */
+    .media img {
+        margin-bottom: 8px !important;
+    }
+
+    .media-nav a {
+        padding: 7px 12px !important;
+        font-size: 13px !important;
+    }
+
+
+    /* =====================================================
+       MESSAGE WALL
+       ===================================================== */
+
+    #wall {
+        padding: 45px 15px !important;
+    }
+
     .wall-title {
         font-size: 3rem !important;
-        line-height: 1.1;
+        line-height: 1.1 !important;
+        text-align: center !important;
     }
 
-    /* Footer */
+    #wall > div {
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
+    }
+
+    .note {
+        font-size: 19px !important;
+        padding: 18px !important;
+    }
+
+    .note:hover {
+        transform: none !important;
+    }
+
+
+    /* =====================================================
+       FOOTER
+       ===================================================== */
+
+    .memory-footer {
+        margin-top: 50px !important;
+        padding: 40px 15px !important;
+    }
+
     .footer-content h2 {
-        font-size: 32px;
+        font-size: 32px !important;
     }
 
     .footer-content p {
-        font-size: 20px;
+        font-size: 20px !important;
     }
 
     .footer-links {
-        gap: 15px;
+        gap: 15px !important;
+        flex-wrap: wrap !important;
     }
+
+    .footer-links a {
+        font-size: 14px !important;
+    }
+
+    .copyright {
+        font-size: 14px !important;
+    }
+
 }
-```
