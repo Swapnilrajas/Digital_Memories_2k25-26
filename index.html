@@ -1,1033 +1,1015 @@
-@font-face {
-    font-family: 'KGChasingCars';
-    src: url('../fonts/KGChasingCars.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: 'PatchworkStitchlings';
-    src: url('../fonts/PatchworkStitchlings.ttf') format('truetype');
-}
-
-@font-face{
-font-family:'Alphazet-SemiBold';
-src:url('../fonts/Alphazet-SemiBold.ttf') format('truetype');
-}
-
-@font-face{
-font-family:'Alphazet-Light';
-src:url('../fonts/Alphazet-Light.ttf') format('truetype');
-}
-
-@font-face{
-font-family:'Cinzel-Regular';
-src:url('../fonts/Cinzel-Bold.otf') format('truetype');
-}
-
-@font-face{
-font-family:'ZenithaClassic';
-src:url('../fonts/ZenithaClassic_PERSONAL_USE_ONLY.otf') format('truetype');
-}
-
-body{
-    -webkit-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select:none;
-}
-
-body{
-    background:
-        radial-gradient(circle at 20% 20%, #e1c56a 0%, transparent 30%),
-        radial-gradient(circle at 80% 30%, #9de5f3 0%, transparent 35%),
-        radial-gradient(circle at 60% 80%, #ffa2ca 0%, transparent 30%),
-        linear-gradient(135deg,#f8f8f8,#ececec);
-}
-
-body::before{
-    content:"";
-    position:fixed;
-    inset:-20%;
-    background:inherit;
-    filter:blur(60px);
-    animation:bgMove 20s ease-in-out infinite alternate;
-    z-index:-2;
-}
-
-@keyframes bgMove{
-    from{transform:translate(-3%,-3%);}
-    to{transform:translate(3%,3%);}
-}
+<!DOCTYPE html>
 
-body{
-    animation: pageLoad 1.2s ease;
-}
+<html lang="en">
+<head>
 
-@keyframes pageLoad{
-    from{
-        opacity:0;
-        transform:translateY(20px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-.glow{
-    animation: floatGlow 8s ease-in-out infinite;
-}
+<title>Batch 2k25-26</title>
 
-@keyframes floatGlow{
-    0%,100%{
-        transform:translateY(0px) scale(1);
-    }
-    50%{
-        transform:translateY(-30px) scale(1.1);
-    }
-}
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="css/style.css">
 
-.achieve-title{
-    animation:titleFloat 4s ease-in-out infinite;
-}
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Poppins:wght@300;400&family=Caveat:wght@500&display=swap" rel="stylesheet">
 
-@keyframes titleFloat{
-    0%,100%{
-        transform:translateY(0);
-    }
-    50%{
-        transform:translateY(-8px);
-    }
-}
+</head>
 
-.start-btn{
-    transition:.4s;
-    position:relative;
-    overflow:hidden;
-}
+<body>
 
-.start-btn::before{
-    content:"";
-    position:absolute;
-    left:-120%;
-    top:0;
-    width:100%;
-    height:100%;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,.7),
-        transparent
-    );
-}
+<!-- HERO -->
 
-.start-btn:hover::before{
-    animation:shine .8s;
-}
+<section id="hero" class="min-h-screen relative overflow-hidden p-10">
+   
+      <!-- Left Polaroid - Pushed to the edge -->
 
-@keyframes shine{
-    to{
-        left:130%;
-    }
-}
 
-#journey img{
-transition:.6s;
-}
-#journey img:hover{
-transform:
-scale(1.05)
-rotate(1deg);
-box-shadow:
-0 20px 50px rgba(0,0,0,.35);
-}
-.student{
-transition:.5s;
-}
-.student:hover{
-transform:
-translateY(-12px);
-}
-.student img{
-transition:.7s;
-}
-.student:hover img{
-transform:scale(1.12);
-filter:brightness(1.1);
-}
-.line-divide{
-height:3px;
-width:1200px;
-background:#4e4e4e;
-margin:30px auto;
-opacity:.5;
-}
-.note{
-transition:.4s;
-transform:rotate(-2deg);
-}
-.note:nth-child(even){
-transform:rotate(2deg);
-}
-.note:hover{
-transform:
-rotate(0deg)
-scale(1.08);
-box-shadow:
-0 18px 40px rgba(0,0,0,.35);
-}
-.play-icon{
-animation:pulsePlay 2s infinite;
-}
-@keyframes pulsePlay{
-0%{
-transform:translate(-50%,-50%) scale(1);
-}
-50%{
-transform:translate(-50%,-50%) scale(1.2);
-}
-100%{
-transform:translate(-50%,-50%) scale(1);
-}
-}
-.reveal{
-opacity:0;
-transform:translateY(80px);
-transition:1s;
-}
-.reveal.active{
-opacity:1;
-transform:translateY(0);
-}
+    <!-- Top Left Doodle/Text -->
+    <!-- MAIN CENTER CONTENT -->
+    <div class="flex flex-col items-center justify-center mt-20 z-10 relative">
+        <span class="font-['Caveat'] text-xl mt-2 mb-[-10px]">OUR STORY • OUR MEMORIES</span>
+        <h1 class="text-6xl mt-5 achieve-title text-slate-900 text-center">
+            Batch </h1>
 
+        <h1 class="text-6xl mt-10 achieve-title text-slate-900 text-center">    
+            <span class="text-pink-400">2k25</span>-<span class="text-blue-400">2026</span>
+        </h1>
+        
+        <h2 class="font-['Caveat'] text-4xl mt-10 bg-yellow-100 px-4 py-1 rounded-lg rotate-1">
+            Digital Memories ❤️
+        </h2>
 
-body::after{
-content:"";
-position:fixed;
-width:300%;
-height:300%;
-background:
-radial-gradient(circle,
-rgba(255,255,255,.03) 0%,
-transparent 60%);
-
-animation:bgMove 40s linear infinite;
-pointer-events:none;
-z-index:-1;
-}
+        <p class="mt-6 text-slate-700 max-w-md text-lg px-10 text-center">
+            A journey of shared moments, laughter and memories that will stay <span class="underline decoration-pink-400">forever.</span>
+        </p>
 
-@keyframes bgMove{
-0%{
-transform:translate(-10%,-10%);
-}
-100%{
-transform:translate(10%,10%);
-}
-}
+        <button onclick="startSite()" 
+            class="start-btn mt-8 flex items-center gap-8">
+            START THE JOURNEY <span>→</span>
+        </button>
 
-/* glow hero */
-.glow{
-position:absolute;
-width:700px;
-height:700px;
-border-radius:50%;
-background:radial-gradient(circle,#00e1ff70,#003cff70,transparent 70%);
-animation:pulse 5s infinite;
-}
+    <!-- Right Polaroid - Pushed to the edge -->
 
-@keyframes pulse{
-0%,100%{opacity:.3;transform:scale(1)}
-50%{opacity:.9;transform:scale(1.2)}
-}
 
-/* navbar */
-.navbar{
-    position: sticky;
-    top: 15px;
-    z-index: 1000;
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+</section>
 
-    width: 92%;
-    margin: 20px auto;
-    padding: 14px 28px;
 
-    background: rgba(255,255,255,0.35);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+<!-- WEBSITE -->
 
-    border: 1px solid rgba(255,255,255,0.4);
-    border-radius: 20px;
+<div id="site" class="hidden">
 
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.12),
-        inset 0 1px 0 rgba(255,255,255,.5);
+<!-- NAVBAR -->
 
-    transition: .35s;
-}
+<div class="media-nav grid grid-cols-2 md:grid-cols-2 gap-4 px-10 py-4">
+    <!-- Memories Card -->
+    <button onclick="openTab('media',this)" class="sketch-card bg-[#fff9c4]">
+        <div class="flex items-center gap-3">
+            <span class="text-4xl">🖼️</span>
+            <div class="text-center">
+                <p class="font-bold uppercase text-slate-700">Memories</p>
+                <p class="text-[12px]">Photos & Moments</p>
+            </div>
+        </div>
+    </button>
 
-.navbtn{
-    background: transparent;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: .3s;
-    font-family: 'Cinzel-Regular';
-}
+    <!-- Classmates Card -->
+    <button onclick="openTab('yearbook',this)" class="sketch-card bg-[#e1f5fe]">
+        <div class="flex items-center gap-3">
+            <span class="text-4xl">👥</span>
+            <div class="text-center">
+                <p class="font-bold uppercase text-slate-700">Classmates</p>
+                <p class="text-[12px]">Our Amazing People</p>
+            </div>
+        </div>
+    </button>
+    
+    <!-- Add more cards for Messages, Videos, and Specials -->
+</div>
 
-.navbtn:hover{
-    background: rgba(255,255,255,.35);
-    backdrop-filter: blur(10px);
-    transform: translateY(-2px);
-}
 
-.navbtn.active{
-    background: rgba(255,213,0,.9);
-    color: black;
-    box-shadow: 0 5px 20px rgba(255,213,0,.35);
-}
+<div class="navbar flex justify-between items-center px-5 md:px-10 py-4">
 
-.start-btn {
-    background-color: #c5b4e3; /* Light purple from the image */
-    border: 5px solid #333;
-    padding: 15px 40px;
-    border-radius: 50px;
-    font-family: 'Alphazet-SemiBold';
-    font-size: 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: transform 0.2s;
-}
+    <!-- LEFT SIDE -->
+    <div class="flex items-center gap-2 font-semibold text-lg">
+        <img src="icon.png" class="w-10 h-10">
+        <span>Batch 2k25-26</span>
+    </div>
 
-.start-btn:hover {
-    transform: scale(1.05);
-    background-color: #b3a2d1;
-}
+    <!-- MOBILE MENU BUTTON -->
+<button
+    class="mobile-menu-btn"
+    id="mobileMenuBtn"
+    type="button"
+    aria-label="Open navigation menu"
+    aria-controls="navLinks"
+    aria-expanded="false"
+>
+    ☰
+</button>
 
-.media-nav a {
-    border: 5px solid #333;
-    border-radius: 12px;
-    font-weight: bold;
-    /* Use the colors from the image */
-    background: #ecd502; /* Yellow for Memories */
-}
+    <!-- RIGHT SIDE -->
+    <div id="navLinks" class="nav-links flex items-center gap-8 text-slate-700 font-[Cinzel-Regular]">
 
-/* Example of color variations for different buttons */
-.media-nav a:nth-child(2) { background: #f5f8f9; } /* Blue for Classmates */
-.media-nav a:nth-child(3) { background: #ebe9ea; } /* Pink for Messages */
-
-
-/* tabs */
-.tab{
-display:none;
-padding:120px 60px;
-opacity:0;
-transform:translateY(40px);
-transition:all .6s ease;
-}
+        <button class="navbtn active" onclick="openTab('journey',this)">
+            The Journey
+        </button>
 
-.tab.active{
-display:block;
-opacity:1;
-transform:translateY(0);
-}
+        <button class="navbtn" onclick="openTab('yearbook',this)">
+            Yearbook
+        </button>
 
-.journey-separator{
-position:relative;
-width:100%;
-height:80px;
-display:flex;
-align-items:center;
-justify-content:center;
-margin:80px 0;
-}
+        <button class="navbtn" onclick="openTab('media',this)">
+            Media Vault
+        </button>
 
-.journey-separator .circle{
-position:relative;
-background:#000;
-border:4px solid #fac415;
-color:#facc15;
-padding:10px 22px;
-border-radius:50px;
-font-size:14px;
-font-weight:500;
-}
+        <a href="arcade.html">🎮 GAMES</a>
 
-/* media vault */
-.achieve-title{
-font-family:'PatchworkStitchlings' !important;
-}
+        <button class="navbtn" onclick="openTab('wall',this)">
+            The Wall
+        </button>
 
-.masonry{
-column-count:4;
-column-gap:16px;
-}
+        <a href="https://instagram.com/memories_westillcarry?igsh=MTMwcThiNTMxM25zcQ=="
+           target="_blank"
+           rel="noopener"
+           class="border border-yellow-400 px-4 py-1 rounded-full">
+            Visit Instagram
+        </a>
 
-.media{
-position:relative;
-}
-.media img{
-width:100%;
-margin-bottom:16px;
-border-radius:10px;
-transition:.4s;
-}
+    </div>
+</div>
 
-.media:hover img{
-border:2px solid black;
-transform:scale(1.05);
-}
 
-.media span{
-position:absolute;
-bottom:10px;
-left:10px;
-background:black;
-padding:4px 10px;
-font-size:12px;
-border-radius:6px;
-opacity:0;
-transition:.3s;
-}
+<!-- JOURNEY TAB -->
 
-.media:hover span{
-opacity:1;
-}
+<section id="journey" class="tab active">
 
-/* notes */
-.note{
-font-family:'Caveat', cursive;
-font-size:22px;
-}
+<h2 class="meet-boo text-6xl mb-15">
+The Journey
+</h2>
 
-.wall-title{
-font-family:'KGChasingCars', cursive;
-}
+<!-- Story 1 -->
 
-.author{
-color:red;
-font: weight 6px bold;
-display:block;
-margin-top:6px;
-text-align:right;
-}
+<div class="flex flex-col md:flex-row gap-10 items-center">
 
-.meet-btn{
-font-family:'Cinzel-Regular'!important;
-letter-spacing:1px;
-}
+<img src="images/day3.jpg" class="rounded-xl w-[600px]">
+This was the day we walked together for the first time.
+A simple moment that turned into unforgettable memories.
+<div class="max-w-md">
+<p class="text-white-300">
 
-.meet-boo{
-font-family:'ZenithaClassic'!important;
-letter-spacing:1px;
-}
+</p>
+</div>
 
-.galleryImg,
-.galleryVideo{
-width:100%;
-border-radius:12px;
-}
+</div>
 
-.video-thumb{
-position:relative;
-}
+<div class="journey-separator">
+    <div class="line"></div>
+    <div class="circle"></div>
+</div>
 
-.play-icon{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-font-size:40px;
-color:white;
-background:rgba(0,0,0,0.6);
-padding:10px 16px;
-border-radius:50%;
-}
+<!-- Story 2 -->
 
-.media-nav{
-display:flex;
-gap:20px;
-margin-bottom:30px;
-}
+<div class="flex flex-col md:flex-row-reverse gap-10 items-center">
 
-.media-nav a{
-padding:8px 18px;
-border-radius:20px;
-background:#222;
-color:white;
-text-decoration:none;
-transition:0.3s;
-}
+<img src="images/day1.jpg" class="rounded-xl w-[600px]">
+Not just scribbles on our shirts, but memories written on our hearts
+No matter where life takes us, this moment will stay with us forever.
+<div class="max-w-md">
+<p class="text-white-300">
 
-.media-nav a:hover{
-background:#ffd500;
-color:black;
-}
+</p>
+</div>
 
-/* FOOTER */
-.memory-footer{
-margin-top:100px;
-padding:50px 20px;
-background:
-linear-gradient(
-to bottom,
-#0b0b0b,
-#17120c
-);
-
-text-align:center;
-color:white;
-border-top:1px solid rgba(255,255,255,.1);
-}
+</div>
 
-.footer-content h2{
-font-family:'Playfair Display',serif;
-font-size:45px;
-letter-spacing:2px;
-color:#facc15;
-}
+<div class="journey-separator">
+    <div class="line"></div>
+    <div class="circle"></div>
+</div>
 
-.footer-content p{
-font-family:'Caveat',cursive;
-font-size:25px;
-margin-top:15px;
-color:#ddd;
-}
+<!-- Story 3 -->
 
-.footer-line{
-height:1px;
-width:250px;
-background:#eab308;
-margin:30px auto;
-opacity:.5;
-}
-.footer-links{
-display:flex;
-justify-content:center;
-gap:30px;
-flex-wrap:wrap;
-}
-.footer-links a{
-color:#ddd;
-font-family:'Poppins',sans-serif;
-transition:.3s;
-}
-.footer-links a:hover{
-color:#facc15;
-}
-.copyright{
-margin-top:35px;
-font-size:18px !important;
-opacity:.7;
-}
-.write-note-box{
-background:#fff8dc;
-padding:30px;
-border-radius:20px;
-max-width:600px;
-margin:0 auto 50px;
-text-align:center;
-color:#222;
-box-shadow:0 10px 30px #0003;
-}
-.write-note-box h2{
-font-family:'Caveat',cursive;
-font-size:40px;
-}
-.write-note-box input,
-.write-note-box textarea{
-width:100%;
-padding:12px;
-margin:10px;
-border-radius:10px;
-border:1px solid #ccc;
-font-family:'Poppins';
-}
-.write-note-box textarea{
-height:120px;
-resize:none;
-}
-.write-note-box button{
-background:#eab308;
-padding:12px 25px;
-border-radius:30px;
-font-weight:bold;
-}
-.user-note{
-background:white;
-color:black;
-padding:20px;
-border-radius:10px;
-font-family:'Caveat',cursive;
-font-size:22px;
-}
+<div class="flex flex-col md:flex-row gap-10 items-center">
 
-/* MOBILE NAVBAR */
-.mobile-menu-btn {
-    display: none;
-    font-size: 28px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #334155;
-}
+<img src="images/day2.jpg" class="rounded-xl w-[600px]">
+From classmates to lifelong memories, this journey meant everything.
+Today we say goodbye, but the memories will never leave us.
+<div class="max-w-md">
+<p class="text-white-300">
 
-/* MOBILE */
-/* =========================================================
-   MOBILE RESPONSIVE DESIGN
-   ========================================================= */
-
-@media (max-width: 768px) {
-
-    /* ---------- GENERAL ---------- */
-
-    html,
-    body {
-        width: 100%;
-        max-width: 100%;
-        overflow-x: hidden;
-    }
-
-    * {
-        box-sizing: border-box;
-    }
-
-    /* ---------- HERO ---------- */
-
-    #hero {
-        min-height: 100vh !important;
-        padding: 20px !important;
-        overflow: hidden;
-    }
-
-    #hero > div {
-        margin-top: 80px !important;
-    }
-
-    #hero h1 {
-        font-size: 3rem !important;
-        line-height: 1.1 !important;
-        margin-top: 15px !important;
-    }
-
-    #hero h2 {
-        font-size: 2rem !important;
-        margin-top: 25px !important;
-    }
-
-    #hero p {
-        font-size: 16px !important;
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-    }
-
-    .start-btn {
-        font-size: 15px !important;
-        padding: 13px 22px !important;
-        border-width: 3px !important;
-    }
-
-
-    /* =====================================================
-       TOP MEMORY / CLASSMATES CARDS
-       ===================================================== */
-
-    .media-nav {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important;
-        gap: 10px !important;
-        padding: 10px !important;
-        margin-bottom: 15px !important;
-    }
-
-    .media-nav button {
-        min-width: 0 !important;
-        padding: 10px 5px !important;
-    }
-
-    .media-nav button span {
-        font-size: 25px !important;
-    }
-
-    .media-nav button p {
-        font-size: 10px !important;
-    }
-
-
-    /* =====================================================
-       NAVBAR
-       ===================================================== */
-
-    .navbar {
-        width: calc(100% - 20px) !important;
-        margin: 10px auto !important;
-        padding: 10px 14px !important;
-        border-radius: 16px !important;
-        position: sticky !important;
-        top: 8px !important;
-    }
-
-    .navbar > div:first-child span {
-        font-size: 14px !important;
-    }
-
-    .navbar > div:first-child img {
-        width: 34px !important;
-        height: 34px !important;
-    }
-
-    .mobile-menu-btn {
-        display: block !important;
-        font-size: 27px !important;
-        padding: 0 !important;
-    }
-
-    .nav-links {
-        display: none !important;
-
-        position: absolute !important;
-        top: calc(100% + 8px) !important;
-        left: 0 !important;
-        right: 0 !important;
-
-        flex-direction: column !important;
-        align-items: stretch !important;
-
-        gap: 4px !important;
-        padding: 10px !important;
-
-        border-radius: 16px !important;
-
-        background: rgba(255,255,255,.97) !important;
-        backdrop-filter: blur(15px);
-
-        box-shadow: 0 15px 35px rgba(0,0,0,.18);
-
-        z-index: 9999 !important;
-    }
-
-    .nav-links.active {
-        display: flex !important;
-    }
-
-    .nav-links button,
-    .nav-links a {
-        width: 100% !important;
-        padding: 12px 8px !important;
-        text-align: center !important;
-        font-size: 14px !important;
-    }
-
-    .nav-links .navbtn.active {
-        background: rgba(255,213,0,.9) !important;
-    }
-
-
-    /* =====================================================
-       ALL TABS
-       ===================================================== */
-
-    .tab {
-        padding: 50px 18px !important;
-    }
-
-
-    /* =====================================================
-       JOURNEY
-       ===================================================== */
-
-    #journey {
-        padding: 45px 18px !important;
-    }
-
-    .meet-boo {
-        font-size: 3rem !important;
-        text-align: center !important;
-        margin-bottom: 35px !important;
-    }
-
-    #journey > div {
-        max-width: 100% !important;
-    }
-
-    #journey img {
-        width: 100% !important;
-        max-width: 100% !important;
-        height: auto !important;
-        object-fit: cover !important;
-    }
-
-    #journey .max-w-md {
-        width: 100% !important;
-        max-width: 100% !important;
-    }
-
-    .journey-separator {
-        height: 45px !important;
-        margin: 35px 0 !important;
-    }
-
-    .journey-separator .line {
-        max-width: 80% !important;
-    }
-
-    #journey .meet-btn {
-        margin-top: 30px !important;
-    }
-
-
-    /* =====================================================
-       YEARBOOK
-       ===================================================== */
-
-    #yearbook {
-        padding: 45px 12px !important;
-    }
-
-    #yearbook h1 {
-        font-size: 2.7rem !important;
-        line-height: 1.15 !important;
-    }
-
-    #yearbook > div {
-        max-width: 100% !important;
-    }
-
-    /* Search */
-
-    #yearbook input {
-        width: 100% !important;
-        margin: 0 !important;
-    }
-
-    #yearbook .w-full.px-14 {
-        padding-left: 5px !important;
-        padding-right: 5px !important;
-    }
-
-    /* Alphabet */
-
-    #yearbook .flex.flex-wrap {
-        gap: 5px !important;
-    }
-
-    #yearbook .flex.flex-wrap button {
-        padding: 6px 9px !important;
-        font-size: 12px !important;
-    }
-
-    /* Student grid */
-
-    #yearbook .grid {
-        grid-template-columns: 1fr 1fr !important;
-        gap: 12px !important;
-    }
-
-    .student {
-        width: 100% !important;
-        max-width: 100% !important;
-    }
-
-    .student img {
-        width: 100% !important;
-        height: 220px !important;
-        object-fit: cover !important;
-    }
-
-    .student h3 {
-        font-size: 12px !important;
-    }
-
-    /* Disable huge hover movement on mobile */
-
-    .student:hover {
-        transform: none !important;
-    }
-
-    .student:hover img {
-        transform: none !important;
-    }
-
-    .line-divide {
-        width: 90% !important;
-    }
-
-
-    /* =====================================================
-       MEDIA VAULT
-       ===================================================== */
-
-    #media {
-        padding: 45px 15px !important;
-    }
-
-    #media .achieve-title {
-        font-size: 2.8rem !important;
-        text-align: center !important;
-    }
-
-    #media p {
-        text-align: center !important;
-    }
-
-    .masonry {
-        column-count: 2 !important;
-        column-gap: 8px !important;
-    }
-
-    .media img {
-        margin-bottom: 8px !important;
-    }
-
-    .media-nav a {
-        padding: 7px 12px !important;
-        font-size: 13px !important;
-    }
-
-
-    /* =====================================================
-       MESSAGE WALL
-       ===================================================== */
-
-    #wall {
-        padding: 45px 15px !important;
-    }
-
-    .wall-title {
-        font-size: 3rem !important;
-        line-height: 1.1 !important;
-        text-align: center !important;
-    }
-
-    #wall > div {
-        grid-template-columns: 1fr !important;
-        gap: 18px !important;
-    }
-
-    .note {
-        font-size: 19px !important;
-        padding: 18px !important;
-    }
-
-    .note:hover {
-        transform: none !important;
-    }
-
-
-    /* =====================================================
-       FOOTER
-       ===================================================== */
-
-    .memory-footer {
-        margin-top: 50px !important;
-        padding: 40px 15px !important;
-    }
-
-    .footer-content h2 {
-        font-size: 32px !important;
-    }
-
-    .footer-content p {
-        font-size: 20px !important;
-    }
-
-    .footer-links {
-        gap: 15px !important;
-        flex-wrap: wrap !important;
-    }
-
-    .footer-links a {
-        font-size: 14px !important;
-    }
-
-    .copyright {
-        font-size: 14px !important;
-    }
+</p>
+</div>
+</div>
 
-}
+<div class="journey-separator">
+    <div class="line"></div>
+    <div class="circle"></div>
+</div>
 
-/* =========================================
-   MOBILE NAVBAR - FIXED
-   ========================================= */
+<div class="flex flex-center md:flex- gap-10 items-center">
 
-/* Desktop */
-.mobile-menu-btn {
-    display: none;
-}
+<img src="images/Qr.png" class="rounded-xl w-[400px]">
+Collection of moments from a chapter we'll never live again ❤️‍🩹                                      ,                          
+A place to relive the memories we once created ❤️.....!!!
+<div class="max-w-md">
+<p class="text-slate-700">
 
-.navbar {
-    position: sticky;
-    top: 15px;
-    z-index: 1000;
-}
+</p>
+</div>
 
-/* Mobile */
-@media screen and (max-width: 768px) {
-
-    .navbar {
-        position: sticky !important;
-        top: 8px !important;
-        z-index: 1000 !important;
-        overflow: visible !important;
-    }
-
-    .mobile-menu-btn {
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        position: relative;
-        z-index: 1002;
-        width: 44px;
-        height: 44px;
-        padding: 0;
-        font-size: 27px;
-        color: #334155;
-        background: rgba(255, 255, 255, 0.7);
-        border: 1px solid rgba(255, 200, 70, 0.7);
-        border-radius: 10px;
-        cursor: pointer;
-    }
-
-    .nav-links {
-        display: none !important;
-        position: absolute !important;
-        top: calc(100% + 10px) !important;
-        left: 0 !important;
-        right: 0 !important;
-        width: 100% !important;
-        height: auto !important;
-        padding: 12px !important;
-        margin: 0 !important;
-
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: 6px !important;
-
-        background: rgba(255, 255, 255, 0.97) !important;
-        border: 1px solid rgba(255, 200, 70, 0.7);
-        border-radius: 16px;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
-
-        z-index: 1001 !important;
-    }
-
-    .nav-links.active {
-        display: flex !important;
-    }
-
-    .nav-links a,
-    .nav-links button {
-        display: block !important;
-        width: 100% !important;
-        padding: 12px 8px !important;
-        margin: 0 !important;
-        text-align: center !important;
-        box-sizing: border-box !important;
-        white-space: normal !important;
-    }
-}
+</div>
+<button onclick="openTab('yearbook')"
+class="meet-btn mt-10 border border-yellow-500 px-6 py-3 rounded-full block mx-auto hover:bg-yellow-500 hover:text-black transition">
+Meet The Class
+</button>
+
+</section>
+
+<div class="flex flex-col md:flex-row justify-between items-center gap-4">
+
+<!-- YEARBOOK -->
+
+<section id="yearbook" class="tab space-y-20 ">
+
+<!-- TOP FEATURE / HERO -->
+<div class="max-w-7xl mx-auto mb-16">
+  <!-- Title -->
+  <div class="text-center mb-10">
+    <h1 class="text-7xl font-[Cinzel-Regular] mb-4">The Class of '26</h1>
+    <p class="text-gray-400">Faces that defined our journey. Moment that became memories.</p>
+  </div>
+</div>
+
+<!-- SEARCH + ALPHABET FILTER -->
+
+<div class="max-w-18xl mx-auto mb-22">
+
+<!-- Search Bar -->
+<div class="w-full px-14 mb-22">
+<input 
+type="text" 
+id="searchInput"
+placeholder="Search student name..."
+class="w-full p-3 rounded-lg bg-black/40 border border-gray-600 text-white mb-6"
+onkeyup="searchStudent()"
+>
+
+<div class="max-w-14xl mx-auto">
+<!-- Alphabet Buttons -->
+<div class="flex flex-wrap gap-2 justify-center mb-10">
+
+<button onclick="filterLetter('all')" class="px-3 py-1 bg-yellow-500 text-black rounded">All</button>
+
+<script>
+let skip = ['E','F','H','Q','W','X','Z'];
+
+for(let i=65;i<=90;i++){
+let letter = String.fromCharCode(i);
+
+if(!skip.includes(letter)){
+document.write(`<button onclick="filterLetter('${letter}')" class="px-3 py-1 bg-white/10 rounded">${letter}</button>`);
+}
+}
+</script>
+
+</div>
+
+<!-- Students Card-->
+<div class="max-w-7xl mx-auto"> 
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center "> 
+
+<!-- Aditya Bele --> 
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" > 
+<img src="images/aditya-bele.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110"> 
+<div class="absolute bottom-0 left-0 flex items-end opacity-0 group-hover:opacity-100 transition duration-500 
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4"> 
+<h3 class="text-white text-lg font-semibold">Aditya Bele</h3> 
+</div> 
+</div> 
+
+<!-- Aditya Arya --> 
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" > 
+<img src="images/aditya-arya.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110"> 
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500 
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4"> 
+<h3 class="text-white text-lg font-semibold">Aditya Arya</h3> 
+</div> 
+</div>
+
+<!-- Alisha Khan -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/alisha-khan.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Alisha Khan</h3>
+</div>
+</div>
+
+<!-- Altasha Khan -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/altasha-khan.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Altasha Khan</h3>
+</div>
+</div>
+
+<!-- Ansh -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/ansh.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Ansh Ambrose Tirkey</h3>
+</div>
+</div>
+
+<!-- Anugrah Yadav -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/anugrah-yadav.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Anugrah Yadav</h3>
+</div>
+</div>
+
+<!-- Anushka Arya -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/anushka-arya.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Anushka Arya</h3>
+</div>
+</div>
+
+<!-- Arpita Suryawanshi -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/arpita.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Arpita Suryawanshi</h3>
+</div>
+</div>
+
+<!-- Balueet -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/baljeet.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Baljeet Kaur</h3>
+</div>
+</div>
+
+<!-- Bhavya Gugnani -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/bhavya.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Bhavya Gugnani</h3>
+</div>
+</div>
+
+<!-- Bhumika Pawar -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/bhumika.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Bhumika Pawar</h3>
+</div>
+</div>
+
+<!-- Bilal Ahmed -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/bilal-ahmed.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Bilal Ahmed</h3>
+</div>
+</div>
+
+<!-- Chetna Mahale -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/chetna-mahale.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Chetna Mahale</h3>
+</div>
+</div>
+
+<!-- Devansh Kanere -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/devansh-kanere.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Devansh Kanere</h3>
+</div>
+</div>
+
+<!-- Diple Baraskar -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/dimple-baraskar.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Dimple Baraskar</h3>
+</div>
+</div>
+
+<!-- Gayatri -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/gayatri-dhurve.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Gayatri Dhurve</h3>
+</div>
+</div>
+
+<!-- Isha Pawar -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/isha-pawar.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Isha Pawar</h3>
+</div>
+</div>
+
+<!-- Kanak Bihariya -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/kanak.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Kanak Bihariya</h3>
+</div>
+</div>
+
+<!-- Ketika Makode -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/ketika.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Ketika Makode</h3>
+</div>
+</div>
+
+<!-- Kratika Mokhede -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/kratika.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Kratika Mokhede</h3>
+</div>
+</div>
+
+<!-- Kushal Chourasia -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/kushal.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Kushal Chourasia</h3>
+</div>
+</div>
+
+<!-- Laxmi Mishra -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/lakshmi-mishra.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Laxmi Mishra</h3>
+</div>
+</div>
+
+<!-- Mahak Choudhary -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/mahak-choudhary.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Mahak Choudhary</h3>
+</div>
+</div>
+
+<!-- Mahvish Siddique -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/mahvish.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Mahvish Siddique</h3>
+</div>
+</div>
+
+<!-- Manish Warte -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/manish.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Manish Warte</h3>
+</div>
+</div>
+
+<!-- Navalk Khakare -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/naval-khakre.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Naval Khakre</h3>
+</div>
+</div>
+
+<!-- Niharika Baraskar -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/niharika-baraskar.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Niharika Baraskar</h3>
+</div>
+</div>
+
+<!-- Nikhil Thakre -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/nikhil-thakre.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Nikhil Thakre</h3>
+</div>
+</div>
+
+<!-- Oshiyan Sarle -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/oshiyan-sarle.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Oshiyan Sarle</h3>
+</div>
+</div>
+
+<!-- Palak Dange -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/palak.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Palak Dange</h3>
+</div>
+</div>
+
+<!-- Payal Parihar -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/payal-parihar.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Payal Parihar</h3>
+</div>
+</div>
+
+<!-- Piyush -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/piyush.png" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Piyush Nagle</h3>
+</div>
+</div>
+
+<!-- Prajwal Chourasiya -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/prajwal-chourasiya.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Prajwal Chourasiya</h3>
+</div>
+</div>
+
+<!-- Rashi Pandagre -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/rashi.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Rashi Pandagre</h3>
+</div>
+</div>
+
+<!-- Rishabh Likhitkar -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/rishabh-likhitkar.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Rishabh Likhitkar</h3>
+</div>
+</div>
+
+<!-- Sakshi Pandagre -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/sakshi.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Sakshi Pandagre</h3>
+</div>
+</div>
+
+<!-- Shrajal Dhamore -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/shrajal.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Shrajal Dhamore</h3>
+</div>
+</div>
+
+
+<!-- Shreya Soni -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/shreya-soni.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Shreya Soni</h3>
+</div>
+</div>
+
+<!-- Shreyansh Gujare -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/shreyansh-gujre.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Shreyansh Gujare</h3>
+</div>
+</div>
+
+<!-- Shrirang Ambekar -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/shrirang-ambekar.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Shrirang Ambekar</h3>
+</div>
+</div>
+
+<!-- Soumya Masodkar -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/soumya-masodkar.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Soumya Masodkar</h3>
+</div>
+</div>
+
+<!-- Sphurna Rathore -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/sphurna-rathore.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Sphurna Rathore</h3>
+</div>
+</div>
+
+<!-- Sudha Tekam -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/sudha.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Sudha Tekam</h3>
+</div>
+</div>
+
+<!-- Sudiksha -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/sudiksha.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Sudiksha Shukla</h3>
+</div>
+</div>
+
+<!-- Swapnil -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/swapnil.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Swapnil Rajas</h3>
+</div>
+</div>
+
+<!-- Tejas Baraskar -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/tejas-barskar.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Tejas Baraskar</h3>
+</div>
+</div>
+
+<!-- Umang -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/umang.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Umang Magarde</h3>
+</div>
+</div>
+
+<!-- Vaishnavi Malvi -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/vaishnavi-malvi.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Vaishnavi Malvi</h3>
+</div>
+</div>
+
+
+<!-- Vaishnavi Lokhande -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/vaishnavi-lokhande.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Vaishnavi Lokhande</h3>
+</div>
+</div>
+
+<!-- Vanshika Sahu -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/vanshika-sahu.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Vanshika Sahu</h3>
+</div>
+</div>
+
+<!-- Vedant Satpute -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/vedant-satpute.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Vedant Satpute</h3>
+</div>
+</div>
+
+<!-- Vikrant -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/vikrant.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Vikrant Singh Thakur</h3>
+</div>
+</div>
+
+<!-- Yash -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/yash-deshmukh.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Yash Deshmukh</h3>
+</div>
+</div>
+
+<!-- Yashika Dharmade -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/yashika-dharmade.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Yashika Dharmade</h3>
+</div>
+</div>
+
+<!-- Yogita Kudare -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/yogita-kudare.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Yogita Kudare</h3>
+</div>
+</div>
+
+<!-- Yogita Ghore -->
+<div class="student group relative overflow-hidden rounded-xl w-[260px]" >
+<img src="images/yogita-ghore.jpg" class="w-full h-80 object-cover transition duration-500 group-hover:scale-110">
+<div class="absolute bottom-0 left-0 p-4 flex items-end opacity-0 group-hover:opacity-100 transition duration-500
+bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+<h3 class="text-white text-lg font-semibold">Yogita Ghore</h3>
+</div>
+</div>
+    <div class="line-divide"></div>
+</div>
+
+</div>
+<button onclick="openTab('media')"
+class="meet-btn mt-10 border border-yellow-500 px-6 py-3 rounded-full block mx-auto hover:bg-yellow-500 hover:text-black transition">
+The Collection
+</button>
+
+
+</section>
+
+<!-- MEDIA VAULT -->
+
+<section id="media" class="tab">
+
+<h2 class="achieve-title text-4xl mb-10">
+Media Vault
+</h2>
+
+<p class="text mb-10">
+A collection of unforgettable moments.
+</p>
+
+<!-- TOP NAVIGATION -->
+<div class="media-nav">
+
+<a href="#images">Images</a>
+
+</div>
+
+<!-- IMAGES -->
+<h3 id="images"  class="text-2xl mb-6">Images</h3>
+<div class="masonry image-grid"></div>
+
+<button onclick="openTab('wall')"
+class="meet-btn mt-10 border border-yellow-500 px-6 py-3 rounded-full block mx-auto hover:bg-yellow-500 hover:text-black transition">
+Note from the one's
+</button>
+
+</div>
+
+</section>
+
+<!-- WALL -->
+
+<section id="wall" class="tab">
+
+<h2 class="wall-title text-8xl text-center mb-10">
+Message Wall of Reflection
+</h2>
+
+<div class="grid md:grid-cols-4 gap-6">
+
+<div class="note bg-white text-black p-5 rounded">
+Memories bring back memories.<br>
+<span class="author">~Ketika</span>
+</div>
+
+<div class="note bg-white text-black p-5 rounded">
+Last year with some good memories.<br>
+<span class="author">~Chetna</span>
+</div>
+
+<div class="note bg-white text-black p-5 rounded">
+Maths vali mam ka Fav student.<br>
+<span class="author">~Nikhil </span>
+</div>
+
+<div class="note bg-white text-black p-5 rounded">
+mai galat sangati mai galat samaye pr<br>
+<span class="author">~Tejas</span>
+</div>
+
+<div class="note bg-white text-black p-5 rounded">
+Best year Best memories with best peoples.<br>
+<span class="author">~Niharika</span>
+</div>
+
+
+<div class="note bg-white text-black p-5 rounded">
+Hamare school life ke kuch aakhri lamhe ....<br>
+<span class="author">~Vaishnavi Malvi</span>
+</div>
+
+<div class="note bg-white text-black p-5 rounded">
+Don't be sad because it ended 
+Smile becoz it happened.<br>
+<span class="author">~</span>
+</div>
+
+
+<div class="note bg-white text-black p-5 rounded">
+Bas yaad ayegi toh ye 50 saal purane school ki.<br>
+<span class="author">~Kratika</span>
+</div>
+
+
+<div class="note bg-white text-black p-5 rounded">
+chutti laga do yaar (holidays).<br>
+<span class="author">~Payal</span>
+</div>
+
+
+<div class="note bg-white text-black p-5 rounded">
+Ban gaye hum azaad panchi.<br>
+<span class="author">~Sakshi</span>
+</div>
+
+<div class="note bg-white text-black p-5 rounded">
+Last Exam of school life.<br>
+<span class="author">~Soumya</span>
+</div>
+
+<div class="note bg-white text-black p-5 rounded">
+we didn't realise we were making memories =, we just knew we were having fun.<br>
+<span class="author">~Naval</span>
+</div>
+
+<div class="note bg-white text-black p-5 rounded">
+School friends are the only treasure that time can never steal.<br>
+<span class="author">~Anugrah</span>
+</div>
+
+<div class="note bg-white text-black p-5 rounded">
+Best time of life 🥹.<br>
+<span class="author">~Arpita</span>
+</div>
+
+<div class="note bg-white text-black p-5 rounded">
+I guess our school life ends here, we'll go out separate ways and hope that we'll see each other somewhere in future doing something meaningful.<br>
+<span class="author">~Mahak</span>
+</div>
+
+<div class="note bg-white text-black p-5 rounded">
+Hard to relive the days we laughed,learned and spent together.<br>
+<span class="author">~Swapnil</span>
+</div>
+
+<div class="note bg-white text-black p-5 rounded">
+I'm so glad that, how lucky am I to have something that make saying goodbye so hard... 🌞
+It's a new jerney, so may you all achieve what you deserve 🍀
+((Aur han... Koi festival pr hangout toh banta hai ⭐ ))😝.<br>
+<span class="author">~Shreya Soni</span>
+</div>
+
+<div class="note bg-white text-black p-5 rounded">
+Hey everyone,
+I just wanted to take a moment to say that being part of this batch with all of you was truly special. We might be moving in different directions now, but the memories, fun moments, and even the struggles we shared will always stay with me.
+I learned a lot from you all—both in studies and in life. Wishing each one of you success, happiness, and everything you’re aiming for ahead. Let’s stay connected and keep supporting each other.
+Take care and all the best for your journey ❤️.<br>
+<span class="author">~Vedant</span>
+</div>
+
+<div class="note bg-white text-black p-5 rounded">
+Last bell baj gayi, par yaadon ki awaaz hamesha saath rahegi.<br>
+<span class="author">~Parth Gupta</span>
+</div>
+
+<div class="note bg-white text-black p-5 rounded">
+Yaad to fir bhi iss 2kodi ke school ki hi aa rahi hai !!<br>
+<span class="author">~Shristy Mishra</span>
+</div>
+
+</div>
+
+</section>
+
+<script src="js/script.js"></script>
+
+
+<div id="imageViewer" class="fixed inset-0 hidden items-center justify-center bg-black/80 backdrop-blur z-50">
+  
+  <button id="closeViewer" class="absolute top-6 right-8 text-white text-4xl">&times;</button>
+
+  <img id="viewerImg" class="max-h-[90vh] max-w-[90vw] rounded-lg">
+
+</div>
+
+<!-- FOOTER -->
+
+<footer class="memory-footer">
+
+    <div class="footer-content">
+
+        <h2>
+            Batch 2k25-26
+        </h2>
+
+        <p>
+            "Some chapters end, but memories stay forever ❤️"
+        </p>
+
+
+        <div class="footer-line"></div>
+
+
+        <div class="footer-links">
+
+            <a href="#journey">
+                The Journey
+            </a>
+
+            <a href="#yearbook">
+                Yearbook
+            </a>
+
+            <a href="#media">
+                Media Vault
+            </a>
+
+            <a href="#wall">
+                The Wall
+            </a>
+
+        </div>
+
+
+        <p class="copyright">
+            Made with ❤️ by Swapnil Rajas
+        </p>
+
+
+    </div>
+
+</footer>
+
+</body>
+</html>
