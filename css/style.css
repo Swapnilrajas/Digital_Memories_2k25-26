@@ -1071,3 +1071,18 @@ body::after {
         font-size: 28px;
     }
 }
+/* YEARBOOK - 2 CARDS PER ROW ON MOBILE */
+@media (max-width: 768px) {
+
+    .yearbook-grid,
+    .students-grid,
+    .student-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+    }
+
+    .student {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+}
