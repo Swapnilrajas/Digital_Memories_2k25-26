@@ -95,10 +95,7 @@
     </div>
 
     <!-- MOBILE MENU BUTTON -->
-    <button id="menuBtn" class="mobile-menu-btn">
-        ☰
-    </button>
-
+<button class="mobile-menu-btn" type="button">☰</button>
     <!-- RIGHT SIDE -->
     <div id="navLinks" class="nav-links flex items-center gap-8 text-slate-700 font-[Cinzel-Regular]">
 
@@ -975,5 +972,45 @@ Yaad to fir bhi iss 2kodi ke school ki hi aa rahi hai !!<br>
         </p>
     </div>
 </footer>
+   <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const menuButton = document.querySelector(".mobile-menu-btn");
+    const navLinks = document.querySelector(".nav-links");
+
+    if (!menuButton || !navLinks) {
+        console.log("Mobile menu elements not found.");
+        return;
+    }
+
+    menuButton.addEventListener("click", function () {
+
+        navLinks.classList.toggle("active");
+
+        // Change hamburger icon
+        if (navLinks.classList.contains("active")) {
+            menuButton.innerHTML = "✕";
+        } else {
+            menuButton.innerHTML = "☰";
+        }
+
+    });
+
+
+    // Close menu after clicking a navigation item
+    navLinks.querySelectorAll("a, button").forEach(function (item) {
+
+        item.addEventListener("click", function () {
+
+            navLinks.classList.remove("active");
+
+            menuButton.innerHTML = "☰";
+
+        });
+
+    });
+
+});
+</script>
 </body>
 </html>
