@@ -1255,3 +1255,80 @@ img,
 video {
     max-width: 100%;
 }
+
+/* =====================================
+   FIX: CENTER DESKTOP PAGE CONTENT
+===================================== */
+
+#yearbook,
+#media,
+#wall {
+    width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+
+/* Center section headings and text */
+#yearbook > h1,
+#yearbook > h2,
+#yearbook > p,
+#media > h2,
+#media > h3,
+#media > p,
+#wall > h1,
+#wall > h2 {
+    text-align: center;
+}
+
+/* Keep Yearbook cards centered */
+#yearbook .grid {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+}
+
+/* Center the Media Vault content */
+#media .masonry {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Center the Message Wall */
+#wall .grid {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+}
+
+/* Desktop layout */
+@media (min-width: 1025px) {
+    #yearbook,
+    #media,
+    #wall {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+
+/* Mobile layout */
+@media (max-width: 640px) {
+    #yearbook,
+    #media,
+    #wall {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    #yearbook .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+}
